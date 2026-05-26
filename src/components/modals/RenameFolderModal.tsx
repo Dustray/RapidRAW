@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import Text from '../ui/Text';
 import { TextVariants } from '../../types/typography';
+import { useTranslation } from 'react-i18next';
 
 interface RenameFolderProps {
   currentName?: string;
@@ -10,6 +11,7 @@ interface RenameFolderProps {
 }
 
 export default function RenameFolderModal({ isOpen, onClose, onSave, currentName }: RenameFolderProps) {
+  const { t } = useTranslation();
   const [name, setName] = useState('');
   const [isMounted, setIsMounted] = useState(false);
   const [show, setShow] = useState(false);
@@ -73,14 +75,14 @@ export default function RenameFolderModal({ isOpen, onClose, onSave, currentName
         onClick={(e: any) => e.stopPropagation()}
       >
         <Text variant={TextVariants.title} className="mb-4">
-          Rename Folder
+          {t('modal.renameFolder')}
         </Text>
         <input
           autoFocus
           className="w-full bg-bg-primary text-text-primary border border-border rounded-md px-3 py-2 focus:outline-hidden focus:ring-2 focus:ring-accent"
           onChange={(e: any) => setName(e.target.value)}
           onKeyDown={handleKeyDown}
-          placeholder="Enter new folder name..."
+          placeholder={t('modal.enterNewFolderName')}
           type="text"
           value={name}
         />

@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 import clsx from 'clsx';
 import Text from '../ui/Text';
 import { TextVariants } from '../../types/typography';
@@ -95,6 +96,7 @@ const PresetTypeSwitch = ({ selectedType, onChange }: PresetTypeSwitchProps) => 
 };
 
 export default function ConfigurePresetModal({ isOpen, onClose, onSave, initialPreset }: ConfigurePresetModalProps) {
+  const { t } = useTranslation();
   const [name, setName] = useState('');
   const [includeMasks, setIncludeMasks] = useState(false);
   const [includeCropTransform, setIncludeCropTransform] = useState(false);
@@ -183,14 +185,14 @@ export default function ConfigurePresetModal({ isOpen, onClose, onSave, initialP
           className="w-full bg-bg-primary text-text-primary border border-border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-accent"
           onChange={(e: any) => setName(e.target.value)}
           onKeyDown={handleKeyDown}
-          placeholder="Enter preset name..."
+          placeholder={t('modal.preset.enterPresetName')}
           type="text"
           value={name}
         />
 
         <div className="mt-5 mb-4 p-1 space-y-4">
-          <Switch label="Include Masks" checked={includeMasks} onChange={setIncludeMasks} />
-          <Switch label="Include Crop & Transform" checked={includeCropTransform} onChange={setIncludeCropTransform} />
+          <Switch label={t('modal.preset.includeMasks')} checked={includeMasks} onChange={setIncludeMasks} />
+          <Switch label={t('modal.preset.includeCropTransform')} checked={includeCropTransform} onChange={setIncludeCropTransform} />
         </div>
 
         <PresetTypeSwitch selectedType={presetType} onChange={setPresetType} />

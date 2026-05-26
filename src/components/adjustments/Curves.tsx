@@ -7,6 +7,7 @@ import { useContextMenu } from '../../context/ContextMenuContext';
 import Text from '../ui/Text';
 import Slider from '../ui/Slider';
 import { TextColors, TextVariants, TextWeights } from '../../types/typography';
+import { useTranslation } from 'react-i18next';
 
 let curveClipboard: Array<Coord> | null = null;
 let parametricClipboard: any = null;
@@ -268,6 +269,7 @@ export default function CurveGraph({
   theme,
   onDragStateChange,
 }: CurveGraphProps) {
+  const { t } = useTranslation();
   const { showContextMenu } = useContextMenu();
   const [curveMode, setCurveMode] = useState<'point' | 'parametric'>(adjustments.curveMode || 'point');
   const [activeChannel, setActiveChannel] = useState<ActiveChannel>(ActiveChannel.Luma);
@@ -955,7 +957,7 @@ export default function CurveGraph({
 
               <div className="flex flex-col gap-2">
                 <Slider
-                  label="White Level"
+                  label={t('adjustments.curves.whiteLevel')}
                   min={-100}
                   max={0}
                   step={1}
@@ -965,7 +967,7 @@ export default function CurveGraph({
                   onDragStateChange={onDragStateChange}
                 />
                 <Slider
-                  label="Highlights"
+                  label={t('adjustments.curves.highlights')}
                   min={-100}
                   max={100}
                   step={1}
@@ -975,7 +977,7 @@ export default function CurveGraph({
                   onDragStateChange={onDragStateChange}
                 />
                 <Slider
-                  label="Lights"
+                  label={t('adjustments.curves.lights')}
                   min={-100}
                   max={100}
                   step={1}
@@ -985,7 +987,7 @@ export default function CurveGraph({
                   onDragStateChange={onDragStateChange}
                 />
                 <Slider
-                  label="Darks"
+                  label={t('adjustments.curves.darks')}
                   min={-100}
                   max={100}
                   step={1}
@@ -995,7 +997,7 @@ export default function CurveGraph({
                   onDragStateChange={onDragStateChange}
                 />
                 <Slider
-                  label="Shadows"
+                  label={t('adjustments.curves.shadows')}
                   min={-100}
                   max={100}
                   step={1}
@@ -1005,7 +1007,7 @@ export default function CurveGraph({
                   onDragStateChange={onDragStateChange}
                 />
                 <Slider
-                  label="Black Level"
+                  label={t('adjustments.curves.blackLevel')}
                   min={0}
                   max={100}
                   step={1}

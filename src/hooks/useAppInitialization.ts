@@ -123,7 +123,7 @@ export const useAppInitialization = ({
         ) {
           settings.copyPasteSettings = { mode: 'merge', includedAdjustments: COPYABLE_ADJUSTMENT_KEYS };
         }
-        setAppSettings(settings);
+        await setAppSettings(settings);
 
         if (settings?.language) {
           i18n.changeLanguage(settings.language);

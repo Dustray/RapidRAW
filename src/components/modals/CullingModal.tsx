@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { invoke } from '@tauri-apps/api/core';
+import { useTranslation } from 'react-i18next';
 import { CheckCircle, XCircle, Loader2, Users, Trash2, Star, Tag } from 'lucide-react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { CullingSettings, CullingSuggestions, Invokes, Progress } from '../ui/AppProperties';
@@ -79,6 +80,7 @@ export default function CullingModal({
   onApply,
   onError,
 }: CullingModalProps) {
+  const { t } = useTranslation();
   const [isMounted, setIsMounted] = useState(false);
   const [show, setShow] = useState(false);
   const [stage, setStage] = useState<'settings' | 'progress' | 'results'>('settings');
@@ -170,14 +172,14 @@ export default function CullingModal({
       <div className="space-y-6 text-sm">
         <div>
           <Switch
-            label="Group Similar Images"
+            label={t('modal.culling.groupSimilarImages')}
             checked={settings.groupSimilar}
             onChange={(v) => setSettings((s) => ({ ...s, groupSimilar: v }))}
           />
           {settings.groupSimilar && (
             <div className="mt-2 pl-4 border-l-2 border-border-color ml-1">
               <Slider
-                label="Similarity Threshold"
+                label={t('modal.culling.similarityThreshold')}
                 min={1}
                 max={64}
                 step={1}
@@ -195,14 +197,14 @@ export default function CullingModal({
         </div>
         <div>
           <Switch
-            label="Filter Blurry Images"
+            label={t('modal.culling.filterBlurryImages')}
             checked={settings.filterBlurry}
             onChange={(v) => setSettings((s) => ({ ...s, filterBlurry: v }))}
           />
           {settings.filterBlurry && (
             <div className="mt-2  pl-4 border-l-2 border-border-color ml-1">
               <Slider
-                label="Blur Threshold"
+                label={t('modal.culling.blurThreshold')}
                 min={25}
                 max={500}
                 step={25}

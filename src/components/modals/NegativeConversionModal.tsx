@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { invoke } from '@tauri-apps/api/core';
 import { listen } from '@tauri-apps/api/event';
+import { useTranslation } from 'react-i18next';
 import { RotateCcw, ZoomIn, ZoomOut, Maximize, Save, Loader2, Eye, EyeOff, Info } from 'lucide-react';
 import { AnimatePresence, motion } from 'framer-motion';
 import Button from '../ui/Button';
@@ -39,6 +40,7 @@ export default function NegativeConversionModal({
   targetPaths,
   onSave,
 }: NegativeConversionModalProps) {
+  const { t } = useTranslation();
   const [params, setParams] = useState<NegativeParams>(DEFAULT_PARAMS);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -221,7 +223,7 @@ export default function NegativeConversionModal({
           </Text>
           <div className="space-y-3">
             <Slider
-              label="Red (Cyan)"
+              label={t('modal.negativeConversion.redCyan')}
               value={params.red_weight}
               min={0.5}
               max={2.0}
@@ -231,7 +233,7 @@ export default function NegativeConversionModal({
               fillOrigin="min"
             />
             <Slider
-              label="Green (Magenta)"
+              label={t('modal.negativeConversion.greenMagenta')}
               value={params.green_weight}
               min={0.5}
               max={2.0}
@@ -241,7 +243,7 @@ export default function NegativeConversionModal({
               fillOrigin="min"
             />
             <Slider
-              label="Blue (Yellow)"
+              label={t('modal.negativeConversion.blueYellow')}
               value={params.blue_weight}
               min={0.5}
               max={2.0}
@@ -261,7 +263,7 @@ export default function NegativeConversionModal({
           </Text>
           <div className="space-y-3">
             <Slider
-              label="Exposure"
+              label={t('modal.negativeConversion.exposure')}
               value={params.exposure}
               min={-2.0}
               max={2.0}
@@ -270,7 +272,7 @@ export default function NegativeConversionModal({
               onChange={(e) => handleParamChange('exposure', Number(e.target.value))}
             />
             <Slider
-              label="Contrast (Grade)"
+              label={t('modal.negativeConversion.contrastGrade')}
               value={params.contrast}
               min={0.5}
               max={2.5}
