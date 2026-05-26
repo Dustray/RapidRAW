@@ -122,7 +122,12 @@
       "addTagPlaceholder": "添加标签...",
       "addTag": "添加标签"
     },
-    "virtualCopy": "虚拟副本"
+    "virtualCopy": "虚拟副本",
+    "selectImageToRate": "选择图像进行评分",
+    "rateStars": "评分 {{count}} 星",
+    "selectedImages": "已选择 {{count}} / {{total}} 张图像",
+    "expandFilmstrip": "展开胶片条",
+    "collapseFilmstrip": "折叠胶片条"
   },
   "editor": {
     "title": "编辑器",
@@ -276,7 +281,15 @@
     "perspective": "透视和梯形校正",
     "lensDistortion": "镜头畸变校正",
     "xAxis": "X轴",
-    "yAxis": "Y轴"
+    "yAxis": "Y轴",
+    "rotateLeft": "向左旋转",
+    "rotateRight": "向右旋转",
+    "flipHoriz": "水平翻转",
+    "flipVert": "垂直翻转",
+    "geometry": "几何",
+    "transform": "变换",
+    "lens": "镜头",
+    "noImageSelected": "未选择图像。"
   },
   "masks": {
     "title": "蒙版",
@@ -725,7 +738,24 @@
       "groupSimilarImages": "分组相似图片",
       "similarityThreshold": "相似度阈值",
       "filterBlurryImages": "过滤模糊图片",
-      "blurThreshold": "模糊阈值"
+      "blurThreshold": "模糊阈值",
+      "title": "筛选图片",
+      "cancel": "取消",
+      "startCulling": "开始筛选",
+      "cullingFailed": "筛选失败",
+      "close": "关闭",
+      "noIssuesFound": "未发现问题！",
+      "allUniqueAndSharp": "所有图片都是唯一且清晰的。",
+      "done": "完成",
+      "cullingSuggestions": "筛选建议",
+      "similarGroups": "相似组",
+      "blurryImages": "模糊图片",
+      "group": "组 {{index}}",
+      "bestImage": "最佳图片",
+      "duplicates": "重复项 ({{count}})",
+      "applyTo": "应用到 {{count}} 张图片",
+      "lowerIsStricter": "值越低越严格（精确重复）。值越高越宽松（近似重复）。建议值为 24-32。",
+      "blurThresholdDesc": "清晰度分数低于此值的图片将被标记。值越高越严格。"
     },
     "preset": {
       "includeMasks": "包含蒙版",
@@ -773,7 +803,34 @@
     "customZoom": "点击输入自定义缩放百分比"
   },
   "mainLibrary": {
-    "goToSettings": "前往设置"
+    "goToSettings": "前往设置",
+    "welcomeBack": "欢迎回来！",
+    "continueSessionPrompt": "继续您上次的工作或开始新的会话。",
+    "welcomeMessage": "一款极速、GPU 加速的 RAW 图像编辑器。{{openText}}",
+    "openFolder": "打开文件夹",
+    "openLibrary": "打开图库",
+    "addFolder": "添加文件夹",
+    "continueSession": "继续会话",
+    "version": "版本",
+    "newVersionAvailable": "有新版本可用！",
+    "downloadVersion": "点击下载版本 {{version}}",
+    "latestVersion": "您正在使用最新版本",
+    "donateKoFi": "在 Ko-Fi 上捐赠",
+    "contributeGitHub": "在 GitHub 上贡献",
+    "or": "或",
+    "importing": "正在导入... ({{current}}/{{total}})",
+    "importComplete": "导入完成！",
+    "importFailed": "导入失败！",
+    "communityPresets": "社区预设",
+    "downloading": "正在下载 {{model}}...",
+    "indexing": "正在索引图片... ({{current}}/{{total}})",
+    "processingImages": "正在处理图片...",
+    "mayTakeMoment": "这可能需要一点时间。",
+    "noResultsFound": "未找到结果",
+    "noResultsDescription": "无法根据文件名或标签找到图像。",
+    "enableTaggingHint": "如需更全面的搜索，请在设置中启用自动标记。",
+    "noImagesMatchFilter": "没有找到符合筛选条件的图片。",
+    "importImages": "导入图片"
   },
   "imagePicker": {
     "clearImage": "清除图像"

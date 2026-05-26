@@ -167,7 +167,7 @@ export default function CullingModal({
         <Users className="w-12 h-12 text-accent" />
       </div>
       <Text variant={TextVariants.title} className="mb-6 text-center">
-        Cull Images
+        {t('modal.culling.title')}
       </Text>
       <div className="space-y-6 text-sm">
         <div>
@@ -189,8 +189,7 @@ export default function CullingModal({
                 fillOrigin="min"
               />
               <Text variant={TextVariants.small} className="mt-1">
-                Lower is stricter (exact duplicates). Higher is looser (near duplicates). A value of 24-32 is
-                recommended.
+                {t('modal.culling.lowerIsStricter')}
               </Text>
             </div>
           )}
@@ -214,7 +213,7 @@ export default function CullingModal({
                 fillOrigin="min"
               />
               <Text variant={TextVariants.small} className="mt-1">
-                Images with a sharpness score below this value are flagged. Higher is stricter.
+                {t('modal.culling.blurThresholdDesc')}
               </Text>
             </div>
           )}
@@ -225,9 +224,9 @@ export default function CullingModal({
           className="px-4 py-2 rounded-md text-text-secondary hover:bg-surface transition-colors"
           onClick={onClose}
         >
-          Cancel
+          {t('modal.culling.cancel')}
         </button>
-        <Button onClick={handleStartCulling}>Start Culling</Button>
+        <Button onClick={handleStartCulling}>{t('modal.culling.startCulling')}</Button>
       </div>
     </>
   );
