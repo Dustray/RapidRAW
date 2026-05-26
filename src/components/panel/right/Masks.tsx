@@ -63,12 +63,12 @@ export interface SubMask {
 }
 
 export function formatMaskTypeName(type: string) {
-  if (type === Mask.AiDepth) return 'Depth';
-  if (type === Mask.AiSubject) return 'Subject';
-  if (type === Mask.AiForeground) return 'Foreground';
-  if (type === Mask.AiSky) return 'Sky';
-  if (type === Mask.All) return 'Whole Image';
-  if (type === Mask.QuickEraser) return 'Quick Eraser';
+  if (type === Mask.AiDepth) return 'masks.types.depth';
+  if (type === Mask.AiSubject) return 'masks.types.subject';
+  if (type === Mask.AiForeground) return 'masks.types.foreground';
+  if (type === Mask.AiSky) return 'masks.types.sky';
+  if (type === Mask.All) return 'masks.types.wholeImage';
+  if (type === Mask.QuickEraser) return 'masks.types.quickEraser';
   return type.charAt(0).toUpperCase() + type.slice(1);
 }
 
@@ -95,38 +95,38 @@ export const MASK_PANEL_CREATION_TYPES: Array<MaskType> = [
   {
     disabled: false,
     icon: Sparkles,
-    name: 'Subject',
+    name: 'masks.types.subject',
     type: Mask.AiSubject,
   },
   {
     disabled: false,
     icon: Cloud,
-    name: 'Sky',
+    name: 'masks.types.sky',
     type: Mask.AiSky,
   },
   {
     disabled: false,
     icon: User,
-    name: 'Foreground',
+    name: 'masks.types.foreground',
     type: Mask.AiForeground,
   },
   {
     disabled: false,
     icon: TriangleRight,
-    name: 'Linear',
+    name: 'masks.types.linear',
     type: Mask.Linear,
   },
   {
     disabled: false,
     icon: Circle,
-    name: 'Radial',
+    name: 'masks.types.radialType',
     type: Mask.Radial,
   },
   {
     disabled: false,
     icon: MoreHorizontal,
     id: 'others',
-    name: 'Others',
+    name: 'masks.types.others',
     type: null,
   },
 ];
@@ -135,37 +135,37 @@ export const AI_PANEL_CREATION_TYPES: Array<MaskType> = [
   {
     disabled: false,
     icon: Eraser,
-    name: 'Quick Erase',
+    name: 'masks.types.quickErase',
     type: Mask.QuickEraser,
   },
   {
     disabled: false,
     icon: Sparkles,
-    name: 'Subject',
+    name: 'masks.types.subject',
     type: Mask.AiSubject,
   },
   {
     disabled: false,
     icon: User,
-    name: 'Foreground',
+    name: 'masks.types.foreground',
     type: Mask.AiForeground,
   },
   {
     disabled: false,
     icon: Brush,
-    name: 'Brush',
+    name: 'masks.brush',
     type: Mask.Brush,
   },
   {
     disabled: false,
     icon: TriangleRight,
-    name: 'Linear',
+    name: 'masks.types.linear',
     type: Mask.Linear,
   },
   {
     disabled: false,
     icon: Circle,
-    name: 'Radial',
+    name: 'masks.types.radialType',
     type: Mask.Radial,
   },
 ];
@@ -174,38 +174,38 @@ export const SUB_MASK_COMPONENT_TYPES: Array<MaskType> = [
   {
     disabled: false,
     icon: Sparkles,
-    name: 'Subject',
+    name: 'masks.types.subject',
     type: Mask.AiSubject,
   },
   {
     disabled: false,
     icon: Cloud,
-    name: 'Sky',
+    name: 'masks.types.sky',
     type: Mask.AiSky,
   },
   {
     disabled: false,
     icon: User,
-    name: 'Foreground',
+    name: 'masks.types.foreground',
     type: Mask.AiForeground,
   },
   {
     disabled: false,
     icon: TriangleRight,
-    name: 'Linear',
+    name: 'masks.types.linear',
     type: Mask.Linear,
   },
   {
     disabled: false,
     icon: Circle,
-    name: 'Radial',
+    name: 'masks.types.radialType',
     type: Mask.Radial,
   },
   {
     disabled: false,
     icon: MoreHorizontal,
     id: 'others',
-    name: 'Others',
+    name: 'masks.types.others',
     type: null,
   },
 ];
@@ -214,7 +214,7 @@ export const OTHERS_MASK_TYPES: Array<MaskType> = [
   {
     disabled: false,
     icon: BringToFront,
-    name: 'Depth',
+    name: 'masks.types.depth',
     type: Mask.AiDepth,
   },
   {
@@ -232,7 +232,7 @@ export const OTHERS_MASK_TYPES: Array<MaskType> = [
   {
     disabled: false,
     icon: Brush,
-    name: 'Brush',
+    name: 'masks.brush',
     type: Mask.Brush,
   },
   {
@@ -244,7 +244,7 @@ export const OTHERS_MASK_TYPES: Array<MaskType> = [
   {
     disabled: false,
     icon: RectangleHorizontal,
-    name: 'Whole Image',
+    name: 'masks.types.wholeImage',
     type: Mask.All,
   },
 ];
@@ -253,31 +253,31 @@ export const AI_SUB_MASK_COMPONENT_TYPES: Array<MaskType> = [
   {
     disabled: false,
     icon: Sparkles,
-    name: 'Subject',
+    name: 'masks.types.subject',
     type: Mask.AiSubject,
   },
   {
     disabled: false,
     icon: User,
-    name: 'Foreground',
+    name: 'masks.types.foreground',
     type: Mask.AiForeground,
   },
   {
     disabled: false,
     icon: Brush,
-    name: 'Brush',
+    name: 'masks.brush',
     type: Mask.Brush,
   },
   {
     disabled: false,
     icon: TriangleRight,
-    name: 'Linear',
+    name: 'masks.types.linear',
     type: Mask.Linear,
   },
   {
     disabled: false,
     icon: Circle,
-    name: 'Radial',
+    name: 'masks.types.radialType',
     type: Mask.Radial,
   },
 ];

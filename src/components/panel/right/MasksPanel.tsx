@@ -858,7 +858,7 @@ export default function MasksPanel() {
     event.stopPropagation();
     const rect = (event.currentTarget as HTMLElement).getBoundingClientRect();
     const options = OTHERS_MASK_TYPES.map((maskType) => ({
-      label: maskType.name,
+      label: t(maskType.name),
       icon: maskType.icon,
       onClick: () => handleGridClick(maskType.type),
       onRightClick: () => handleGridClick(maskType.type, true),
@@ -873,7 +873,7 @@ export default function MasksPanel() {
 
     const buildMenu = (types: MaskType[], mode: SubMaskMode = SubMaskMode.Additive) =>
       types.map((maskType: MaskType) => ({
-        label: maskType.name,
+        label: t(maskType.name),
         icon: maskType.icon,
         disabled: maskType.disabled,
         onClick: () => {
@@ -894,13 +894,13 @@ export default function MasksPanel() {
       submenu: MASK_PANEL_CREATION_TYPES.map((maskType) => {
         if (maskType.id === 'others') {
           return {
-            label: maskType.name,
+            label: t(maskType.name),
             icon: maskType.icon,
             submenu: buildMenu(OTHERS_MASK_TYPES, mode),
           };
         }
         return {
-          label: maskType.name,
+          label: t(maskType.name),
           icon: maskType.icon,
           disabled: maskType.disabled,
           onClick: () => handleAddSubMask(targetContainerId!, maskType.type, mode),
@@ -915,7 +915,7 @@ export default function MasksPanel() {
     const others = MASK_PANEL_CREATION_TYPES.find((m) => m.id === 'others');
     if (others) {
       options.push({
-        label: others.name,
+        label: t(others.name),
         icon: others.icon,
         submenu: buildMenu(OTHERS_MASK_TYPES, SubMaskMode.Additive),
       });
@@ -1495,7 +1495,7 @@ export default function MasksPanel() {
                   const Icon = MASK_ICON_MAP[sm.type] || Circle;
                   return <Icon size={16} className={`shrink-0 ml-1 ${TEXT_COLOR_KEYS[TextColors.secondary]}`} />;
                 })()}
-                <span className="flex-1 truncate">{getSubMaskName(activeDragItem.item as SubMask)}</span>
+                <span className="flex-1 truncate">{t(getSubMaskName(activeDragItem.item as SubMask))}</span>
               </Text>
             )}
 
@@ -1515,7 +1515,7 @@ export default function MasksPanel() {
                     <>
                       <Icon size={24} />
                       <span className="text-center">
-                        {activeDragItem.maskType ? formatMaskTypeName(activeDragItem.maskType) : 'Mask'}
+                        {activeDragItem.maskType ? t(formatMaskTypeName(activeDragItem.maskType)) : t('masks.title')}
                       </span>
                     </>
                   );
@@ -1530,6 +1530,7 @@ export default function MasksPanel() {
 }
 
 function NewMaskDropZone({ isOver }: { isOver: boolean }) {
+  const { t } = useTranslation();
   return (
     <motion.div
       layout
@@ -1539,12 +1540,13 @@ function NewMaskDropZone({ isOver }: { isOver: boolean }) {
       transition={{ duration: 0.2, ease: 'easeOut' }}
       className={`p-4 rounded-lg text-center ${isOver ? 'border border-accent/80 bg-bg-tertiary/50' : ''}`}
     >
-      <Text weight={TextWeights.medium}>Drop here to create a new mask</Text>
+      <Text weight={TextWeights.medium}>{t('masks.dropToCreate')}</Text>
     </motion.div>
   );
 }
 
 function DraggableGridItem({ maskType, onClick, onRightClick, isDraggable, activeMaskContainerId }: any) {
+  const { t } = useTranslation();
   const { attributes, listeners, setNodeRef, isDragging } = useDraggable({
     id: `create-${maskType.id || maskType.type}`,
     data: { type: 'Creation', maskType: maskType.type },
@@ -1554,10 +1556,10 @@ function DraggableGridItem({ maskType, onClick, onRightClick, isDraggable, activ
   const tooltip = maskType.disabled
     ? 'Coming Soon'
     : maskType.id === 'others'
-      ? 'Show More Mask Types'
+      ? t('masks.showMoreMaskTypes')
       : activeMaskContainerId
-        ? `Add ${maskType.name} to Current Mask or Create New (Right-click)`
-        : `Create New ${maskType.name} Mask`;
+        ? t('masks.addToCurrentMaskOrCreateNewRightClick', { type: t(maskType.name) })
+        : t('masks.createNew', { type: t(maskType.name) });
 
   return (
     <motion.div
@@ -1581,7 +1583,7 @@ function DraggableGridItem({ maskType, onClick, onRightClick, isDraggable, activ
     >
       <maskType.icon size={24} />{' '}
       <Text as="span" variant={TextVariants.small} color={TextColors.primary}>
-        {maskType.name}
+        {t(maskType.name)}
       </Text>
     </motion.div>
   );
@@ -2057,7 +2059,7 @@ function SubMaskRow({
         />
       ) : (
         <Text color={TextColors.primary} className="flex-1 truncate select-none">
-          {getSubMaskName(subMask)}
+          {t(getSubMaskName(subMask))}
         </Text>
       )}
       <div className="flex opacity-0 group-hover:opacity-100 transition-opacity">
@@ -2066,10 +2068,10 @@ function SubMaskRow({
             className="p-1 hover:text-text-primary text-text-secondary"
             data-tooltip={
               subMask.mode === SubMaskMode.Additive
-                ? 'Switch to Subtract'
+                ? t('masks.switchToSubtract')
                 : subMask.mode === SubMaskMode.Subtractive
-                  ? 'Switch to Intersect'
-                  : 'Switch to Add'
+                  ? t('masks.switchToIntersect')
+                  : t('masks.switchToAdd')
             }
             onClick={(e) => {
               e.stopPropagation();
@@ -2336,7 +2338,7 @@ function SettingsPanel({
       onClick={(e) => e.stopPropagation()}
     >
       <CollapsibleSection
-        title={isComponentMode ? `${getSubMaskName(activeSubMask)} Properties` : 'Mask Properties'}
+        title={isComponentMode ? `${t(getSubMaskName(activeSubMask))} Properties` : t('masks.maskAdjustments')}
         isOpen={isSettingsSectionOpen}
         onToggle={() => {
           const isOpening = !isSettingsSectionOpen;

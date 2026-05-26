@@ -2076,9 +2076,9 @@ export default function SettingsPanel({
                                 {t('settings.selfHostedConnectorDesc')}
                               </Text>
                               <Text as="ul" className="mt-3 space-y-1 list-disc list-inside">
-                                <li>Use your own ComfyUI instance</li>
-                                <li>Cost-free advanced generative edits</li>
-                                <li>Custom workflow selection</li>
+                                <li>{t('selfHostedConnectorFeatures.useOwnComfyUi')}</li>
+                                <li>{t('selfHostedConnectorFeatures.costFreeEdits')}</li>
+                                <li>{t('selfHostedConnectorFeatures.customWorkflow')}</li>
                               </Text>
                             </div>
                             <SettingItem

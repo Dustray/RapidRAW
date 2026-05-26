@@ -502,7 +502,7 @@ export default function CropPanel() {
                   whileTap={{ scale: 0.98 }}
                   transition={{ type: 'spring', stiffness: 400, damping: 17 }}
                 >
-                  <Text color={isCustomActive ? TextColors.button : TextColors.secondary}>Custom</Text>
+                  <Text color={isCustomActive ? TextColors.button : TextColors.secondary}>{t('crop.custom')}</Text>
                 </motion.div>
                 <div
                   className={clsx(
@@ -596,7 +596,7 @@ export default function CropPanel() {
 
             <div className="space-y-4">
               <Text variant={TextVariants.heading} className="mb-2">
-                Orientation
+                {t('crop.orientation')}
               </Text>
               <div className="grid grid-cols-2 gap-2">
                 <motion.div

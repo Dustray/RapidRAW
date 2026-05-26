@@ -165,6 +165,7 @@ const BrushTools = ({ settings, onSettingsChange }: { settings: any; onSettingsC
     </div>
   </>
 );
+}
 
 interface ConnectionStatusProps {
   aiProvider: string;
@@ -280,9 +281,9 @@ const ConnectionStatus = ({
     </div>
   );
 }
-};
 
 export default function AIPanel() {
+  const { t } = useTranslation();
   const activePatchContainerId = useEditorStore((s) => s.activeAiPatchContainerId);
   const activeSubMaskId = useEditorStore((s) => s.activeAiSubMaskId);
   const adjustments = useEditorStore((s) => s.adjustments);
@@ -1176,6 +1177,7 @@ function NewMaskDropZone({ isOver }: { isOver: boolean }) {
 }
 
 function DraggableGridItem({ maskType, isGenerating, onClick }: any) {
+  const { t } = useTranslation();
   const { attributes, listeners, setNodeRef, isDragging } = useDraggable({
     id: `create-ai-${maskType.type}`,
     data: { type: 'Creation', maskType: maskType.type },
@@ -1238,6 +1240,7 @@ function ContainerRow({
   analyzingSubMaskId,
   onAddComponent,
 }: any) {
+  const { t } = useTranslation();
   const { setNodeRef: setDroppableRef, isOver } = useDroppable({
     id: container.id,
     data: { type: 'Container', item: container },
