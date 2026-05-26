@@ -333,7 +333,7 @@ const ColorCalibrationPanel = ({ adjustments, setAdjustments, onDragStateChange 
   return (
     <div className="p-2 bg-bg-tertiary rounded-md mt-4">
       <Text variant={TextVariants.heading} className="mb-2">
-        Color Calibration
+        {t('adjustments.colorCalibration.title')}
       </Text>
       <div>
         <Text color={TextColors.primary} weight={TextWeights.medium} className="mb-1">
@@ -497,7 +497,7 @@ export default function ColorPanel({
 
       <div className="p-2 bg-bg-tertiary rounded-md">
         <Text variant={TextVariants.heading} className="mb-2">
-          Presence
+          {t('adjustments.color.presence')}
         </Text>
         <Slider
           label={t('adjustments.color.vibrance')}
@@ -521,7 +521,7 @@ export default function ColorPanel({
 
       <div className="p-2 bg-bg-tertiary rounded-md">
         <Text variant={TextVariants.heading} className="mb-3">
-          Color Grading
+          {t('adjustments.color.colorGrading')}
         </Text>
         <ColorGradingPanel
           adjustments={adjustments}
@@ -533,7 +533,7 @@ export default function ColorPanel({
 
       <div className="p-2 bg-bg-tertiary rounded-md">
         <Text variant={TextVariants.heading} className="mb-3">
-          Color Mixer
+          {t('adjustments.color.colorMixer')}
         </Text>
         <div className="flex justify-between mb-4 px-1">
           {HSL_COLORS.map(({ name, color }) => (

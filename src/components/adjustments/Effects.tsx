@@ -50,7 +50,7 @@ export default function EffectsPanel({
     <div className="space-y-4">
       <div className="p-2 bg-bg-tertiary rounded-md">
         <Text variant={TextVariants.heading} className="mb-2">
-          Creative
+          {t('adjustments.effects.creative')}
         </Text>
 
         <Slider
@@ -90,7 +90,7 @@ export default function EffectsPanel({
         <div className="space-y-4">
           <div className="p-2 bg-bg-tertiary rounded-md">
             <Text variant={TextVariants.heading} className="mb-2">
-              LUT
+              {t('adjustments.effects.lut')}
             </Text>
             <LUTControl
               lutName={adjustments.lutName || null}
@@ -153,7 +153,7 @@ export default function EffectsPanel({
           {adjustmentVisibility.grain !== false && (
             <div className="p-2 bg-bg-tertiary rounded-md">
               <Text variant={TextVariants.heading} className="mb-2">
-                Grain
+                {t('adjustments.effects.grain')}
               </Text>
               <Slider
                 label={t('adjustments.effects.grainAmount')}

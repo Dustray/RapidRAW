@@ -235,13 +235,13 @@ export const OTHERS_MASK_TYPES: Array<MaskType> = [
   {
     disabled: false,
     icon: Droplet,
-    name: 'Color',
+    name: 'masks.types.color',
     type: Mask.Color,
   },
   {
     disabled: false,
     icon: Sun,
-    name: 'Luminance',
+    name: 'masks.types.luminance',
     type: Mask.Luminance,
   },
   {
@@ -253,7 +253,7 @@ export const OTHERS_MASK_TYPES: Array<MaskType> = [
   {
     disabled: false,
     icon: Droplets,
-    name: 'Flow',
+    name: 'masks.types.flow',
     type: Mask.Flow,
   },
   {
