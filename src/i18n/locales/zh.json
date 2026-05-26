@@ -691,9 +691,13 @@
       "font": "字体",
       "fontDesc": "更改应用程序字体。",
       "systemDefault": "系统默认",
+      "poppins": "Poppins",
       "nativeTitlebar": "原生标题栏",
       "nativeTitlebarDesc": "使用系统默认的窗口标题栏代替 RapidRAW 的自定义标题栏。",
-      "enableOsTitlebar": "启用 OS 标题栏"
+      "enableOsTitlebar": "启用 OS 标题栏",
+      "dark": "深色",
+      "light": "浅色",
+      "grey": "灰色"
     },
     "adjustmentsVisibility": "调整可见性",
     "adjustmentsVisibilityDesc": "隐藏您不经常使用的调整部分以简化编辑面板。您的设置将被保留并在隐藏时应用。",
@@ -791,7 +795,17 @@
       "defaultRawTonemapper": "默认 RAW 色调映射器",
       "defaultRawTonemapperDesc": "应用于 RAW 图像的色调映射器。",
       "defaultNonRawTonemapper": "默认非 RAW 色调映射器",
-      "defaultNonRawTonemapperDesc": "应用于非 RAW 图像（如 JPEG、PNG）的色调映射器。"
+      "defaultNonRawTonemapperDesc": "应用于非 RAW 图像（如 JPEG、PNG）的色调映射器。",
+      "zoomNative": "1.0x（原生）",
+      "zoom75x": "0.75x",
+      "zoomHalf": "0.50x（一半）",
+      "zoom25x": "0.25x",
+      "auto": "自动",
+      "applyGamma": "应用 Gamma",
+      "skipCalibrate": "跳过校准",
+      "applyGammaSkipCalibrate": "应用 Gamma 并跳过校准",
+      "agx": "AgX",
+      "basic": "基础"
     },
     "generativeAi": "生成式 AI",
     "generativeAiDesc": "RapidRAW 的 AI 专为灵活性而构建。选择您理想的工作流程，从快速本地工具到强大的自托管方案。",
@@ -852,7 +866,30 @@
     "connectionFailed": "连接失败。",
     "goToHome": "前往主页",
     "addAiTag": "添加 AI 标签",
-    "addShortcut": "添加快捷方式"
+    "addShortcut": "添加快捷方式",
+    "ai": {
+      "cpu": "CPU",
+      "aiConnector": "AI 连接器",
+      "cloud": "云端"
+    },
+    "preview": {
+      "fixedResolution": "固定分辨率",
+      "dynamic": "动态"
+    },
+    "input": {
+      "mouse": "鼠标",
+      "trackpad": "触控板"
+    },
+    "keyboard": {
+      "pressKey": "按任意键...（Esc 清除）",
+      "notAssigned": "未分配"
+    },
+    "cloud": {
+      "subscriptionActive": "云端订阅已激活",
+      "noActiveSubscription": "无激活订阅",
+      "needSubscription": "要使用云端 AI 功能，您需要云端订阅。",
+      "upgrade": "在网站升级"
+    }
   },
   "modal": {
     "confirmDelete": "确定要删除吗？",
@@ -1007,5 +1044,62 @@
   },
   "imagePicker": {
     "clearImage": "清除图像"
+  },
+  "keyboard": {
+    "sections": {
+      "library": "图库",
+      "editing": "编辑",
+      "view": "视图",
+      "rating": "评分与标签",
+      "panels": "面板"
+    },
+    "actions": {
+      "open_image": "打开选中的图像",
+      "copy_files": "复制选中的文件",
+      "paste_files": "粘贴文件到当前文件夹",
+      "select_all": "全选图像",
+      "delete_selected": "删除选中的文件",
+      "preview_prev": "上一张图像",
+      "preview_next": "下一张图像",
+      "zoom_in_step": "逐步放大",
+      "zoom_out_step": "逐步缩小",
+      "cycle_zoom": "循环缩放（适应、2倍适应、100%）",
+      "zoom_in": "放大",
+      "zoom_out": "缩小",
+      "zoom_fit": "适应屏幕",
+      "zoom_100": "缩放至100%",
+      "toggle_fullscreen": "切换全屏",
+      "show_original": "显示原图（前后对比）",
+      "rate_0": "星级评分：0",
+      "rate_1": "星级评分：1",
+      "rate_2": "星级评分：2",
+      "rate_3": "星级评分：3",
+      "rate_4": "星级评分：4",
+      "rate_5": "星级评分：5",
+      "color_label_none": "颜色标签：无",
+      "color_label_red": "颜色标签：红色",
+      "color_label_yellow": "颜色标签：黄色",
+      "color_label_green": "颜色标签：绿色",
+      "color_label_blue": "颜色标签：蓝色",
+      "color_label_purple": "颜色标签：紫色",
+      "toggle_adjustments": "切换调整面板",
+      "toggle_crop_panel": "切换裁剪面板",
+      "toggle_masks": "切换蒙版面板",
+      "toggle_ai": "切换AI面板",
+      "toggle_presets": "切换预设面板",
+      "toggle_metadata": "切换元数据面板",
+      "toggle_analytics": "切换分析显示",
+      "toggle_export": "切换导出面板",
+      "toggle_library_exif": "切换EXIF覆盖层",
+      "undo": "撤销调整",
+      "redo": "重做调整",
+      "copy_adjustments": "复制选中的调整",
+      "paste_adjustments": "粘贴复制的调整",
+      "rotate_left": "逆时针旋转90°",
+      "rotate_right": "顺时针旋转90°",
+      "toggle_crop": "切换裁剪/拉直",
+      "brush_size_up": "增大画笔尺寸",
+      "brush_size_down": "减小画笔尺寸"
+    }
   }
 }
