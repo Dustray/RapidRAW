@@ -328,10 +328,10 @@ export default function TransformModal({ isOpen, onClose, onApply, currentAdjust
   const renderControls = () => (
     <div className="modal-adjustments-pane w-80 shrink-0 bg-bg-secondary flex flex-col border-l border-surface h-full z-10">
       <div className="p-4 flex justify-between items-center shrink-0 border-b border-surface">
-        <Text variant={TextVariants.title}>Transform</Text>
+        <Text variant={TextVariants.title}>{t('modal.transform.title')}</Text>
         <button
           onClick={handleReset}
-          data-tooltip="Reset Transform"
+          data-tooltip={t('modal.transform.resetTransform')}
           className="p-2 rounded-full hover:bg-surface transition-colors"
         >
           <RotateCcw size={18} />
@@ -423,7 +423,7 @@ export default function TransformModal({ isOpen, onClose, onApply, currentAdjust
           </Text>
           <div className="space-y-3">
             <Slider
-              label="X Axis"
+              label={t('modal.transform.xAxis')}
               value={params.x_offset}
               min={-100}
               max={100}
@@ -432,7 +432,7 @@ export default function TransformModal({ isOpen, onClose, onApply, currentAdjust
               onChange={(e) => handleChange('x_offset', Number(e.target.value))}
             />
             <Slider
-              label="Y Axis"
+              label={t('modal.transform.yAxis')}
               value={params.y_offset}
               min={-100}
               max={100}
@@ -621,11 +621,11 @@ export default function TransformModal({ isOpen, onClose, onApply, currentAdjust
                 onClick={onClose}
                 className="px-4 py-2 rounded-md text-text-secondary hover:bg-surface transition-colors"
               >
-                Cancel
+                {t('modal.transform.cancel')}
               </button>
               <Button onClick={handleApply} disabled={isApplying || !previewUrl}>
                 <Check className="mr-2" size={16} />
-                Apply
+                {t('modal.transform.apply')}
               </Button>
             </div>
           </motion.div>
