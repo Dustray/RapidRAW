@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { invoke } from '@tauri-apps/api/core';
 import { useShallow } from 'zustand/react/shallow';
+import i18n from '../i18n';
 import { useSettingsStore } from '../store/useSettingsStore';
 import { useUIStore } from '../store/useUIStore';
 import { useLibraryStore } from '../store/useLibraryStore';
@@ -140,6 +141,10 @@ export const useAppInitialization = ({
         }
 
         if (settings?.theme) setTheme(settings.theme);
+
+        if (settings?.language && settings.language !== i18n.language) {
+          i18n.changeLanguage(settings.language);
+        }
 
         if (settings?.uiVisibility)
           setUI((state) => ({ uiVisibility: { ...state.uiVisibility, ...settings.uiVisibility } }));
