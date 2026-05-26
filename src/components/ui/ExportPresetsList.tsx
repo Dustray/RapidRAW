@@ -6,6 +6,7 @@ import { AppSettings } from './AppProperties';
 import Dropdown from './Dropdown';
 import Text from './Text';
 import { TextVariants } from '../../types/typography';
+import { useTranslation } from 'react-i18next';
 
 interface ExportPresetsListProps {
   appSettings: AppSettings | null;
@@ -20,6 +21,7 @@ export default function ExportPresetsList({
   onApplyPreset,
   onSettingsChange,
 }: ExportPresetsListProps) {
+  const { t } = useTranslation();
   const [isCreating, setIsCreating] = useState(false);
   const [newPresetName, setNewPresetName] = useState('');
   const [selectedPresetId, setSelectedPresetId] = useState<string>('');
@@ -106,7 +108,7 @@ export default function ExportPresetsList({
             value={selectedPresetId}
             onChange={handleSelect}
             options={dropdownOptions}
-            placeholder="Select a preset..."
+            placeholder={t('export.selectPreset')}
             className="w-full"
           />
 
@@ -145,7 +147,7 @@ export default function ExportPresetsList({
           <input
             autoFocus
             type="text"
-            placeholder="Preset Name"
+            placeholder={t('export.presetName')}
             value={newPresetName}
             onChange={(e) => setNewPresetName(e.target.value)}
             className="grow bg-bg-primary border border-surface rounded-md p-2 text-sm text-text-primary focus:ring-accent focus:border-accent"

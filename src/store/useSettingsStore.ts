@@ -13,7 +13,7 @@ interface SettingsState {
 
   // Actions
   initPlatform: () => void;
-  setAppSettings: (settings: AppSettings | null) => void;
+  setAppSettings: (settings: AppSettings | null) => Promise<void>;
   setTheme: (theme: string) => void;
   setSupportedTypes: (types: SupportedTypes | null) => void;
   handleSettingsChange: (newSettings: AppSettings) => Promise<void>;
@@ -34,9 +34,9 @@ export const useSettingsStore = create<SettingsState>((set, get) => ({
     }
   },
 
-  setAppSettings: (settings) => {
+  setAppSettings: async (settings) => {
     if (settings?.language && settings.language !== i18n.language) {
-      i18n.changeLanguage(settings.language);
+      await i18n.changeLanguage(settings.language);
     }
     set({ appSettings: settings });
   },
@@ -56,7 +56,7 @@ export const useSettingsStore = create<SettingsState>((set, get) => ({
     }
 
     if (newSettings.language && newSettings.language !== i18n.language) {
-      i18n.changeLanguage(newSettings.language);
+      await i18n.changeLanguage(newSettings.language);
     }
 
     const { searchCriteria: _searchCriteria, ...settingsToSave } = newSettings as any;

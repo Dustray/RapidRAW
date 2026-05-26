@@ -3,6 +3,7 @@ import { invoke } from '@tauri-apps/api/core';
 import { ArrowLeft, CheckCircle2, ChevronDown, Loader2, Search, Users, Layers, Crop } from 'lucide-react';
 import { siGithub } from 'simple-icons';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 import Button from '../ui/Button';
 import Input from '../ui/Input';
 import { Invokes, SupportedTypes, ImageFile } from '../ui/AppProperties';
@@ -63,6 +64,7 @@ const shuffleArray = (array: any[]) => {
 };
 
 const CommunityPage = ({ onBackToLibrary, imageList, currentFolderPath }: CommunityPageProps) => {
+  const { t } = useTranslation();
   const [presets, setPresets] = useState<CommunityPreset[]>([]);
   const [previews, setPreviews] = useState<Record<string, string | null>>({});
   const [isLoading, setIsLoading] = useState(true);
@@ -233,7 +235,7 @@ const CommunityPage = ({ onBackToLibrary, imageList, currentFolderPath }: Commun
           <Input
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            placeholder="Search presets..."
+            placeholder={t('community.searchPresets')}
             className="pl-10 w-64"
           />
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-text-secondary" />

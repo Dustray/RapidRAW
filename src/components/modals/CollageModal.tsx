@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback, useRef, useLayoutEffect } from 'react';
 import { invoke } from '@tauri-apps/api/core';
+import { useTranslation } from 'react-i18next';
 import { AnimatePresence, motion } from 'framer-motion';
 import {
   CheckCircle,
@@ -62,6 +63,7 @@ const INITIAL_SPACING = 15;
 const INITIAL_BORDER_RADIUS = 0;
 
 export default function CollageModal({ isOpen, onClose, onSave, sourceImages }: CollageModalProps) {
+  const { t } = useTranslation();
   const [isMounted, setIsMounted] = useState(false);
   const [show, setShow] = useState(false);
 
@@ -677,12 +679,12 @@ export default function CollageModal({ isOpen, onClose, onSave, sourceImages }: 
           )}
         </div>
 
-        <Switch label="Keep Original Aspect Ratio" checked={keepOriginalRatio} onChange={setKeepOriginalRatio} />
+        <Switch label={t('modal.collage.keepAspectRatio')} checked={keepOriginalRatio} onChange={setKeepOriginalRatio} />
       </div>
 
       <div className="space-y-2">
         <Slider
-          label="Spacing"
+          label={t('modal.collage.spacing')}
           min={0}
           max={50}
           step={1}
@@ -692,7 +694,7 @@ export default function CollageModal({ isOpen, onClose, onSave, sourceImages }: 
           fillOrigin="min"
         />
         <Slider
-          label="Border Radius"
+          label={t('modal.collage.borderRadius')}
           min={0}
           max={50}
           step={1}

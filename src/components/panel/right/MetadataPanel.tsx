@@ -13,6 +13,7 @@ import { useLibraryStore } from '../../../store/useLibraryStore';
 import { useSettingsStore } from '../../../store/useSettingsStore';
 import { useProcessStore } from '../../../store/useProcessStore';
 import { useLibraryActions } from '../../../hooks/useLibraryActions';
+import { useTranslation } from 'react-i18next';
 
 interface CameraSetting {
   format?(value: number): string | number;
@@ -184,6 +185,7 @@ const KEY_CAMERA_SETTINGS_MAP: CameraSettings = {
 };
 
 export default function MetadataPanel() {
+  const { t } = useTranslation();
   const [isOrganizationExpanded, setIsOrganizationExpanded] = useState(false);
   const [isAuthorExpanded, setIsAuthorExpanded] = useState(false);
   const [tagInputValue, setTagInputValue] = useState('');
@@ -641,7 +643,7 @@ export default function MetadataPanel() {
                               onKeyDown={handleTagInputKeyDown}
                               onFocus={() => setIsTagInputFocused(true)}
                               onBlur={() => setIsTagInputFocused(false)}
-                              placeholder="Add tag..."
+                              placeholder={t('metadata.addTagPlaceholder')}
                               className="bg-transparent border-none outline-hidden text-xs w-full text-text-primary placeholder-text-tertiary"
                             />
                             <button
@@ -704,9 +706,9 @@ export default function MetadataPanel() {
                     ></a>
                   </div>
                   <div className="flex flex-col gap-0.5">
-                    <MetadataItem label="Latitude" value={gpsData.lat?.toFixed(6)} />
-                    <MetadataItem label="Longitude" value={gpsData.lon?.toFixed(6)} />
-                    {gpsData.altitude && <MetadataItem label="Altitude" value={`${gpsData.altitude} m`} />}
+                    <MetadataItem label={t('metadata.latitude')} value={gpsData.lat?.toFixed(6)} />
+                    <MetadataItem label={t('metadata.longitude')} value={gpsData.lon?.toFixed(6)} />
+                    {gpsData.altitude && <MetadataItem label={t('metadata.altitude')} value={`${gpsData.altitude} m`} />}
                   </div>
                 </div>
               </div>

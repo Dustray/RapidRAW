@@ -85,6 +85,7 @@ import { useAiMasking } from '../../../hooks/useAiMasking';
 import { useEditorActions } from '../../../hooks/useEditorActions';
 import { useUIStore } from '../../../store/useUIStore';
 import { useWaveformControls } from '../../../hooks/useWaveformControls';
+import { useTranslation } from 'react-i18next';
 
 interface DragData {
   type: 'Container' | 'SubMask' | 'Creation';
@@ -147,30 +148,34 @@ const BrushTools = ({
   settings: any;
   onSettingsChange: any;
   onDragStateChange?: (isDragging: boolean) => void;
-}) => (
-  <div>
-    <Slider
-      defaultValue={100}
-      label="Brush Size"
-      max={200}
-      min={1}
-      onChange={(e: any) => onSettingsChange((s: any) => ({ ...s, size: Number(e.target.value) }))}
-      step={1}
-      value={settings.size}
-      fillOrigin="min"
-      onDragStateChange={onDragStateChange}
-    />
-    <Slider
-      defaultValue={50}
-      label="Brush Feather"
-      max={100}
-      min={0}
-      onChange={(e: any) => onSettingsChange((s: any) => ({ ...s, feather: Number(e.target.value) }))}
-      step={1}
-      value={settings.feather}
-      fillOrigin="min"
-      onDragStateChange={onDragStateChange}
-    />
+}) => {
+  const { t } = useTranslation();
+  return (
+    <>
+    <div>
+      <Slider
+        defaultValue={100}
+        label={t('masks.brushSize')}
+        max={200}
+        min={1}
+        onChange={(e: any) => onSettingsChange((s: any) => ({ ...s, size: Number(e.target.value) }))}
+        step={1}
+        value={settings.size}
+        fillOrigin="min"
+        onDragStateChange={onDragStateChange}
+      />
+      <Slider
+        defaultValue={50}
+        label={t('masks.brushFeather')}
+        max={100}
+        min={0}
+        onChange={(e: any) => onSettingsChange((s: any) => ({ ...s, feather: Number(e.target.value) }))}
+        step={1}
+        value={settings.feather}
+        fillOrigin="min"
+        onDragStateChange={onDragStateChange}
+      />
+    </div>
     <div className="grid grid-cols-2 gap-2 pt-2">
       <button
         className={`p-2 rounded-md text-sm font-medium transition-colors flex items-center justify-center gap-2 ${settings.tool === ToolType.Brush ? 'text-primary bg-surface' : 'bg-surface text-text-secondary hover:bg-card-active'}`}
@@ -185,8 +190,9 @@ const BrushTools = ({
         Eraser
       </button>
     </div>
-  </div>
-);
+  </>
+  );
+};
 
 const FlowBrushTool = ({
   flow,
@@ -200,22 +206,25 @@ const FlowBrushTool = ({
   settings: any;
   onSettingsChange: any;
   onDragStateChange?: (isDragging: boolean) => void;
-}) => (
-  <div className="space-y-4 border-t border-surface">
-    <Slider
-      defaultValue={10}
-      label="Flow"
-      max={100}
-      min={0}
-      onChange={(e: ChangeEvent<HTMLInputElement>) => onFlowChange(Number(e.target.value))}
-      step={1}
-      value={flow}
-      fillOrigin="min"
-      onDragStateChange={onDragStateChange}
-    />
-    <BrushTools settings={settings} onSettingsChange={onSettingsChange} onDragStateChange={onDragStateChange} />
-  </div>
-);
+}) => {
+  const { t } = useTranslation();
+  return (
+    <div className="space-y-4 border-t border-surface">
+      <Slider
+        defaultValue={10}
+        label={t('masks.flow')}
+        max={100}
+        min={0}
+        onChange={(e: ChangeEvent<HTMLInputElement>) => onFlowChange(Number(e.target.value))}
+        step={1}
+        value={flow}
+        fillOrigin="min"
+        onDragStateChange={onDragStateChange}
+      />
+      <BrushTools settings={settings} onSettingsChange={onSettingsChange} onDragStateChange={onDragStateChange} />
+    </div>
+  );
+};
 
 function DepthRangePicker({
   minDepth,
@@ -2130,6 +2139,7 @@ function SettingsPanel({
   presets,
   handleGenerateAiDepthMask,
 }: any) {
+  const { t } = useTranslation();
   const { showContextMenu } = useContextMenu();
   const isActive = !!container;
   const presetButtonRef = useRef<HTMLButtonElement>(null);
@@ -2369,7 +2379,7 @@ function SettingsPanel({
 
           <Slider
             defaultValue={100}
-            label="Opacity"
+            label={t('masks.opacity')}
             max={100}
             min={0}
             value={(isComponentMode ? activeSubMask.opacity : displayContainer.opacity) ?? 100}

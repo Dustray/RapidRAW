@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { invoke } from '@tauri-apps/api/core';
+import { useTranslation } from 'react-i18next';
 import {
   RotateCcw,
   Search,
@@ -128,6 +129,7 @@ export default function LensCorrectionModal({
   currentAdjustments,
   selectedImage,
 }: LensCorrectionModalProps) {
+  const { t } = useTranslation();
   const [params, setParams] = useState<LensParams>(DEFAULT_PARAMS);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [isApplying, setIsApplying] = useState(false);
@@ -599,19 +601,19 @@ export default function LensCorrectionModal({
           </Text>
 
           <div className="space-y-4">
-            <Dropdown options={myLensOptions} value="" onChange={handleMyLensSelect} placeholder="Choose Saved Lens" />
+            <Dropdown options={myLensOptions} value="" onChange={handleMyLensSelect} placeholder={t('modal.lensCorrection.chooseSavedLens')} />
             <Dropdown
               options={makerOptions}
               value={params.lensMaker}
               onChange={handleMakerChange}
-              placeholder="Select Manufacturer"
+              placeholder={t('settings.selectManufacturer')}
             />
             {params.lensMaker && (
               <Dropdown
                 options={lensOptions}
                 value={params.lensModel}
                 onChange={handleModelChange}
-                placeholder="Select Lens Model"
+                placeholder={t('settings.selectLensModel')}
               />
             )}
           </div>
@@ -635,7 +637,7 @@ export default function LensCorrectionModal({
                 </Text>
                 <Switch
                   className="grow"
-                  label="Distortion"
+                  label={t('modal.lensCorrection.distortion')}
                   checked={params.lensDistortionEnabled && availability.distortion}
                   onChange={(val) => handleToggleChange('lensDistortionEnabled', val)}
                   disabled={!availability.distortion}
@@ -651,7 +653,7 @@ export default function LensCorrectionModal({
                     className="overflow-hidden px-2"
                   >
                     <Slider
-                      label="Amount"
+                      label={t('modal.lensCorrection.amount')}
                       value={params.lensDistortionAmount}
                       min={0}
                       max={200}
@@ -676,7 +678,7 @@ export default function LensCorrectionModal({
                 </Text>
                 <Switch
                   className="grow"
-                  label="Chromatic Aberration"
+                  label={t('modal.lensCorrection.chromaticAberration')}
                   checked={params.lensTcaEnabled && availability.tca}
                   onChange={(val) => handleToggleChange('lensTcaEnabled', val)}
                   disabled={!availability.tca}
@@ -692,7 +694,7 @@ export default function LensCorrectionModal({
                     className="overflow-hidden px-2"
                   >
                     <Slider
-                      label="Amount"
+                      label={t('modal.lensCorrection.amount')}
                       value={params.lensTcaAmount}
                       min={0}
                       max={200}
@@ -717,7 +719,7 @@ export default function LensCorrectionModal({
                 </Text>
                 <Switch
                   className="grow"
-                  label="Vignetting"
+                  label={t('modal.lensCorrection.vignetting')}
                   checked={params.lensVignetteEnabled && availability.vignetting}
                   onChange={(val) => handleToggleChange('lensVignetteEnabled', val)}
                   disabled={!availability.vignetting}
@@ -733,7 +735,7 @@ export default function LensCorrectionModal({
                     className="overflow-hidden px-2"
                   >
                     <Slider
-                      label="Amount"
+                      label={t('modal.lensCorrection.amount')}
                       value={params.lensVignetteAmount}
                       min={0}
                       max={200}

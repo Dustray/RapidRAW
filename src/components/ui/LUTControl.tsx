@@ -4,6 +4,7 @@ import Slider from './Slider';
 import { useOsPlatform } from '../../hooks/useOsPlatform';
 import { toast } from 'react-toastify';
 import { invoke } from '@tauri-apps/api/core';
+import { useTranslation } from 'react-i18next';
 
 interface LUTControlProps {
   lutName: string | null;
@@ -22,6 +23,7 @@ export default function LUTControl({
   onClear,
   onDragStateChange,
 }: LUTControlProps) {
+  const { t } = useTranslation();
   const osPlatform = useOsPlatform(); 
   const isAndroid = osPlatform === 'android';
 
@@ -98,7 +100,7 @@ export default function LUTControl({
       </div>
       {lutName && (
         <Slider
-          label="Intensity"
+          label={t('adjustments.lut.intensity')}
           min={0}
           max={100}
           step={1}

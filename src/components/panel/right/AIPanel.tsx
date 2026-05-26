@@ -63,6 +63,7 @@ import { useProcessStore } from '../../../store/useProcessStore';
 import { useUIStore } from '../../../store/useUIStore';
 import { useEditorActions } from '../../../hooks/useEditorActions';
 import { useAiMasking } from '../../../hooks/useAiMasking';
+import { useTranslation } from 'react-i18next';
 
 interface DragData {
   type: 'Container' | 'SubMask' | 'Creation';
@@ -114,28 +115,32 @@ const SUB_MASK_CONFIG: any = {
   },
 };
 
-const BrushTools = ({ settings, onSettingsChange }: { settings: any; onSettingsChange: any }) => (
-  <div>
-    <Slider
-      defaultValue={100}
-      label="Brush Size"
-      max={200}
-      min={1}
-      onChange={(e: any) => onSettingsChange((s: any) => ({ ...s, size: Number(e.target.value) }))}
-      step={1}
-      value={settings.size}
-      fillOrigin="min"
-    />
-    <Slider
-      defaultValue={50}
-      label="Brush Feather"
-      max={100}
-      min={0}
-      onChange={(e: any) => onSettingsChange((s: any) => ({ ...s, feather: Number(e.target.value) }))}
-      step={1}
-      value={settings.feather}
-      fillOrigin="min"
-    />
+const BrushTools = ({ settings, onSettingsChange }: { settings: any; onSettingsChange: any }) => {
+  const { t } = useTranslation();
+  return (
+    <>
+    <div>
+      <Slider
+        defaultValue={100}
+        label={t('ai.brushSize')}
+        max={200}
+        min={1}
+        onChange={(e: any) => onSettingsChange((s: any) => ({ ...s, size: Number(e.target.value) }))}
+        step={1}
+        value={settings.size}
+        fillOrigin="min"
+      />
+      <Slider
+        defaultValue={50}
+        label={t('ai.brushFeather')}
+        max={100}
+        min={0}
+        onChange={(e: any) => onSettingsChange((s: any) => ({ ...s, feather: Number(e.target.value) }))}
+        step={1}
+        value={settings.feather}
+        fillOrigin="min"
+      />
+    </div>
     <div className="grid grid-cols-2 gap-2 pt-2">
       <button
         className={`p-2 rounded-md text-sm font-medium transition-colors flex items-center justify-center gap-2 ${
@@ -158,7 +163,7 @@ const BrushTools = ({ settings, onSettingsChange }: { settings: any; onSettingsC
         Erase
       </button>
     </div>
-  </div>
+  </>
 );
 
 interface ConnectionStatusProps {
@@ -232,7 +237,7 @@ const ConnectionStatus = ({
       );
     }
   } else {
-    titleText = 'Built-in AI:';
+    titleText = t('ai.builtinAiLabel');
     statusColor = 'bg-green-500';
     statusText = 'Ready';
     hoverContent = (
@@ -273,6 +278,7 @@ const ConnectionStatus = ({
       )}
     </div>
   );
+}
 };
 
 export default function AIPanel() {
@@ -1686,6 +1692,7 @@ function SettingsPanel({
   setCollapsibleState,
   isGenerativeAvailable,
 }: any) {
+  const { t } = useTranslation();
   const isActive = !!container;
   const isComponentMode = !!activeSubMask;
   const displayContainer = container || PLACEHOLDER_PATCH;
@@ -1734,7 +1741,7 @@ function SettingsPanel({
       onClick={(e) => e.stopPropagation()}
     >
       <CollapsibleSection
-        title="Generative Replace"
+        title={t('ai.generativeReplace')}
         isOpen={collapsibleState.generative}
         onToggle={() => handleToggleSection('generative')}
         canToggleVisibility={false}
@@ -1769,7 +1776,7 @@ function SettingsPanel({
             <Switch
               checked={useFastInpaint}
               disabled={!isGenerativeAvailable}
-              label="Use basic inpainting"
+              label={t('ai.useBasicInpainting')}
               onChange={setUseFastInpaint}
               tooltip={
                 !isGenerativeAvailable

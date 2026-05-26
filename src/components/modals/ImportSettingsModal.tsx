@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import Switch from '../ui/Switch';
 import { FILENAME_VARIABLES } from '../ui/ExportImportProperties';
 import Text from '../ui/Text';
@@ -12,6 +13,7 @@ interface ImportSettingsModalProps {
 }
 
 export default function ImportSettingsModal({ fileCount, isOpen, onClose, onSave }: ImportSettingsModalProps) {
+  const { t } = useTranslation();
   const [isMounted, setIsMounted] = useState(false);
   const [show, setShow] = useState(false);
 
@@ -136,7 +138,7 @@ export default function ImportSettingsModal({ fileCount, isOpen, onClose, onSave
             <Text variant={TextVariants.heading} className="block mb-2">
               Folder Organization
             </Text>
-            <Switch label="Organize into subfolders by date" checked={organizeByDate} onChange={setOrganizeByDate} />
+            <Switch label={t('modal.import.organizeByDate')} checked={organizeByDate} onChange={setOrganizeByDate} />
             {organizeByDate && (
               <div className="mt-2">
                 <Text variant={TextVariants.label} className="block mb-1">
@@ -159,7 +161,7 @@ export default function ImportSettingsModal({ fileCount, isOpen, onClose, onSave
             </Text>
             <Switch
               checked={deleteAfterImport}
-              label="Delete originals after successful import"
+              label={t('modal.import.deleteOriginals')}
               onChange={setDeleteAfterImport}
             />
             {deleteAfterImport && (

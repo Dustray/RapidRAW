@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Invokes } from '../components/ui/AppProperties';
 import Text from '../components/ui/Text';
 import { TextVariants } from '../types/typography';
+import { useTranslation } from 'react-i18next';
 
 interface TaggingSubMenuProps {
   paths: string[];
@@ -28,6 +29,7 @@ export default function TaggingSubMenu({
   appSettings,
   hideContextMenu,
 }: TaggingSubMenuProps) {
+  const { t } = useTranslation();
   const [tags, setTags] = useState<{ tag: string; isUser: boolean }[]>(initialTags);
   const [inputValue, setInputValue] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
@@ -133,7 +135,7 @@ export default function TaggingSubMenu({
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
           onKeyDown={handleInputKeyDown}
-          placeholder="Add a tag..."
+          placeholder={t('library.tagging.addTagPlaceholder')}
           className="w-full bg-surface border border-border-color rounded-md pl-2 pr-8 py-1.5 text-sm focus:outline-hidden"
         />
         <button

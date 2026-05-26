@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { invoke } from '@tauri-apps/api/core';
+import { useTranslation } from 'react-i18next';
 import { Check, RotateCcw, Grid3X3, Eye, EyeOff, Info, LineChart, ZoomIn, ZoomOut, Maximize } from 'lucide-react';
 import { AnimatePresence, motion } from 'framer-motion';
 import Button from '../ui/Button';
@@ -114,6 +115,7 @@ const CustomGrid = ({ denseVisible, ruleOfThirdsVisible }: { denseVisible: boole
 );
 
 export default function TransformModal({ isOpen, onClose, onApply, currentAdjustments }: TransformModalProps) {
+  const { t } = useTranslation();
   const [params, setParams] = useState<TransformParams>(DEFAULT_PARAMS);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [isApplying, setIsApplying] = useState(false);
@@ -343,7 +345,7 @@ export default function TransformModal({ isOpen, onClose, onApply, currentAdjust
           </Text>
           <div className="space-y-3">
             <Slider
-              label="Amount"
+              label={t('modal.transform.amount')}
               value={params.distortion}
               min={-100}
               max={100}
@@ -360,7 +362,7 @@ export default function TransformModal({ isOpen, onClose, onApply, currentAdjust
           </Text>
           <div className="space-y-3">
             <Slider
-              label="Vertical"
+              label={t('modal.transform.vertical')}
               value={params.vertical}
               min={-100}
               max={100}
@@ -369,7 +371,7 @@ export default function TransformModal({ isOpen, onClose, onApply, currentAdjust
               onChange={(e) => handleChange('vertical', Number(e.target.value))}
             />
             <Slider
-              label="Horizontal"
+              label={t('modal.transform.horizontal')}
               value={params.horizontal}
               min={-100}
               max={100}
@@ -386,7 +388,7 @@ export default function TransformModal({ isOpen, onClose, onApply, currentAdjust
           </Text>
           <div className="space-y-3">
             <Slider
-              label="Rotate"
+              label={t('modal.transform.rotate')}
               value={params.rotate}
               min={-45}
               max={45}
@@ -395,7 +397,7 @@ export default function TransformModal({ isOpen, onClose, onApply, currentAdjust
               onChange={(e) => handleChange('rotate', Number(e.target.value))}
             />
             <Slider
-              label="Aspect"
+              label={t('modal.transform.aspect')}
               value={params.aspect}
               min={-100}
               max={100}
@@ -404,7 +406,7 @@ export default function TransformModal({ isOpen, onClose, onApply, currentAdjust
               onChange={(e) => handleChange('aspect', Number(e.target.value))}
             />
             <Slider
-              label="Scale"
+              label={t('modal.transform.scale')}
               value={params.scale}
               min={50}
               max={150}
