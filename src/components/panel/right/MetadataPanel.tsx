@@ -436,7 +436,7 @@ export default function MetadataPanel() {
 
             <div>
               <Text variant={TextVariants.heading} className="mb-3">
-                Author & Copyright
+                {t('metadata.authorAndCopyright')}
               </Text>
               <div className="bg-surface rounded-xl overflow-hidden">
                 <button
@@ -490,7 +490,7 @@ export default function MetadataPanel() {
 
             <div>
               <Text variant={TextVariants.heading} className="mb-3">
-                Organization
+                {t('metadata.organization')}
               </Text>
               <div className="bg-surface rounded-xl overflow-hidden">
                 <button
@@ -503,7 +503,7 @@ export default function MetadataPanel() {
                     color={TextColors.primary}
                     className="flex items-center gap-2"
                   >
-                    <Tag size={16} /> Rating & Labels
+                    <Tag size={16} /> {t('metadata.ratingAndLabels')}
                   </Text>
                   <Text color={TextColors.secondary}>
                     {isOrganizationExpanded ? <ChevronDown size={16} /> : <ChevronRight size={16} />}
@@ -556,7 +556,7 @@ export default function MetadataPanel() {
                             weight={TextWeights.semibold}
                             className="uppercase tracking-wider mb-2 block"
                           >
-                            Color Label
+                            {t('metadata.colorLabel')}
                           </Text>
                           <div className="flex flex-wrap gap-2">
                             <button
@@ -678,7 +678,7 @@ export default function MetadataPanel() {
             {hasGps && gpsData?.lat && gpsData?.lon && (
               <div>
                 <Text variant={TextVariants.heading} className="mb-3">
-                  GPS Location
+                  {t('metadata.gpsLocation')}
                 </Text>
                 <div className="flex flex-col gap-2">
                   <div className="relative rounded-md overflow-hidden border border-surface shadow-sm">
@@ -734,7 +734,7 @@ export default function MetadataPanel() {
             weight={TextWeights.normal}
             className="text-center mt-4"
           >
-            No image selected.
+            {t('metadata.noImageSelected')}
           </Text>
         )}
       </div>

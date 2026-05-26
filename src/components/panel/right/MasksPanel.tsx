@@ -1270,7 +1270,7 @@ export default function MasksPanel() {
             <button
               className="p-2 rounded-full hover:bg-surface transition-colors"
               onClick={handleResetAllMasks}
-              data-tooltip="Reset Masking"
+              data-tooltip={t('masks.resetMasking')}
             >
               <RotateCcw size={18} />
             </button>
@@ -1438,7 +1438,7 @@ export default function MasksPanel() {
                 className="flex-1 min-h-0"
               >
                 <Text variant={TextVariants.heading} className="mb-2">
-                  Mask Adjustments
+                  {t('masks.maskAdjustments')}
                 </Text>
                 <SettingsPanel
                   container={activeContainer}
@@ -1674,24 +1674,24 @@ function ContainerRow({
         .filter(Boolean);
     showContextMenu(e.clientX, e.clientY, [
       {
-        label: 'Rename',
+        label: t('masks.rename'),
         icon: FileEdit,
         onClick: () => {
           setRenamingId(container.id);
           setTempName(container.name);
         },
       },
-      { label: 'Duplicate Mask', icon: PlusSquare, onClick: () => handleDuplicate(container) },
-      { label: 'Duplicate and Invert Mask', icon: RotateCcw, onClick: () => handleDuplicateAndInvert(container) },
-      { label: 'Copy Mask', icon: Copy, onClick: () => copyMaskToClipboard(container) },
+      { label: t('masks.duplicateMask'), icon: PlusSquare, onClick: () => handleDuplicate(container) },
+      { label: t('masks.duplicateAndInvertMask'), icon: RotateCcw, onClick: () => handleDuplicateAndInvert(container) },
+      { label: t('masks.copyMask'), icon: Copy, onClick: () => copyMaskToClipboard(container) },
       {
-        label: 'Paste Mask',
+        label: t('masks.pasteMask'),
         icon: ClipboardPaste,
         disabled: !copiedMask,
         onClick: () => handlePasteMask(container.id),
       },
       {
-        label: 'Paste Mask Adjustments',
+        label: t('masks.pasteMaskAdjustments'),
         icon: ClipboardPaste,
         disabled: !copiedMask,
         onClick: () => {
@@ -1701,20 +1701,20 @@ function ContainerRow({
         },
       },
       {
-        label: 'Apply Preset',
+        label: t('masks.applyPreset'),
         icon: SwatchBook,
         submenu: generatePresetSubmenu(presets).length
           ? generatePresetSubmenu(presets)
-          : [{ label: 'No presets', disabled: true }],
+          : [{ label: t('masks.noPresets'), disabled: true }],
       },
       { type: OPTION_SEPARATOR },
       {
-        label: 'Reset Mask Adjustments',
+        label: t('masks.resetMaskAdjustments'),
         icon: RotateCcw,
         onClick: () =>
           updateContainer(container.id, { adjustments: JSON.parse(JSON.stringify(INITIAL_MASK_ADJUSTMENTS)) }),
       },
-      { label: 'Delete Mask', icon: Trash2, isDestructive: true, onClick: () => handleDelete(container.id) },
+      { label: t('masks.deleteMask'), icon: Trash2, isDestructive: true, onClick: () => handleDelete(container.id) },
     ]);
   };
 
@@ -1909,6 +1909,7 @@ function SubMaskRow({
   setTempName,
   setIsMaskControlHovered,
 }: any) {
+  const { t } = useTranslation();
   const { attributes, listeners, setNodeRef, isDragging } = useDraggable({
     id: subMask.id,
     data: { type: 'SubMask', item: subMask, parentId: containerId },
@@ -2096,7 +2097,7 @@ function SubMaskRow({
         )}
         <button
           className="p-1 hover:text-text-primary text-text-secondary"
-          data-tooltip={subMask.visible ? 'Hide Component' : 'Show Component'}
+          data-tooltip={subMask.visible ? t('masks.hideComponent') : t('masks.showComponent')}
           onMouseEnter={() => setIsMaskControlHovered(true)}
           onMouseLeave={() => setIsMaskControlHovered(false)}
           onClick={(e) => {
@@ -2108,7 +2109,7 @@ function SubMaskRow({
         </button>
         <button
           className="p-1 hover:text-red-500 text-text-secondary"
-          data-tooltip="Delete Component"
+          data-tooltip={t('masks.deleteComponent')}
           onClick={(e) => {
             e.stopPropagation();
             handleDelete();
@@ -2359,7 +2360,7 @@ function SettingsPanel({
         <div className="space-y-4 pt-2">
           <Switch
             checked={!!(isComponentMode ? activeSubMask.invert : displayContainer.invert)}
-            label={isComponentMode ? 'Invert Component' : 'Invert Mask'}
+            label={isComponentMode ? t('masks.invertComponent') : t('masks.invertMask')}
             onChange={(v) =>
               isComponentMode ? updateSubMask(activeSubMask.id, { invert: v }) : handleMaskPropertyChange('invert', v)
             }
@@ -2368,15 +2369,15 @@ function SettingsPanel({
           {!isComponentMode && (
             <div className="flex justify-between items-center">
               <Text variant={TextVariants.label} className="select-none">
-                Apply Preset
+                {t('masks.applyPreset')}
               </Text>
               <button
                 ref={presetButtonRef}
                 onClick={handlePresetSelectClick}
                 className="text-sm text-text-primary text-right select-none cursor-pointer hover:text-accent transition-colors"
-                data-tooltip="Select a preset to apply"
+                data-tooltip={t('masks.selectPresetToApply')}
               >
-                Select
+                {t('masks.select')}
               </button>
             </div>
           )}

@@ -755,7 +755,7 @@ export default function ExportPanel({
                     color={TextColors.primary}
                     className="flex items-center gap-2"
                   >
-                    <Settings size={16} /> Export Settings
+                    <Settings size={16} /> {t('export.exportSettings')}
                   </Text>
                   <Text color={TextColors.secondary}>
                     {isAdvancedExpanded ? <ChevronDown size={16} /> : <ChevronRight size={16} />}
