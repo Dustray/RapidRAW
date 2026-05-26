@@ -122,7 +122,12 @@
       "addTagPlaceholder": "Add a tag...",
       "addTag": "Add tag"
     },
-    "virtualCopy": "Virtual Copy"
+    "virtualCopy": "Virtual Copy",
+    "selectImageToRate": "Select an image to rate",
+    "rateStars": "Rate {{count}} star{{count > 1 ? 's' : ''}}",
+    "selectedImages": "{{count}} of {{total}} images selected",
+    "expandFilmstrip": "Expand Filmstrip",
+    "collapseFilmstrip": "Collapse Filmstrip"
   },
   "editor": {
     "title": "Editor",
@@ -276,7 +281,15 @@
     "perspective": "Perspective and keystone correction",
     "lensDistortion": "Lens distortion correction",
     "xAxis": "X Axis",
-    "yAxis": "Y Axis"
+    "yAxis": "Y Axis",
+    "rotateLeft": "Rotate Left",
+    "rotateRight": "Rotate Right",
+    "flipHoriz": "Flip Horiz",
+    "flipVert": "Flip Vert",
+    "geometry": "Geometry",
+    "transform": "Transform",
+    "lens": "Lens",
+    "noImageSelected": "No image selected."
   },
   "masks": {
     "title": "Masks",
@@ -725,7 +738,24 @@
       "groupSimilarImages": "Group Similar Images",
       "similarityThreshold": "Similarity Threshold",
       "filterBlurryImages": "Filter Blurry Images",
-      "blurThreshold": "Blur Threshold"
+      "blurThreshold": "Blur Threshold",
+      "title": "Cull Images",
+      "cancel": "Cancel",
+      "startCulling": "Start Culling",
+      "cullingFailed": "Culling Failed",
+      "close": "Close",
+      "noIssuesFound": "No issues found!",
+      "allUniqueAndSharp": "All images seem to be unique and sharp.",
+      "done": "Done",
+      "cullingSuggestions": "Culling Suggestions",
+      "similarGroups": "Similar Groups",
+      "blurryImages": "Blurry Images",
+      "group": "Group {{index}}",
+      "bestImage": "Best Image",
+      "duplicates": "Duplicates ({{count}})",
+      "applyTo": "Apply to {{count}} image{{count !== 1 ? 's' : ''}}",
+      "lowerIsStricter": "Lower is stricter (exact duplicates). Higher is looser (near duplicates). A value of 24-32 is recommended.",
+      "blurThresholdDesc": "Images with a sharpness score below this value are flagged. Higher is stricter."
     },
     "preset": {
       "includeMasks": "Include Masks",
@@ -773,7 +803,34 @@
     "customZoom": "Click to enter custom zoom percentage"
   },
   "mainLibrary": {
-    "goToSettings": "Go to Settings"
+    "goToSettings": "Go to Settings",
+    "welcomeBack": "Welcome back!",
+    "continueSessionPrompt": "Continue where you left off or start a new session.",
+    "welcomeMessage": "A blazingly fast, GPU-accelerated RAW image editor. {{openText}}",
+    "openFolder": "Open Folder",
+    "openLibrary": "Open Library",
+    "addFolder": "Add Folder",
+    "continueSession": "Continue Session",
+    "version": "Version",
+    "newVersionAvailable": "New version available!",
+    "downloadVersion": "Click to download version {{version}}",
+    "latestVersion": "You are on the latest version",
+    "donateKoFi": "Donate on Ko-Fi",
+    "contributeGitHub": "Contribute on GitHub",
+    "or": "or",
+    "importing": "Importing... ({{current}}/{{total}})",
+    "importComplete": "Import Complete!",
+    "importFailed": "Import Failed!",
+    "communityPresets": "Community Presets",
+    "downloading": "Downloading {{model}}...",
+    "indexing": "Indexing images... ({{current}}/{{total}})",
+    "processingImages": "Processing images...",
+    "mayTakeMoment": "This may take a moment.",
+    "noResultsFound": "No Results Found",
+    "noResultsDescription": "Could not find an image based on filename or tags.",
+    "enableTaggingHint": "For a more comprehensive search, enable automatic tagging in Settings.",
+    "noImagesMatchFilter": "No images found that match your filter.",
+    "importImages": "Import Images"
   },
   "imagePicker": {
     "clearImage": "Clear Image"

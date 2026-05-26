@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { getVersion } from '@tauri-apps/api/app';
 import { invoke } from '@tauri-apps/api/core';
 import { open } from '@tauri-apps/plugin-shell';
@@ -119,6 +120,7 @@ export interface ColumnWidths {
 }
 
 export default function MainLibrary(props: MainLibraryProps) {
+  const { t } = useTranslation();
   const [showSettings, setShowSettings] = useState(false);
   const [appVersion, setAppVersion] = useState('');
   const [isUpdateAvailable, setIsUpdateAvailable] = useState(false);
@@ -259,14 +261,14 @@ export default function MainLibrary(props: MainLibraryProps) {
                     >
                       {hasLastPath ? (
                         <>
-                          Welcome back!
+                          {t('mainLibrary.welcomeBack')}
                           <br />
-                          Continue where you left off or start a new session.
+                          {t('mainLibrary.continueSessionPrompt')}
                         </>
                       ) : (
-                        `A blazingly fast, GPU-accelerated RAW image editor. ${
-                          props.isAndroid ? 'Open the library to begin.' : 'Open a folder to begin.'
-                        }`
+                        t('mainLibrary.welcomeMessage', {
+                          openText: props.isAndroid ? t('mainLibrary.openLibrary') : t('mainLibrary.openFolder') + ' to begin.',
+                        })
                       )}
                     </Text>
                     <div className="flex flex-col w-full max-w-xs gap-4 relative z-10">
@@ -276,7 +278,7 @@ export default function MainLibrary(props: MainLibraryProps) {
                           onClick={props.onContinueSession}
                           size="lg"
                         >
-                          <RefreshCw size={20} className="mr-2" /> Continue Session
+                          <RefreshCw size={20} className="mr-2" /> {t('mainLibrary.continueSession')}
                         </Button>
                       )}
                       <div className="flex items-center gap-2">
@@ -288,13 +290,13 @@ export default function MainLibrary(props: MainLibraryProps) {
                           size="lg"
                         >
                           <Folder size={20} className="mr-2" />
-                          {props.isAndroid ? 'Open Library' : hasLastPath ? 'Add Folder' : 'Open Folder'}
+                          {props.isAndroid ? t('mainLibrary.openLibrary') : hasLastPath ? t('mainLibrary.addFolder') : t('mainLibrary.openFolder')}
                         </Button>
                         <Button
                           className="px-3 bg-surface text-text-primary shadow-md h-11"
                           onClick={() => setShowSettings(true)}
                           size="lg"
-                          data-tooltip="Go to Settings"
+                          data-tooltip={t('mainLibrary.goToSettings')}
                           variant="ghost"
                         >
                           <Settings size={20} />
@@ -335,13 +337,13 @@ export default function MainLibrary(props: MainLibraryProps) {
                             }}
                             data-tooltip={
                               isUpdateAvailable
-                                ? `Click to download version ${latestVersion}`
-                                : `You are on the latest version`
+                                ? t('mainLibrary.downloadVersion', { version: latestVersion })
+                                : t('mainLibrary.latestVersion')
                             }
                           >
-                            <span className={isUpdateAvailable ? 'group-hover:hidden' : ''}>Version {appVersion}</span>
+                            <span className={isUpdateAvailable ? 'group-hover:hidden' : ''}>{t('mainLibrary.version')} {appVersion}</span>
                             {isUpdateAvailable && (
-                              <span className="hidden group-hover:inline text-yellow-400">New version available!</span>
+                              <span className="hidden group-hover:inline text-yellow-400">{t('mainLibrary.newVersionAvailable')}</span>
                             )}
                           </span>
                         </p>
@@ -353,16 +355,16 @@ export default function MainLibrary(props: MainLibraryProps) {
                             target="_blank"
                             rel="noopener noreferrer"
                           >
-                            Donate on Ko-Fi
+                            {t('mainLibrary.donateKoFi')}
                           </a>
-                          <span className="mx-1">or</span>
+                          <span className="mx-1">{t('mainLibrary.or')}</span>
                           <a
                             href="https://github.com/CyberTimon/RapidRAW"
                             className="hover:underline"
                             target="_blank"
                             rel="noopener noreferrer"
                           >
-                            Contribute on GitHub
+                            {t('mainLibrary.contributeGitHub')}
                           </a>
                         </p>
                       </div>
@@ -385,7 +387,7 @@ export default function MainLibrary(props: MainLibraryProps) {
         onMouseLeave={() => setIsProgressHovered(false)}
       >
         <div className="min-w-0">
-          <Text variant={TextVariants.headline}>Library</Text>
+          <Text variant={TextVariants.headline}>{t('library.title')}</Text>
           {!props.isAndroid && (
             <div className="flex items-center gap-2">
               {props.currentFolderPath ? (
@@ -419,20 +421,23 @@ export default function MainLibrary(props: MainLibraryProps) {
             <Text as="div" color={TextColors.accent} className="flex items-center gap-2 animate-pulse">
               <FolderInput size={16} />
               <span>
-                Importing... ({props.importState.progress?.current}/{props.importState.progress?.total})
+                {t('mainLibrary.importing', {
+                  current: props.importState.progress?.current,
+                  total: props.importState.progress?.total,
+                })}
               </span>
             </Text>
           )}
           {props.importState.status === Status.Success && (
             <Text as="div" color={TextColors.success} className="flex items-center gap-2">
               <Check size={16} />
-              <span>Import Complete!</span>
+              <span>{t('mainLibrary.importComplete')}</span>
             </Text>
           )}
           {props.importState.status === Status.Error && (
             <Text as="div" color={TextColors.error} className="flex items-center gap-2">
               <AlertTriangle size={16} />
-              <span>Import Failed!</span>
+              <span>{t('mainLibrary.importFailed')}</span>
             </Text>
           )}
           <SearchInput indexingProgress={props.indexingProgress} isIndexing={props.isIndexing} />
@@ -452,12 +457,12 @@ export default function MainLibrary(props: MainLibraryProps) {
           {!props.isAndroid && (
             <>
               <Button
-                className="h-12 w-12 bg-surface text-text-primary shadow-none p-0 flex items-center justify-center"
-                onClick={props.onNavigateToCommunity}
-                data-tooltip="Community Presets"
-              >
-                <Users className="w-8 h-8" />
-              </Button>
+            className="h-12 w-12 bg-surface text-text-primary shadow-none p-0 flex items-center justify-center"
+            onClick={props.onNavigateToCommunity}
+            data-tooltip={t('mainLibrary.communityPresets')}
+          >
+            <Users className="w-8 h-8" />
+          </Button>
             </>
           )}
           <Button
@@ -477,16 +482,22 @@ export default function MainLibrary(props: MainLibraryProps) {
           <Loader2 className="h-12 w-12 text-secondary animate-spin mb-4" />
           <Text variant={TextVariants.heading} color={TextColors.secondary}>
             {props.aiModelDownloadStatus
-              ? `Downloading ${props.aiModelDownloadStatus}...`
+              ? t('mainLibrary.downloading', { model: props.aiModelDownloadStatus })
               : props.isIndexing && props.indexingProgress.total > 0
-                ? `Indexing images... (${props.indexingProgress.current}/${props.indexingProgress.total})`
+                ? t('mainLibrary.indexing', {
+                    current: props.indexingProgress.current,
+                    total: props.indexingProgress.total,
+                  })
                 : props.importState.status === Status.Importing &&
                     props.importState?.progress?.total &&
                     props.importState.progress.total > 0
-                  ? `Importing images... (${props.importState.progress?.current}/${props.importState.progress?.total})`
-                  : 'Processing images...'}
+                  ? t('mainLibrary.importing', {
+                      current: props.importState.progress?.current,
+                      total: props.importState.progress?.total,
+                    })
+                  : t('mainLibrary.processingImages')}
           </Text>
-          <Text className="mt-2">This may take a moment.</Text>
+          <Text className="mt-2">{t('mainLibrary.mayTakeMoment')}</Text>
         </div>
       ) : searchCriteria.tags.length > 0 || searchCriteria.text ? (
         <div
@@ -495,18 +506,17 @@ export default function MainLibrary(props: MainLibraryProps) {
         >
           <Search className="h-12 w-12 text-secondary mb-4" />
           <Text variant={TextVariants.heading} color={TextColors.secondary}>
-            No Results Found
+            {t('mainLibrary.noResultsFound')}
           </Text>
           <Text className="mt-2 max-w-sm">
-            Could not find an image based on filename or tags.
-            {!props.appSettings?.enableAiTagging &&
-              ' For a more comprehensive search, enable automatic tagging in Settings.'}
+            {t('mainLibrary.noResultsDescription')}
+            {!props.appSettings?.enableAiTagging && ' ' + t('mainLibrary.enableTaggingHint')}
           </Text>
         </div>
       ) : (
         <div className="flex-1 flex flex-col items-center justify-center" onContextMenu={props.onEmptyAreaContextMenu}>
           <SlidersHorizontal className="h-12 w-12 mb-4 text-text-secondary" />
-          <Text>No images found that match your filter.</Text>
+          <Text>{t('mainLibrary.noImagesMatchFilter')}</Text>
         </div>
       )}
       {props.isAndroid && (

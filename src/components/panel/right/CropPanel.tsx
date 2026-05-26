@@ -602,22 +602,22 @@ export default function CropPanel() {
                 <motion.div
                   className="flex flex-col items-center justify-center p-3 cursor-pointer rounded-lg transition-colors bg-surface text-text-secondary hover:bg-card-active hover:text-text-primary"
                   onClick={() => handleStepRotate(-90)}
-                  data-tooltip="Rotate 90° counter-clockwise"
+                  data-tooltip={t('crop.rotateCCW')}
                   whileTap={{ scale: 0.98 }}
                   transition={{ type: 'spring', stiffness: 400, damping: 17 }}
                 >
                   <RotateCcw size={20} className="transition-none" />
-                  <span className="text-xs mt-2 transition-none">Rotate Left</span>
+                  <span className="text-xs mt-2 transition-none">{t('crop.rotateLeft')}</span>
                 </motion.div>
                 <motion.div
                   className="flex flex-col items-center justify-center p-3 cursor-pointer rounded-lg transition-colors bg-surface text-text-secondary hover:bg-card-active hover:text-text-primary"
                   onClick={() => handleStepRotate(90)}
-                  data-tooltip="Rotate 90° clockwise"
+                  data-tooltip={t('crop.rotateCW')}
                   whileTap={{ scale: 0.98 }}
                   transition={{ type: 'spring', stiffness: 400, damping: 17 }}
                 >
                   <RotateCw size={20} className="transition-none" />
-                  <span className="text-xs mt-2 transition-none">Rotate Right</span>
+                  <span className="text-xs mt-2 transition-none">{t('crop.rotateRight')}</span>
                 </motion.div>
                 <motion.div
                   className={clsx(
@@ -632,12 +632,12 @@ export default function CropPanel() {
                       flipHorizontal: !prev.flipHorizontal,
                     }))
                   }
-                  data-tooltip="Flip image horizontally"
+                  data-tooltip={t('crop.flipHorizontal')}
                   whileTap={{ scale: 0.98 }}
                   transition={{ type: 'spring', stiffness: 400, damping: 17 }}
                 >
                   <FlipHorizontal size={20} className="transition-none" />
-                  <span className="text-xs mt-2 transition-none">Flip Horiz</span>
+                  <span className="text-xs mt-2 transition-none">{t('crop.flipHoriz')}</span>
                 </motion.div>
                 <motion.div
                   className={clsx(
@@ -647,40 +647,40 @@ export default function CropPanel() {
                       : 'bg-surface text-text-secondary hover:bg-card-active hover:text-text-primary',
                   )}
                   onClick={() => setAdjustments((prev: Adjustments) => ({ ...prev, flipVertical: !prev.flipVertical }))}
-                  data-tooltip="Flip image vertically"
+                  data-tooltip={t('crop.flipVertical')}
                   whileTap={{ scale: 0.98 }}
                   transition={{ type: 'spring', stiffness: 400, damping: 17 }}
                 >
                   <FlipVertical size={20} className="transition-none" />
-                  <span className="text-xs mt-2 transition-none">Flip Vert</span>
+                  <span className="text-xs mt-2 transition-none">{t('crop.flipVert')}</span>
                 </motion.div>
               </div>
             </div>
 
             <div className="space-y-4">
               <Text variant={TextVariants.heading} className="mb-2">
-                Geometry
+                {t('crop.geometry')}
               </Text>
               <div className="grid grid-cols-2 gap-2">
                 <motion.div
                   className="flex flex-col items-center justify-center p-3 cursor-pointer rounded-lg transition-colors bg-surface text-text-secondary hover:bg-card-active hover:text-text-primary group"
                   onClick={() => setIsTransformModalOpen(true)}
-                  data-tooltip="Perspective and keystone correction"
+                  data-tooltip={t('crop.perspective')}
                   whileTap={{ scale: 0.98 }}
                   transition={{ type: 'spring', stiffness: 400, damping: 17 }}
                 >
                   <Scan size={20} className="transition-none" />
-                  <span className="text-xs mt-2 transition-none">Transform</span>
+                  <span className="text-xs mt-2 transition-none">{t('crop.transform')}</span>
                 </motion.div>
                 <motion.div
                   className="flex flex-col items-center justify-center p-3  cursor-pointer rounded-lg transition-colors bg-surface text-text-secondary hover:bg-card-active hover:text-text-primary group"
                   onClick={() => setIsLensModalOpen(true)}
-                  data-tooltip="Lens distortion correction"
+                  data-tooltip={t('crop.lensDistortion')}
                   whileTap={{ scale: 0.98 }}
                   transition={{ type: 'spring', stiffness: 400, damping: 17 }}
                 >
                   <Aperture size={20} className="transition-none" />
-                  <span className="text-xs mt-2 transition-none">Lens</span>
+                  <span className="text-xs mt-2 transition-none">{t('crop.lens')}</span>
                 </motion.div>
               </div>
             </div>

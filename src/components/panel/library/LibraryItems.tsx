@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Image as ImageIcon, Folder, FolderOpen, Star as StarIcon } from 'lucide-react';
 import clsx from 'clsx';
@@ -30,6 +31,7 @@ const ThumbnailComponent = ({
   aspectRatio: thumbnailAspectRatio,
   exif,
 }: any) => {
+  const { t } = useTranslation();
   const data = useProcessStore((s) => s.thumbnails[path]);
   const exifOverlay = useSettingsStore((s) => s.appSettings?.exifOverlay || ExifOverlay.Off);
 
@@ -286,7 +288,7 @@ const ThumbnailComponent = ({
                     ? 'bg-black/30 text-white backdrop-blur-xs shadow-md group-hover:bg-border-color/30 group-hover:text-text-primary group-hover:shadow-none group-hover:backdrop-blur-none'
                     : 'bg-black/30 text-white backdrop-blur-xs shadow-md',
               )}
-              data-tooltip="Virtual Copy"
+              data-tooltip={t('library.virtualCopy')}
             >
               VC
             </Text>
@@ -310,25 +312,25 @@ const ThumbnailComponent = ({
                 isAlways ? 'translate-y-0' : isHover ? 'translate-y-3 group-hover:translate-y-0' : 'translate-y-3',
               )}
             >
-              <div className="flex items-center gap-1 text-text-secondary" data-tooltip="Shutter Speed">
+              <div className="flex items-center gap-1 text-text-secondary" data-tooltip={t('editor.toolbar.shutterSpeed')}>
                 <IconShutter className="w-2.5 h-2.5" />
                 <Text variant={TextVariants.small} className="text-[9px] font-medium tracking-wide">
                   {shutter || '-'}
                 </Text>
               </div>
-              <div className="flex items-center gap-1 text-text-secondary" data-tooltip="Aperture">
+              <div className="flex items-center gap-1 text-text-secondary" data-tooltip={t('editor.toolbar.aperture')}>
                 <IconAperture className="w-2.5 h-2.5" />
                 <Text variant={TextVariants.small} className="text-[9px] font-medium tracking-wide">
                   {fNumber || '-'}
                 </Text>
               </div>
-              <div className="flex items-center gap-1 text-text-secondary" data-tooltip="ISO">
+              <div className="flex items-center gap-1 text-text-secondary" data-tooltip={t('editor.toolbar.iso')}>
                 <IconIso className="w-2.5 h-2.5" />
                 <Text variant={TextVariants.small} className="text-[9px] font-medium tracking-wide">
                   {iso || '-'}
                 </Text>
               </div>
-              <div className="flex items-center gap-1 text-text-secondary" data-tooltip="Focal Length">
+              <div className="flex items-center gap-1 text-text-secondary" data-tooltip={t('editor.toolbar.focalLength')}>
                 <IconFocalLength className="w-2.5 h-2.5" />
                 <Text variant={TextVariants.small} className="text-[9px] font-medium tracking-wide">
                   {focal ? (String(focal).endsWith('mm') ? focal : `${focal}mm`) : '-'}
@@ -361,6 +363,7 @@ const ListItemComponent = ({
   columnWidths,
   exif,
 }: any) => {
+  const { t } = useTranslation();
   const data = useProcessStore((s) => s.thumbnails[path]);
   const exifOverlay = useSettingsStore((s) => s.appSettings?.exifOverlay || ExifOverlay.Off);
 
@@ -524,7 +527,7 @@ const ListItemComponent = ({
             color={TextColors.secondary}
             weight={TextWeights.bold}
             className="shrink-0 bg-bg-primary px-1.5 py-0.5 rounded-full leading-none border border-border-color"
-            data-tooltip="Virtual Copy"
+            data-tooltip={t('library.virtualCopy')}
           >
             VC
           </Text>
@@ -615,6 +618,7 @@ const RowComponent = ({
   queueThumbnailRequest,
   onToggleRecursiveFolder,
 }: any) => {
+  const { t } = useTranslation();
   const row = rows[index];
 
   useEffect(() => {
@@ -642,7 +646,7 @@ const RowComponent = ({
         displayPath = displayPath.substring(1);
       }
     }
-    if (!displayPath) displayPath = 'Current Folder';
+    if (!displayPath) displayPath = t('library.currentFolder');
 
     return (
       <div
@@ -664,7 +668,7 @@ const RowComponent = ({
               event.stopPropagation();
               onToggleRecursiveFolder(row.path);
             }}
-            data-tooltip={row.isExpanded ? 'Collapse Folder' : 'Expand Folder'}
+            data-tooltip={row.isExpanded ? t('library.folderTree.collapse') : t('library.folderTree.expand')}
           >
             {row.isExpanded ? <FolderOpen size={16} /> : <Folder size={16} />}
           </button>

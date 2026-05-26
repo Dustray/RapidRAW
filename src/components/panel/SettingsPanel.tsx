@@ -956,7 +956,7 @@ export default function SettingsPanel({
               onClick={onBack}
               size="icon"
               variant="ghost"
-              data-tooltip="Go to Home"
+              data-tooltip={t('settings.goToHome')}
             >
               <ArrowLeft />
             </Button>
@@ -1370,7 +1370,7 @@ export default function SettingsPanel({
                                       <button
                                         onClick={handleAddAiTag}
                                         className="absolute right-1 top-1/2 -translate-y-1/2 p-1.5 rounded-full text-text-secondary hover:text-text-primary hover:bg-surface"
-                                        data-tooltip="Add AI tag"
+                                        data-tooltip={t('settings.addAiTag')}
                                       >
                                         <Plus size={18} />
                                       </button>
@@ -1448,7 +1448,7 @@ export default function SettingsPanel({
                             <button
                               onClick={handleAddShortcut}
                               className="absolute right-1 top-1/2 -translate-y-1/2 p-1.5 rounded-full text-text-secondary hover:text-text-primary hover:bg-surface"
-                              data-tooltip="Add Shortcut"
+                              data-tooltip={t('settings.addShortcut')}
                             >
                               <Plus size={18} />
                             </button>
