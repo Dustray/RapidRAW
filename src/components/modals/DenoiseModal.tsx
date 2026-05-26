@@ -7,6 +7,7 @@ import Slider from '../ui/Slider';
 import Text from '../ui/Text';
 import { TextColors, TextVariants, TextWeights } from '../../types/typography';
 import { listen } from '@tauri-apps/api/event';
+import { useTranslation } from 'react-i18next';
 
 interface DenoiseModalProps {
   isOpen: boolean;
@@ -188,13 +189,12 @@ const ImageCompare = ({ original, denoised }: { original: string; denoised: stri
         </div>
 
         <Text
-          as="div"
           variant={TextVariants.small}
           color={TextColors.white}
           weight={TextWeights.medium}
           className="absolute top-3 left-3 bg-black/60 backdrop-blur-xs px-2.5 py-1 rounded-md pointer-events-none z-0"
         >
-          Original
+          {t('modal.denoise.original')}
         </Text>
         <Text
           as="div"
@@ -203,7 +203,7 @@ const ImageCompare = ({ original, denoised }: { original: string; denoised: stri
           weight={TextWeights.medium}
           className="absolute top-3 right-3 bg-accent/90 backdrop-blur-xs px-2.5 py-1 rounded-md pointer-events-none z-0"
         >
-          Denoised
+          {t('modal.denoise.denoised')}
         </Text>
       </div>
     </div>
@@ -227,6 +227,7 @@ export default function DenoiseModal({
   loadingImageUrl,
   targetPaths,
 }: DenoiseModalProps) {
+  const { t } = useTranslation();
   const [isMounted, setIsMounted] = useState(false);
   const [show, setShow] = useState(false);
   const [intensity, setIntensity] = useState<number>(15);

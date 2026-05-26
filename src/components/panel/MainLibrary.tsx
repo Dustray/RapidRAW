@@ -79,32 +79,32 @@ interface MainLibraryProps {
 }
 
 const ratingFilterOptions = [
-  { value: 0, label: 'Show All' },
-  { value: -1, label: 'Unrated Only' },
-  { value: 1, label: '1 & up' },
-  { value: 2, label: '2 & up' },
-  { value: 3, label: '3 & up' },
-  { value: 4, label: '4 & up' },
-  { value: 5, label: '5 only' },
+  { value: 0, label: 'library.ratingFilter.showAll' },
+  { value: -1, label: 'library.ratingFilter.unratedOnly' },
+  { value: 1, label: 'library.ratingFilter.oneUp' },
+  { value: 2, label: 'library.ratingFilter.twoUp' },
+  { value: 3, label: 'library.ratingFilter.threeUp' },
+  { value: 4, label: 'library.ratingFilter.fourUp' },
+  { value: 5, label: 'library.ratingFilter.fiveOnly' },
 ];
 
 const rawStatusOptions = [
-  { key: RawStatus.All, label: 'All Types' },
-  { key: RawStatus.RawOnly, label: 'RAW Only' },
-  { key: RawStatus.NonRawOnly, label: 'Non-RAW Only' },
-  { key: RawStatus.RawOverNonRaw, label: 'Prefer RAW' },
+  { key: RawStatus.All, label: 'library.fileTypeFilter.allTypes' },
+  { key: RawStatus.RawOnly, label: 'library.fileTypeFilter.rawOnly' },
+  { key: RawStatus.NonRawOnly, label: 'library.fileTypeFilter.nonRawOnly' },
+  { key: RawStatus.RawOverNonRaw, label: 'library.fileTypeFilter.preferRaw' },
 ];
 
 const thumbnailSizeOptions = [
-  { id: ThumbnailSize.Small, label: 'Small', size: 160 },
-  { id: ThumbnailSize.Medium, label: 'Medium', size: 240 },
-  { id: ThumbnailSize.Large, label: 'Large', size: 320 },
-  { id: ThumbnailSize.List, label: 'List', size: 48 },
+  { id: ThumbnailSize.Small, label: 'library.thumbnailSize.small', size: 160 },
+  { id: ThumbnailSize.Medium, label: 'library.thumbnailSize.medium', size: 240 },
+  { id: ThumbnailSize.Large, label: 'library.thumbnailSize.large', size: 320 },
+  { id: ThumbnailSize.List, label: 'library.thumbnailSize.list', size: 48 },
 ];
 
 const thumbnailAspectRatioOptions = [
-  { id: ThumbnailAspectRatio.Cover, label: 'Fill Square' },
-  { id: ThumbnailAspectRatio.Contain, label: 'Original Ratio' },
+  { id: ThumbnailAspectRatio.Cover, label: 'library.thumbnailAspectRatio.fillSquare' },
+  { id: ThumbnailAspectRatio.Contain, label: 'library.thumbnailAspectRatio.originalRatio' },
 ];
 
 export interface ColumnWidths {

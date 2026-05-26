@@ -556,6 +556,7 @@ function DepthRangePicker({
 }
 
 export default function MasksPanel() {
+  const { t } = useTranslation();
   const { setAdjustments } = useEditorActions();
   const { handleGenerateAiDepthMask, handleGenerateAiForegroundMask, handleGenerateAiSkyMask } = useAiMasking();
   const setCustomEscapeHandler = useUIStore((s) => s.setCustomEscapeHandler);

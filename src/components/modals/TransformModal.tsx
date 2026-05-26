@@ -512,7 +512,7 @@ export default function TransformModal({ isOpen, onClose, onApply, currentAdjust
                       color={TextColors.button}
                       className="absolute top-4 left-4 bg-accent px-2 py-1 rounded-sm shadow-lg z-20"
                     >
-                      Original
+                      {t('modal.transform.original')}
                     </Text>
                   )}
                 </div>

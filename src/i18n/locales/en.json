@@ -118,6 +118,31 @@
       "collapse": "Collapse",
       "clearSearch": "Clear search"
     },
+    "ratingFilter": {
+      "showAll": "Show All",
+      "unratedOnly": "Unrated Only",
+      "oneUp": "1 & up",
+      "twoUp": "2 & up",
+      "threeUp": "3 & up",
+      "fourUp": "4 & up",
+      "fiveOnly": "5 only"
+    },
+    "fileTypeFilter": {
+      "allTypes": "All Types",
+      "rawOnly": "RAW Only",
+      "nonRawOnly": "Non-RAW Only",
+      "preferRaw": "Prefer RAW"
+    },
+    "thumbnailSize": {
+      "small": "Small",
+      "medium": "Medium",
+      "large": "Large",
+      "list": "List"
+    },
+    "thumbnailAspectRatio": {
+      "fillSquare": "Fill Square",
+      "originalRatio": "Original Ratio"
+    },
     "tagging": {
       "addTagPlaceholder": "Add a tag...",
       "addTag": "Add tag"
@@ -188,6 +213,9 @@
     },
     "color": {
       "title": "Color",
+      "whiteBalance": "White Balance",
+      "whiteBalancePicker": "White Balance Picker",
+      "whiteBalancePickerDisabled": "WB Picker: Disable WGPU in Settings.",
       "temperature": "Temperature",
       "tint": "Tint",
       "vibrance": "Vibrance",
@@ -297,7 +325,47 @@
     "geometry": "Geometry",
     "transform": "Transform",
     "lens": "Lens",
-    "noImageSelected": "No image selected."
+    "noImageSelected": "No image selected.",
+    "presets": {
+      "free": "Free",
+      "freeTooltip": "Freeform crop",
+      "originalTooltip": "Original image aspect ratio",
+      "square": "1:1",
+      "squareTooltip": "Square - Instagram, profile pictures",
+      "fiveFour": "5:4",
+      "fiveFourTooltip": "5:4 - Instagram landscape, 8x10 prints",
+      "fourThree": "4:3",
+      "fourThreeTooltip": "4:3 - Traditional monitors, tablets",
+      "threeTwo": "3:2",
+      "threeTwoTooltip": "3:2 - 35mm film, DSLR cameras",
+      "sixteenNine": "16:9",
+      "sixteenNineTooltip": "16:9 - Widescreen, desktop wallpapers, YouTube",
+      "twentyOneNine": "21:9",
+      "twentyOneNineTooltip": "21:9 - Ultrawide monitors, cinematic",
+      "sixtyFiveTwentyFour": "65:24",
+      "sixtyFiveTwentyFourTooltip": "65:24 - Panoramic 35mm wide format"
+    },
+    "overlays": {
+      "none": "None",
+      "noneTooltip": "No overlay",
+      "thirds": "Thirds",
+      "thirdsTooltip": "Rule of Thirds",
+      "diagonal": "Diagonal Lines",
+      "diagonalTooltip": "Diagonal Lines",
+      "goldenTriangle": "Triangle",
+      "goldenTriangleTooltip": "Golden Triangle",
+      "goldenSpiral": "Spiral",
+      "goldenSpiralTooltip": "Golden Spiral (Fibonacci)",
+      "phiGrid": "Phi Grid",
+      "phiGridTooltip": "Phi Grid (Golden Ratio)",
+      "armature": "Armature",
+      "armatureTooltip": "Armature"
+    },
+    "overlay": {
+      "composition": "Composition Overlay",
+      "overlay": "Overlay",
+      "rotateHint": " (Shift+O to rotate)"
+    }
   },
   "masks": {
     "title": "Masks",
@@ -496,6 +564,7 @@
     "intersectEditWith": "Intersect Edit with",
     "pasteEdit": "Paste Edit",
     "addNewEdit": "Add New Edit",
+    "addNewComponent": "Add New Component",
     "duplicateEdit": "Duplicate Edit",
     "duplicateAndInvertEdit": "Duplicate and Invert Edit",
     "copyEdit": "Copy Edit",
@@ -648,6 +717,9 @@
     "generativeAiDesc": "RapidRAW's AI is built for flexibility. Choose your ideal workflow, from fast local tools to powerful self-hosting.",
     "builtinAiCpu": "Built-in AI (CPU)",
     "builtinAiCpuDesc": "Integrated directly into RapidRAW, these features run entirely on your computer. They are fast, free, and require no setup, making them ideal for everyday workflow acceleration.",
+    "aiMasking": "AI Masking (Subject, Sky, Foreground)",
+    "automaticImageTagging": "Automatic Image Tagging",
+    "simpleCpuGenerativeReplace": "Simple CPU-based Generative Replace",
     "selfHostedConnector": "Self-Hosted (RapidRAW AI Connector)",
     "selfHostedConnectorDesc": "For users with a capable GPU who want maximum control, connect RapidRAW to your own Connector server. This gives you full control for technical workflows.",
     "aiConnectorAddress": "AI Connector Address",
@@ -718,7 +790,8 @@
       "resetTransform": "Reset Transform",
       "toggleGrid": "Toggle Grid",
       "toggleHelperLines": "Toggle Helper Lines",
-      "holdToCompare": "Hold to Compare"
+      "holdToCompare": "Hold to Compare",
+      "original": "Original"
     },
     "negativeConversion": {
       "redCyan": "Red (Cyan)",
@@ -728,7 +801,8 @@
       "contrastGrade": "Contrast (Grade)",
       "reset": "Reset",
       "resetView": "Reset View",
-      "holdToViewOriginal": "Hold to View Original"
+      "holdToViewOriginal": "Hold to View Original",
+      "originalNegative": "Original Negative"
     },
     "import": {
       "organizeByDate": "Organize into subfolders by date",
@@ -741,7 +815,8 @@
       "vignetting": "Vignetting",
       "chooseSavedLens": "Choose Saved Lens",
       "resetLensCorrection": "Reset Lens Correction",
-      "holdToCompare": "Hold to Compare"
+      "holdToCompare": "Hold to Compare",
+      "original": "Original"
     },
     "culling": {
       "groupSimilarImages": "Group Similar Images",
@@ -775,9 +850,12 @@
       "keepAspectRatio": "Keep Original Aspect Ratio",
       "spacing": "Spacing",
       "borderRadius": "Border Radius",
-      "shuffleImages": "Shuffle Images"
+      "shuffleImages": "Shuffle Images",
+      "original": "Original"
     },
     "denoise": {
+      "original": "Original",
+      "denoised": "Denoised",
       "gpuAccelerationNote": "NIND Denoise does not yet support GPU acceleration due to dependency limitations."
     }
   },

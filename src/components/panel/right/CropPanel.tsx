@@ -44,25 +44,25 @@ interface OverlayOption {
 }
 
 const PRESETS: Array<CropPreset> = [
-  { name: 'Free', value: null, tooltip: 'Freeform crop' },
-  { name: 'Original', value: ORIGINAL_RATIO, tooltip: 'Original image aspect ratio' },
-  { name: '1:1', value: 1, tooltip: 'Square - Instagram, profile pictures' },
-  { name: '5:4', value: 5 / 4, tooltip: '5:4 - Instagram landscape, 8x10 prints' },
-  { name: '4:3', value: 4 / 3, tooltip: '4:3 - Traditional monitors, tablets' },
-  { name: '3:2', value: 3 / 2, tooltip: '3:2 - 35mm film, DSLR cameras' },
-  { name: '16:9', value: 16 / 9, tooltip: '16:9 - Widescreen, desktop wallpapers, YouTube' },
-  { name: '21:9', value: 21 / 9, tooltip: '21:9 - Ultrawide monitors, cinematic' },
-  { name: '65:24', value: 65 / 24, tooltip: '65:24 - Panoramic 35mm wide format' },
+  { name: 'crop.presets.free', value: null, tooltip: 'crop.presets.freeTooltip' },
+  { name: 'crop.original', value: ORIGINAL_RATIO, tooltip: 'crop.presets.originalTooltip' },
+  { name: 'crop.presets.square', value: 1, tooltip: 'crop.presets.squareTooltip' },
+  { name: 'crop.presets.fiveFour', value: 5 / 4, tooltip: 'crop.presets.fiveFourTooltip' },
+  { name: 'crop.presets.fourThree', value: 4 / 3, tooltip: 'crop.presets.fourThreeTooltip' },
+  { name: 'crop.presets.threeTwo', value: 3 / 2, tooltip: 'crop.presets.threeTwoTooltip' },
+  { name: 'crop.presets.sixteenNine', value: 16 / 9, tooltip: 'crop.presets.sixteenNineTooltip' },
+  { name: 'crop.presets.twentyOneNine', value: 21 / 9, tooltip: 'crop.presets.twentyOneNineTooltip' },
+  { name: 'crop.presets.sixtyFiveTwentyFour', value: 65 / 24, tooltip: 'crop.presets.sixtyFiveTwentyFourTooltip' },
 ];
 
 const OVERLAYS: Array<OverlayOption> = [
-  { id: 'none', name: 'None', tooltip: 'No overlay' },
-  { id: 'thirds', name: 'Thirds', tooltip: 'Rule of Thirds' },
-  { id: 'diagonal', name: 'Diagonal Lines', tooltip: 'Diagonal Lines' },
-  { id: 'goldenTriangle', name: 'Triangle', tooltip: 'Golden Triangle' },
-  { id: 'goldenSpiral', name: 'Spiral', tooltip: 'Golden Spiral (Fibonacci)' },
-  { id: 'phiGrid', name: 'Phi Grid', tooltip: 'Phi Grid (Golden Ratio)' },
-  { id: 'armature', name: 'Armature', tooltip: 'Armature' },
+  { id: 'none', name: 'crop.overlays.none', tooltip: 'crop.overlays.noneTooltip' },
+  { id: 'thirds', name: 'crop.overlays.thirds', tooltip: 'crop.overlays.thirdsTooltip' },
+  { id: 'diagonal', name: 'crop.overlays.diagonal', tooltip: 'crop.overlays.diagonalTooltip' },
+  { id: 'goldenTriangle', name: 'crop.overlays.goldenTriangle', tooltip: 'crop.overlays.goldenTriangleTooltip' },
+  { id: 'goldenSpiral', name: 'crop.overlays.goldenSpiral', tooltip: 'crop.overlays.goldenSpiralTooltip' },
+  { id: 'phiGrid', name: 'crop.overlays.phiGrid', tooltip: 'crop.overlays.phiGridTooltip' },
+  { id: 'armature', name: 'crop.overlays.armature', tooltip: 'crop.overlays.armatureTooltip' },
 ];
 
 export default function CropPanel() {
@@ -393,9 +393,9 @@ export default function CropPanel() {
 
   const getOverlayTooltip = () => {
     const current = OVERLAYS.find((o) => o.id === activeOverlay);
-    if (!current) return 'Composition Overlay';
+    if (!current) return t('crop.overlay.composition');
     const isRotatable = ['goldenSpiral', 'goldenTriangle'].includes(activeOverlay);
-    return `Overlay: ${current.name}${isRotatable ? ' (Shift+O to rotate)' : ''}`;
+    return `${t('crop.overlay.overlay')}: ${t(current.name)}${isRotatable ? t('crop.overlay.rotateHint') : ''}`;
   };
 
   const getOrientationTooltip = () => {
@@ -473,11 +473,11 @@ export default function CropPanel() {
                     )}
                     key={preset.name}
                     onClick={() => handlePresetClick(preset)}
-                    data-tooltip={preset.tooltip}
+                    data-tooltip={t(preset.tooltip)}
                     whileTap={{ scale: 0.98 }}
                     transition={{ type: 'spring', stiffness: 400, damping: 17 }}
                   >
-                    <Text color={isPresetActive(preset) ? TextColors.button : TextColors.secondary}>{preset.name}</Text>
+                    <Text color={isPresetActive(preset) ? TextColors.button : TextColors.secondary}>{t(preset.name)}</Text>
                   </motion.div>
                 ))}
               </div>
@@ -545,7 +545,7 @@ export default function CropPanel() {
 
             <div className="space-y-4">
               <Text variant={TextVariants.heading} className="mb-2">
-                Rotation
+                {t('crop.rotation')}
               </Text>
               <div className="bg-surface px-4 pt-3 pb-4 rounded-lg">
                 <Slider

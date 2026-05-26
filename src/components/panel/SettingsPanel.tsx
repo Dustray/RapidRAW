@@ -397,7 +397,7 @@ const CloudDashboard = () => {
       {isPro ? (
         <div className="bg-surface p-4 rounded-md">
           <div className="flex justify-between items-center mb-2">
-            <Text variant={TextVariants.label}>Monthly Usage</Text>
+            <Text variant={TextVariants.label}>{t('monthlyUsage')}</Text>
             <Text variant={TextVariants.small}>
               {usage?.requests ?? 0} / {usage?.limit ?? 500} requests
             </Text>
@@ -2054,9 +2054,9 @@ export default function SettingsPanel({
                             {t('settings.builtinAiCpuDesc')}
                           </Text>
                           <Text as="ul" className="mt-3 space-y-1 list-disc list-inside">
-                            <li>AI Masking (Subject, Sky, Foreground)</li>
-                            <li>Automatic Image Tagging</li>
-                            <li>Simple CPU-based Generative Replace</li>
+                            <li>{t('aiMasking')}</li>
+                            <li>{t('automaticImageTagging')}</li>
+                            <li>{t('simpleCpuGenerativeReplace')}</li>
                           </Text>
                         </motion.div>
                       )}

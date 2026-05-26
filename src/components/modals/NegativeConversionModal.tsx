@@ -358,7 +358,7 @@ export default function NegativeConversionModal({
                       color={TextColors.button}
                       className="absolute top-4 left-4 bg-accent px-2 py-1 rounded-sm shadow-lg z-20"
                     >
-                      Original Negative
+                      {t('modal.negativeConversion.originalNegative')}
                     </Text>
                   )}
                 </div>
@@ -406,7 +406,7 @@ export default function NegativeConversionModal({
                 'p-2 rounded-full transition-colors select-none',
                 isCompareActive ? 'bg-accent text-button-text' : 'text-white/60 hover:bg-white/10 hover:text-white',
               )}
-              data-tooltip="Hold to View Original"
+              data-tooltip={t('modal.negativeConversion.holdToViewOriginal')}
             >
               {isCompareActive ? <Eye size={18} /> : <EyeOff size={18} />}
             </button>

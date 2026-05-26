@@ -1062,7 +1062,7 @@ export default function AIPanel() {
                   <div className="p-0.5">
                     <Plus size={18} />
                   </div>
-                  <span>Add New Edit</span>
+                  <span>{t('addNewEdit')}</span>
                 </Text>
               </motion.div>
             )}
@@ -1449,7 +1449,7 @@ function ContainerRow({
                     <div className="relative w-4 h-4 ml-1 shrink-0 flex items-center justify-center">
                       <Plus size={16} />
                     </div>
-                    <span className="select-none">Add New Component</span>
+                    <span className="select-none">{t('addNewComponent')}</span>
                   </Text>
                 </motion.div>
               )}
