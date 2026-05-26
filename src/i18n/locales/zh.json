@@ -399,6 +399,7 @@
     "masks": "蒙版",
     "masking": "蒙版",
     "addNewMask": "添加新蒙版",
+    "addNewComponent": "添加新组件",
     "pasteMask": "粘贴蒙版",
     "maskAdjustments": "蒙版调整",
     "dropToCreate": "拖放到此处创建新蒙版",
@@ -525,6 +526,8 @@
     "deletePreset": "删除预设",
     "overwritePreset": "覆盖选中的预设",
     "saved": "已保存！",
+    "presetHighQuality": "高质量",
+    "presetFastWeb": "快速（网页）",
     "selectPresetToApply": "选择预设以应用"
   },
   "rightPanel": {
@@ -830,6 +833,9 @@
     "signUpWebsite": "在网站上注册",
     "dataManagement": "数据管理",
     "clearAllSidecarFiles": "清除所有侧边车文件",
+    "clearAllSidecarFilesDescPart1": "这将删除您文件夹中所有的",
+    "clearAllSidecarFilesDescPart2": "文件（包含您编辑过的内容）：",
+    "noFoldersSelected": "未选择文件夹",
     "clearThumbnailCache": "清除缩略图缓存",
     "clearThumbnailCacheDesc": "这将删除所有缓存的缩略图图像。它们将在您浏览图库时自动重新生成。",
     "viewApplicationLogsDesc": "查看应用程序日志文件以进行故障排除。日志位于：",
