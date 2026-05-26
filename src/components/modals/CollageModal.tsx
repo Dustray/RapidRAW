@@ -674,7 +674,7 @@ export default function CollageModal({ isOpen, onClose, onSave, sourceImages }: 
                   : 'bg-surface hover:bg-card-active',
               )}
             >
-              Original
+              {t('modal.collage.original')}
             </button>
           )}
         </div>

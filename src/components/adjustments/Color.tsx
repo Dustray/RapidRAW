@@ -455,7 +455,7 @@ export default function ColorPanel({
     <div className="space-y-4">
       <div className="p-2 bg-bg-tertiary rounded-md">
         <div className="flex justify-between items-center mb-2">
-          <Text variant={TextVariants.heading}>White Balance</Text>
+          <Text variant={TextVariants.heading}>{t('adjustments.color.whiteBalance')}</Text>
           {!isForMask && toggleWbPicker && (
             <button
               onClick={toggleWbPicker}
@@ -467,7 +467,7 @@ export default function ColorPanel({
                     ? 'bg-accent text-button-text'
                     : 'hover:bg-bg-secondary text-text-secondary'
               }`}
-              data-tooltip={isWgpuEnabled ? 'WB Picker: Disable WGPU in Settings.' : 'White Balance Picker'}
+              data-tooltip={isWgpuEnabled ? t('adjustments.color.whiteBalancePickerDisabled') : t('adjustments.color.whiteBalancePicker')}
             >
               <Pipette size={16} />
             </button>

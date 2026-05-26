@@ -118,6 +118,31 @@
       "expand": "展开",
       "collapse": "折叠"
     },
+    "ratingFilter": {
+      "showAll": "显示全部",
+      "unratedOnly": "仅未评分",
+      "oneUp": "1星及以上",
+      "twoUp": "2星及以上",
+      "threeUp": "3星及以上",
+      "fourUp": "4星及以上",
+      "fiveOnly": "仅5星"
+    },
+    "fileTypeFilter": {
+      "allTypes": "所有类型",
+      "rawOnly": "仅 RAW",
+      "nonRawOnly": "仅非 RAW",
+      "preferRaw": "优先 RAW"
+    },
+    "thumbnailSize": {
+      "small": "小",
+      "medium": "中",
+      "large": "大",
+      "list": "列表"
+    },
+    "thumbnailAspectRatio": {
+      "fillSquare": "填充正方形",
+      "originalRatio": "原始比例"
+    },
     "tagging": {
       "addTagPlaceholder": "添加标签...",
       "addTag": "添加标签"
@@ -188,6 +213,9 @@
     },
     "color": {
       "title": "颜色",
+      "whiteBalance": "白平衡",
+      "whiteBalancePicker": "白平衡选择器",
+      "whiteBalancePickerDisabled": "白平衡选择器：在设置中禁用 WGPU。",
       "temperature": "色温",
       "tint": "色调",
       "vibrance": "自然饱和度",
@@ -297,7 +325,47 @@
     "geometry": "几何",
     "transform": "变换",
     "lens": "镜头",
-    "noImageSelected": "未选择图像。"
+    "noImageSelected": "未选择图像。",
+    "presets": {
+      "free": "自由",
+      "freeTooltip": "自由裁剪",
+      "originalTooltip": "原始图像宽高比",
+      "square": "1:1",
+      "squareTooltip": "正方形 - Instagram、头像",
+      "fiveFour": "5:4",
+      "fiveFourTooltip": "5:4 - Instagram横版、8x10打印",
+      "fourThree": "4:3",
+      "fourThreeTooltip": "4:3 - 传统显示器、平板",
+      "threeTwo": "3:2",
+      "threeTwoTooltip": "3:2 - 35mm胶片、单反相机",
+      "sixteenNine": "16:9",
+      "sixteenNineTooltip": "16:9 - 宽屏、桌面壁纸、YouTube",
+      "twentyOneNine": "21:9",
+      "twentyOneNineTooltip": "21:9 - 超宽显示器、电影",
+      "sixtyFiveTwentyFour": "65:24",
+      "sixtyFiveTwentyFourTooltip": "65:24 - 全景35mm宽幅"
+    },
+    "overlays": {
+      "none": "无",
+      "noneTooltip": "无参考线",
+      "thirds": "三分",
+      "thirdsTooltip": "三分法则",
+      "diagonal": "对角线",
+      "diagonalTooltip": "对角线",
+      "goldenTriangle": "三角",
+      "goldenTriangleTooltip": "黄金三角",
+      "goldenSpiral": "螺旋",
+      "goldenSpiralTooltip": "黄金螺旋（斐波那契）",
+      "phiGrid": "Phi网格",
+      "phiGridTooltip": "Phi网格（黄金比例）",
+      "armature": "骨架",
+      "armatureTooltip": "骨架"
+    },
+    "overlay": {
+      "composition": "构图参考线",
+      "overlay": "参考线",
+      "rotateHint": " (Shift+O 旋转)"
+    }
   },
   "masks": {
     "title": "蒙版",
@@ -496,6 +564,7 @@
     "intersectEditWith": "与编辑相交",
     "pasteEdit": "粘贴编辑",
     "addNewEdit": "添加新编辑",
+    "addNewComponent": "添加新组件",
     "duplicateEdit": "复制编辑",
     "duplicateAndInvertEdit": "复制并反相编辑",
     "copyEdit": "复制编辑",
@@ -648,6 +717,9 @@
     "generativeAiDesc": "RapidRAW 的 AI 专为灵活性而构建。选择您理想的工作流程，从快速本地工具到强大的自托管方案。",
     "builtinAiCpu": "内置 AI (CPU)",
     "builtinAiCpuDesc": "直接集成到 RapidRAW 中，这些功能完全在您的计算机上运行。它们快速、免费且无需设置，非常适合日常工作流程加速。",
+    "aiMasking": "AI 蒙版（主体、天空、前景）",
+    "automaticImageTagging": "自动图像标记",
+    "simpleCpuGenerativeReplace": "基于 CPU 的简单生成替换",
     "selfHostedConnector": "自托管 (RapidRAW AI 连接器)",
     "selfHostedConnectorDesc": "对于拥有强大 GPU 且希望最大程度控制的用户，可以将 RapidRAW 连接到您自己的连接器服务器。这为您提供了技术工作流程的完全控制权。",
     "aiConnectorAddress": "AI 连接器地址",
@@ -718,7 +790,8 @@
       "resetTransform": "重置变换",
       "toggleGrid": "切换网格",
       "toggleHelperLines": "切换辅助线",
-      "holdToCompare": "按住以对比"
+      "holdToCompare": "按住以对比",
+      "original": "原图"
     },
     "negativeConversion": {
       "redCyan": "红色（青色）",
@@ -728,7 +801,8 @@
       "contrastGrade": "对比度（分级）",
       "reset": "重置",
       "resetView": "重置视图",
-      "holdToViewOriginal": "按住以查看原图"
+      "holdToViewOriginal": "按住以查看原图",
+      "originalNegative": "原始底片"
     },
     "import": {
       "organizeByDate": "按日期组织到子文件夹",
@@ -741,7 +815,8 @@
       "vignetting": "暗角",
       "chooseSavedLens": "选择已保存的镜头",
       "resetLensCorrection": "重置镜头校正",
-      "holdToCompare": "按住以对比"
+      "holdToCompare": "按住以对比",
+      "original": "原图"
     },
     "culling": {
       "groupSimilarImages": "分组相似图片",
@@ -775,9 +850,12 @@
       "keepAspectRatio": "保持原始宽高比",
       "spacing": "间距",
       "borderRadius": "圆角半径",
-      "shuffleImages": "随机打乱图片"
+      "shuffleImages": "随机打乱图片",
+      "original": "原始比例"
     },
     "denoise": {
+      "original": "原图",
+      "denoised": "降噪后",
       "gpuAccelerationNote": "由于依赖限制，NIND Denoise 暂不支持 GPU 加速。"
     }
   },
