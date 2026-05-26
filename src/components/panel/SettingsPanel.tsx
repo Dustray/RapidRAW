@@ -32,7 +32,7 @@ import Switch from '../ui/Switch';
 import Input from '../ui/Input';
 import Slider from '../ui/Slider';
 import { ThemeProps, THEMES, DEFAULT_THEME_ID } from '../../utils/themes';
-import { Invokes } from '../ui/AppProperties';
+import { Invokes, Language } from '../ui/AppProperties';
 import {
   formatKeyCode,
   KeybindDefinition,
@@ -153,6 +153,11 @@ const linearRawOptions: OptionItem<string>[] = [
   { value: 'gamma', label: 'Apply Gamma' },
   { value: 'skip_calib', label: 'Skip Calibrate' },
   { value: 'gamma_skip_calib', label: 'Apply Gamma & Skip Calibrate' },
+];
+
+const languageOptions: OptionItem<string>[] = [
+  { value: 'en', label: 'English' },
+  { value: 'zh', label: '中文 (Chinese)' },
 ];
 
 const tonemapperOptions: OptionItem<string>[] = [
@@ -1000,6 +1005,15 @@ export default function SettingsPanel({
                     General Settings
                   </Text>
                   <div className="space-y-8">
+                    <SettingItem label="Language" description="Change the application language.">
+                      <Dropdown
+                        onChange={(value: any) => onSettingsChange({ ...appSettings, language: value as Language })}
+                        options={languageOptions}
+                        value={appSettings?.language || 'en'}
+                        triggerClassName="bg-bg-primary"
+                      />
+                    </SettingItem>
+
                     <SettingItem label="Theme" description="Change the look and feel of the application.">
                       <Dropdown
                         onChange={(value: any) => onSettingsChange({ ...appSettings, theme: value })}

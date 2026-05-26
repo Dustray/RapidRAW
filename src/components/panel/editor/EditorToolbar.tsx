@@ -1,6 +1,7 @@
 import { memo, useState, useEffect, useRef, useMemo } from 'react';
 import { Eye, EyeOff, ArrowLeft, Maximize, Loader2, Undo, Redo, Waves } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 import clsx from 'clsx';
 import { SelectedImage } from '../../ui/AppProperties';
 import { IconAperture, IconCalendar, IconClock, IconFocalLength, IconIso, IconShutter } from './ExifIcons';
@@ -45,6 +46,7 @@ const EditorToolbar = memo(
     adjustmentsHistoryIndex,
     goToAdjustmentsHistoryIndex,
   }: EditorToolbarProps) => {
+    const { t } = useTranslation();
     const isAnyLoading = isLoading;
     const [isLoaderVisible, setIsLoaderVisible] = useState(false);
     const [disableLoaderTransition, setDisableLoaderTransition] = useState(false);
@@ -152,79 +154,79 @@ const EditorToolbar = memo(
       return () => document.removeEventListener('mousedown', handleClickOutside);
     }, [isHistoryVisible]);
 
-    const prevNamesRef = useRef<string[]>(['Initial State']);
+    const prevNamesRef = useRef<string[]>([t('editor.toolbar.initialState')]);
 
     const historyNames = useMemo(() => {
       if (!adjustmentsHistory || adjustmentsHistory.length === 0) return [];
 
       const formatKey = (k: string) => {
         const special: Record<string, string> = {
-          aiPatches: 'AI Patches',
-          aspectRatio: 'Aspect Ratio',
-          flipHorizontal: 'Flip Horizontal',
-          flipVertical: 'Flip Vertical',
-          orientationSteps: 'Rotation',
-          lutPath: 'LUT',
-          lutIntensity: 'LUT Intensity',
-          lutData: 'LUT Data',
-          lutName: 'LUT Name',
-          lutSize: 'LUT Size',
-          chromaticAberrationBlueYellow: 'Chromatic Aberration Blue/Yellow',
-          chromaticAberrationRedCyan: 'Chromatic Aberration Red/Cyan',
-          centré: 'Centré',
-          lumaNoiseReduction: 'Luma Noise Reduction',
-          colorNoiseReduction: 'Color Noise Reduction',
-          lensMaker: 'Lens Maker',
-          lensModel: 'Lens Model',
-          lensDistortionAmount: 'Lens Distortion',
-          lensVignetteAmount: 'Lens Vignette',
-          lensTcaAmount: 'Lens TCA',
-          lensDistortionEnabled: 'Enable Lens Distortion',
-          lensTcaEnabled: 'Enable Lens TCA',
-          lensVignetteEnabled: 'Enable Lens Vignette',
-          transformDistortion: 'Transform Distortion',
-          transformVertical: 'Transform Vertical',
-          transformHorizontal: 'Transform Horizontal',
-          transformRotate: 'Transform Rotate',
-          transformAspect: 'Transform Aspect',
-          transformScale: 'Transform Scale',
-          transformXOffset: 'Transform X Offset',
-          transformYOffset: 'Transform Y Offset',
-          colorGrading: 'Color Grading',
-          colorCalibration: 'Color Calibration',
-          toneMapper: 'Tone Mapper',
-          showClipping: 'Show Clipping',
-          sectionVisibility: 'Section Visibility',
-          flareAmount: 'Flare Amount',
-          glowAmount: 'Glow Amount',
-          halationAmount: 'Halation Amount',
-          grainAmount: 'Grain Amount',
-          grainRoughness: 'Grain Roughness',
-          grainSize: 'Grain Size',
-          vignetteAmount: 'Vignette Amount',
-          vignetteFeather: 'Vignette Feather',
-          vignetteMidpoint: 'Vignette Midpoint',
-          vignetteRoundness: 'Vignette Roundness',
-          dehaze: 'Dehaze',
-          exposure: 'Exposure',
-          blacks: 'Blacks',
-          whites: 'Whites',
-          shadows: 'Shadows',
-          highlights: 'Highlights',
-          contrast: 'Contrast',
-          brightness: 'Brightness',
-          clarity: 'Clarity',
-          structure: 'Structure',
-          sharpness: 'Sharpness',
-          saturation: 'Saturation',
-          temperature: 'Temperature',
-          tint: 'Tint',
-          vibrance: 'Vibrance',
-          hsl: 'HSL',
-          curves: 'Curves',
-          crop: 'Crop',
-          masks: 'Masks',
-          rating: 'Rating',
+          aiPatches: t('editor.toolbar.aiPatches'),
+          aspectRatio: t('editor.toolbar.aspectRatio'),
+          flipHorizontal: t('editor.toolbar.flipHorizontal'),
+          flipVertical: t('editor.toolbar.flipVertical'),
+          orientationSteps: t('editor.toolbar.orientationSteps'),
+          lutPath: t('editor.toolbar.lutPath'),
+          lutIntensity: t('editor.toolbar.lutIntensity'),
+          lutData: t('editor.toolbar.lutData'),
+          lutName: t('editor.toolbar.lutName'),
+          lutSize: t('editor.toolbar.lutSize'),
+          chromaticAberrationBlueYellow: t('editor.toolbar.chromaticAberrationBlueYellow'),
+          chromaticAberrationRedCyan: t('editor.toolbar.chromaticAberrationRedCyan'),
+          centré: t('editor.toolbar.centré'),
+          lumaNoiseReduction: t('editor.toolbar.lumaNoiseReduction'),
+          colorNoiseReduction: t('editor.toolbar.colorNoiseReduction'),
+          lensMaker: t('editor.toolbar.lensMaker'),
+          lensModel: t('editor.toolbar.lensModel'),
+          lensDistortionAmount: t('editor.toolbar.lensDistortionAmount'),
+          lensVignetteAmount: t('editor.toolbar.lensVignetteAmount'),
+          lensTcaAmount: t('editor.toolbar.lensTcaAmount'),
+          lensDistortionEnabled: t('editor.toolbar.lensDistortionEnabled'),
+          lensTcaEnabled: t('editor.toolbar.lensTcaEnabled'),
+          lensVignetteEnabled: t('editor.toolbar.lensVignetteEnabled'),
+          transformDistortion: t('editor.toolbar.transformDistortion'),
+          transformVertical: t('editor.toolbar.transformVertical'),
+          transformHorizontal: t('editor.toolbar.transformHorizontal'),
+          transformRotate: t('editor.toolbar.transformRotate'),
+          transformAspect: t('editor.toolbar.transformAspect'),
+          transformScale: t('editor.toolbar.transformScale'),
+          transformXOffset: t('editor.toolbar.transformXOffset'),
+          transformYOffset: t('editor.toolbar.transformYOffset'),
+          colorGrading: t('editor.toolbar.colorGrading'),
+          colorCalibration: t('editor.toolbar.colorCalibration'),
+          toneMapper: t('editor.toolbar.toneMapper'),
+          showClipping: t('editor.toolbar.showClipping'),
+          sectionVisibility: t('editor.toolbar.sectionVisibility'),
+          flareAmount: t('editor.toolbar.flareAmount'),
+          glowAmount: t('editor.toolbar.glowAmount'),
+          halationAmount: t('editor.toolbar.halationAmount'),
+          grainAmount: t('editor.toolbar.grainAmount'),
+          grainRoughness: t('editor.toolbar.grainRoughness'),
+          grainSize: t('editor.toolbar.grainSize'),
+          vignetteAmount: t('editor.toolbar.vignetteAmount'),
+          vignetteFeather: t('editor.toolbar.vignetteFeather'),
+          vignetteMidpoint: t('editor.toolbar.vignetteMidpoint'),
+          vignetteRoundness: t('editor.toolbar.vignetteRoundness'),
+          dehaze: t('editor.toolbar.dehaze'),
+          exposure: t('editor.toolbar.exposure'),
+          blacks: t('editor.toolbar.blacks'),
+          whites: t('editor.toolbar.whites'),
+          shadows: t('editor.toolbar.shadows'),
+          highlights: t('editor.toolbar.highlights'),
+          contrast: t('editor.toolbar.contrast'),
+          brightness: t('editor.toolbar.brightness'),
+          clarity: t('editor.toolbar.clarity'),
+          structure: t('editor.toolbar.structure'),
+          sharpness: t('editor.toolbar.sharpness'),
+          saturation: t('editor.toolbar.saturation'),
+          temperature: t('editor.toolbar.temperature'),
+          tint: t('editor.toolbar.tint'),
+          vibrance: t('editor.toolbar.vibrance'),
+          hsl: t('editor.toolbar.hsl'),
+          curves: t('editor.toolbar.curves'),
+          crop: t('editor.toolbar.crop'),
+          masks: t('editor.toolbar.masks'),
+          rating: t('editor.toolbar.rating'),
         };
         if (special[k]) return special[k];
         return k.replace(/([A-Z])/g, ' $1').replace(/^./, (str) => str.toUpperCase());
@@ -234,14 +236,14 @@ const EditorToolbar = memo(
       const newNames = [...cachedNames];
 
       if (newNames.length > adjustmentsHistory.length) {
-        newNames.length = adjustmentsHistory.length;
-      }
-
-      for (let i = newNames.length; i < adjustmentsHistory.length; i++) {
-        if (i === 0) {
-          newNames[i] = 'Initial State';
-          continue;
+          newNames.length = adjustmentsHistory.length;
         }
+
+        for (let i = newNames.length; i < adjustmentsHistory.length; i++) {
+          if (i === 0) {
+            newNames[i] = t('editor.toolbar.initialState');
+            continue;
+          }
 
         const curr = adjustmentsHistory[i];
         const prev = adjustmentsHistory[i - 1];
@@ -254,16 +256,16 @@ const EditorToolbar = memo(
             const prevMasks = prev.masks || [];
             const currMasks = curr.masks || [];
 
-            if (currMasks.length > prevMasks.length) changed.push('Added Mask');
-            else if (currMasks.length < prevMasks.length) changed.push('Deleted Mask');
+            if (currMasks.length > prevMasks.length) changed.push(t('editor.toolbar.addedMask'));
+            else if (currMasks.length < prevMasks.length) changed.push(t('editor.toolbar.deletedMask'));
             else {
               currMasks.forEach((cMask: any) => {
                 const pMask = prevMasks.find((m: any) => m.id === cMask.id);
                 if (pMask) {
-                  if (pMask.opacity !== cMask.opacity) changed.push('Mask Opacity');
-                  if (pMask.invert !== cMask.invert) changed.push('Mask Invert');
-                  if (pMask.visible !== cMask.visible) changed.push('Mask Visibility');
-                  if (pMask.subMasks !== cMask.subMasks) changed.push('Mask Area / Brush');
+                  if (pMask.opacity !== cMask.opacity) changed.push(t('editor.toolbar.maskOpacity'));
+                  if (pMask.invert !== cMask.invert) changed.push(t('editor.toolbar.maskInvert'));
+                  if (pMask.visible !== cMask.visible) changed.push(t('editor.toolbar.maskVisibility'));
+                  if (pMask.subMasks !== cMask.subMasks) changed.push(t('editor.toolbar.maskAreaBrush'));
 
                   if (pMask.adjustments !== cMask.adjustments) {
                     for (const adjKey of Object.keys(cMask.adjustments || {})) {
@@ -279,16 +281,16 @@ const EditorToolbar = memo(
             const prevPatches = prev.aiPatches || [];
             const currPatches = curr.aiPatches || [];
 
-            if (currPatches.length > prevPatches.length) changed.push('Added AI Patch');
-            else if (currPatches.length < prevPatches.length) changed.push('Deleted AI Patch');
+            if (currPatches.length > prevPatches.length) changed.push(t('editor.toolbar.addedAiPatch'));
+            else if (currPatches.length < prevPatches.length) changed.push(t('editor.toolbar.deletedAiPatch'));
             else {
               currPatches.forEach((cPatch: any) => {
                 const pPatch = prevPatches.find((p: any) => p.id === cPatch.id);
                 if (pPatch) {
-                  if (pPatch.visible !== cPatch.visible) changed.push('AI Patch Visibility');
-                  if (pPatch.subMasks !== cPatch.subMasks) changed.push('AI Patch Area');
+                  if (pPatch.visible !== cPatch.visible) changed.push(t('editor.toolbar.aiPatchVisibility'));
+                  if (pPatch.subMasks !== cPatch.subMasks) changed.push(t('editor.toolbar.aiPatchArea'));
                   if (pPatch.patchData !== cPatch.patchData || pPatch.prompt !== cPatch.prompt) {
-                    changed.push('AI Generation');
+                    changed.push(t('editor.toolbar.aiGeneration'));
                   }
                 }
               });
@@ -300,7 +302,7 @@ const EditorToolbar = memo(
 
         const uniqueChanged = Array.from(new Set(changed));
 
-        if (uniqueChanged.length === 0) newNames[i] = 'Adjustment';
+        if (uniqueChanged.length === 0) newNames[i] = t('editor.toolbar.adjustment');
         else if (uniqueChanged.length > 2) newNames[i] = `${uniqueChanged.slice(0, 2).join(', ')}...`;
         else newNames[i] = uniqueChanged.join(', ');
       }
@@ -335,7 +337,7 @@ const EditorToolbar = memo(
             className="bg-surface text-text-primary p-2 rounded-full hover:bg-card-active transition-colors shrink-0"
             onClick={onBackToLibrary}
             onKeyDown={handleButtonKeyDown}
-            data-tooltip="Back to Library"
+            data-tooltip={t('editor.toolbar.backToLibrary')}
           >
             <ArrowLeft size={20} />
           </button>
@@ -450,7 +452,7 @@ const EditorToolbar = memo(
                 )}
               >
                 {exifData.shutter && (
-                  <div className="flex items-center gap-1.5" data-tooltip="Shutter Speed">
+                  <div className="flex items-center gap-1.5" data-tooltip={t('editor.toolbar.shutterSpeed')}>
                     <Text as="span">
                       <IconShutter />
                     </Text>
@@ -460,7 +462,7 @@ const EditorToolbar = memo(
                   </div>
                 )}
                 {exifData.fNumber && (
-                  <div className="flex items-center gap-1.5" data-tooltip="Aperture">
+                  <div className="flex items-center gap-1.5" data-tooltip={t('editor.toolbar.aperture')}>
                     <Text as="span">
                       <IconAperture />
                     </Text>
@@ -480,7 +482,7 @@ const EditorToolbar = memo(
                   </div>
                 )}
                 {exifData.focal && (
-                  <div className="flex items-center gap-1.5" data-tooltip="Focal Length">
+                  <div className="flex items-center gap-1.5" data-tooltip={t('editor.toolbar.focalLength')}>
                     <Text as="span">
                       <IconFocalLength />
                     </Text>
@@ -533,7 +535,7 @@ const EditorToolbar = memo(
                 e.preventDefault();
                 setIsHistoryVisible((prev) => !prev);
               }}
-              data-tooltip="Undo (Ctrl+Z) or History (Right-click)"
+              data-tooltip={t('editor.toolbar.undo')}
             >
               <Undo size={20} />
             </button>
@@ -546,7 +548,7 @@ const EditorToolbar = memo(
                 e.preventDefault();
                 setIsHistoryVisible((prev) => !prev);
               }}
-              data-tooltip="Redo (Ctrl+Y) or History (Right-click)"
+              data-tooltip={t('editor.toolbar.redo')}
             >
               <Redo size={20} />
             </button>
@@ -618,7 +620,7 @@ const EditorToolbar = memo(
             )}
             onClick={onToggleShowOriginal}
             onKeyDown={handleButtonKeyDown}
-            data-tooltip={showOriginal ? 'Show Edited (B)' : 'Show Original (B)'}
+            data-tooltip={showOriginal ? t('editor.toolbar.showEdited') : t('editor.toolbar.showOriginal')}
           >
             {showOriginal ? <EyeOff size={20} /> : <Eye size={20} />}
           </button>
@@ -626,7 +628,7 @@ const EditorToolbar = memo(
             className="bg-surface text-text-primary p-2 rounded-full hover:bg-card-active transition-colors disabled:opacity-50 disabled:cursor-not-allowed relative"
             onClick={onToggleFullScreen}
             onKeyDown={handleButtonKeyDown}
-            data-tooltip="Toggle Fullscreen (F)"
+            data-tooltip={t('editor.toolbar.toggleFullscreen')}
           >
             <div className="relative w-5 h-5 flex items-center justify-center">
               <Maximize size={20} />
