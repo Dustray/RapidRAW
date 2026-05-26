@@ -399,6 +399,7 @@
     "masks": "Masks",
     "masking": "Masking",
     "addNewMask": "Add New Mask",
+    "addNewComponent": "Add New Component",
     "pasteMask": "Paste Mask",
     "maskAdjustments": "Mask Adjustments",
     "dropToCreate": "Drop here to create a new mask",
@@ -525,6 +526,8 @@
     "deletePreset": "Delete preset",
     "overwritePreset": "Overwrite selected preset",
     "saved": "Saved!",
+    "presetHighQuality": "High Quality",
+    "presetFastWeb": "Fast (Web)",
     "selectPresetToApply": "Select a preset to apply"
   },
   "rightPanel": {
@@ -830,6 +833,9 @@
     "signUpWebsite": "Sign up on the website",
     "dataManagement": "Data Management",
     "clearAllSidecarFiles": "Clear All Sidecar Files",
+    "clearAllSidecarFilesDescPart1": "This will delete all",
+    "clearAllSidecarFilesDescPart2": "files (containing your edits) within your root folders:",
+    "noFoldersSelected": "No folders selected",
     "clearThumbnailCache": "Clear Thumbnail Cache",
     "clearThumbnailCacheDesc": "This will delete all cached thumbnail images. They will be regenerated automatically as you browse your library.",
     "viewApplicationLogsDesc": "View the application's log file for troubleshooting. The log is located at:",

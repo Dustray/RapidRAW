@@ -89,10 +89,20 @@ export default function ExportPresetsList({
     setSelectedPresetId('');
   };
 
+  const getPresetLabel = (preset: ExportPreset): string => {
+    if (preset.id === 'default-hq') {
+      return t('export.presetHighQuality');
+    }
+    if (preset.id === 'default-fast') {
+      return t('export.presetFastWeb');
+    }
+    return preset.name;
+  };
+
   const dropdownOptions = presets
     .filter((preset) => preset.id !== '__last_used__')
     .map((preset) => ({
-      label: preset.name,
+      label: getPresetLabel(preset),
       value: preset.id,
     }));
 

@@ -1858,6 +1858,7 @@ export default function SettingsPanel({
                             : 'auto'
                         }
                         triggerClassName="bg-bg-primary"
+                        translate={t}
                       />
                     </SettingItem>
 
@@ -2234,11 +2235,11 @@ export default function SettingsPanel({
                       buttonText={t('common.clear')}
                       description={
                         <Text as="span" variant={TextVariants.small}>
-                          This will delete all{' '}
-                          <code className="bg-bg-primary px-1 rounded-sm text-text-primary">.rrdata</code> files
-                          (containing your edits) within your root folders:
+                          {t('settings.clearAllSidecarFilesDescPart1')}{' '}
+                          <code className="bg-bg-primary px-1 rounded-sm text-text-primary">.rrdata</code>{' '}
+                          {t('settings.clearAllSidecarFilesDescPart2')}
                           <span className="block font-mono bg-bg-primary p-2 rounded-sm mt-2 break-all border border-border-color whitespace-pre-wrap">
-                            {effectiveRootPaths.length > 0 ? effectiveRootPaths.join('\n') : 'No folders selected'}
+                            {effectiveRootPaths.length > 0 ? effectiveRootPaths.join('\n') : t('settings.noFoldersSelected')}
                           </span>
                         </Text>
                       }
