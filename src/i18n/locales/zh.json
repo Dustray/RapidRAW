@@ -179,7 +179,12 @@
       "highlights": "高光",
       "shadows": "阴影",
       "whites": "白色",
-      "blacks": "黑色"
+      "blacks": "黑色",
+      "toneMapper": "色调映射",
+      "basicMapper": "基础",
+      "agxMapper": "AgX",
+      "basicMapperTitle": "标准色调映射",
+      "agxMapperTitle": "胶片风格色调映射"
     },
     "color": {
       "title": "颜色",
@@ -193,15 +198,18 @@
     },
     "details": {
       "title": "细节",
+      "sharpening": "锐化",
       "sharpness": "锐度",
       "threshold": "阈值",
+      "presence": "质感",
       "clarity": "清晰度",
       "dehaze": "去雾",
       "structure": "结构",
       "centre": "中心",
-      "luminanceNoiseReduction": "亮度",
       "noiseReduction": "降噪",
+      "luminanceNoiseReduction": "亮度",
       "colorNoiseReduction": "颜色降噪",
+      "chromaticAberration": "色差",
       "redCyan": "红/青",
       "blueYellow": "蓝/黄"
     },
@@ -444,6 +452,7 @@
     "openMap": "点击在新标签页打开地图",
     "fileInformation": "文件信息",
     "cameraDetails": "相机详情",
+    "creatorDetails": "创作者详情",
     "none": "无",
     "tags": "标签",
     "noTags": "无标签",

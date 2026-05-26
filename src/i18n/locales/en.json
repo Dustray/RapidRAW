@@ -179,7 +179,12 @@
       "highlights": "Highlights",
       "shadows": "Shadows",
       "whites": "Whites",
-      "blacks": "Blacks"
+      "blacks": "Blacks",
+      "toneMapper": "Tone Mapper",
+      "basicMapper": "Basic",
+      "agxMapper": "AgX",
+      "basicMapperTitle": "Standard Tonemapping",
+      "agxMapperTitle": "Film-like Tonemapping"
     },
     "color": {
       "title": "Color",
@@ -193,15 +198,18 @@
     },
     "details": {
       "title": "Details",
+      "sharpening": "Sharpening",
       "sharpness": "Sharpness",
       "threshold": "Threshold",
+      "presence": "Presence",
       "clarity": "Clarity",
       "dehaze": "Dehaze",
       "structure": "Structure",
       "centre": "Centré",
-      "luminanceNoiseReduction": "Luminance",
       "noiseReduction": "Noise Reduction",
+      "luminanceNoiseReduction": "Luminance",
       "colorNoiseReduction": "Color Noise Reduction",
+      "chromaticAberration": "Chromatic Aberration",
       "redCyan": "Red/Cyan",
       "blueYellow": "Blue/Yellow"
     },
@@ -444,6 +452,7 @@
     "openMap": "Click to open map in a new tab",
     "fileInformation": "File Information",
     "cameraDetails": "Camera Details",
+    "creatorDetails": "Creator Details",
     "none": "None",
     "tags": "Tags",
     "noTags": "No tags",

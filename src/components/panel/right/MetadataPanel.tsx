@@ -449,7 +449,7 @@ export default function MetadataPanel() {
                     color={TextColors.primary}
                     className="flex items-center gap-2"
                   >
-                    <User size={16} /> Creator Details
+                    <User size={16} /> {t('metadata.creatorDetails')}
                   </Text>
                   <Text color={TextColors.secondary}>
                     {isAuthorExpanded ? <ChevronDown size={16} /> : <ChevronRight size={16} />}

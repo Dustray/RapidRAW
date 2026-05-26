@@ -14,8 +14,8 @@ interface BasicAdjustmentsProps {
 }
 
 const toneMapperOptions = [
-  { id: 'basic', label: 'Basic', title: 'Standard Tonemapping' },
-  { id: 'agx', label: 'AgX', title: 'Film-like Tonemapping' },
+  { id: 'basic', label: 'adjustments.basic.basicMapper', title: 'adjustments.basic.basicMapperTitle' },
+  { id: 'agx', label: 'adjustments.basic.agxMapper', title: 'adjustments.basic.agxMapperTitle' },
 ];
 
 interface ToneMapperSwitchProps {
@@ -33,6 +33,7 @@ const ToneMapperSwitch = ({
   onEvShiftChange,
   onDragStateChange,
 }: ToneMapperSwitchProps) => {
+  const { t } = useTranslation();
   const [bubbleStyle, setBubbleStyle] = useState({});
   const isInitialAnimation = useRef(true);
   const [isLabelHovered, setIsLabelHovered] = useState(false);
@@ -87,7 +88,7 @@ const ToneMapperSwitch = ({
               isLabelHovered ? 'opacity-0' : 'opacity-100'
             }`}
           >
-            Tone Mapper
+            {t('adjustments.basic.toneMapper')}
           </span>
           <span
             aria-hidden={!isLabelHovered}
@@ -95,7 +96,7 @@ const ToneMapperSwitch = ({
               isLabelHovered ? 'opacity-100' : 'opacity-0'
             }`}
           >
-            Reset
+            {t('common.reset')}
           </span>
         </div>
       </div>
@@ -110,7 +111,7 @@ const ToneMapperSwitch = ({
           {toneMapperOptions.map((mapper) => (
             <button
               key={mapper.id}
-              data-tooltip={mapper.title}
+              data-tooltip={t(mapper.title)}
               onClick={() => onMapperChange(mapper.id)}
               className={clsx(
                 'relative flex-1 flex items-center justify-center gap-2 px-3 p-1.5 text-sm font-medium rounded-md transition-colors',
@@ -121,13 +122,13 @@ const ToneMapperSwitch = ({
               )}
               style={{ WebkitTapHighlightColor: 'transparent' }}
             >
-              <span className="relative z-10 flex items-center">{mapper.label}</span>
+              <span className="relative z-10 flex items-center">{t(mapper.label)}</span>
             </button>
           ))}
         </div>
         <div className="mt-2.5 px-1">
           <Slider
-            label="EV Shift"
+            label={t('adjustments.basic.evShift')}
             max={5}
             min={-5}
             onChange={(e: any) => onEvShiftChange(parseFloat(e.target.value))}
