@@ -1,7 +1,8 @@
 import { create } from 'zustand';
 import { invoke } from '@tauri-apps/api/core';
 import { platform } from '@tauri-apps/plugin-os';
-import { AppSettings, SupportedTypes, Invokes } from '../components/ui/AppProperties';
+import i18n from '../i18n';
+import { AppSettings, SupportedTypes, Invokes, Language } from '../components/ui/AppProperties';
 import { DEFAULT_THEME_ID } from '../utils/themes';
 
 interface SettingsState {
@@ -16,6 +17,7 @@ interface SettingsState {
   setTheme: (theme: string) => void;
   setSupportedTypes: (types: SupportedTypes | null) => void;
   handleSettingsChange: (newSettings: AppSettings) => Promise<void>;
+  setLanguage: (language: Language) => void;
 }
 
 export const useSettingsStore = create<SettingsState>((set, get) => ({
@@ -32,7 +34,12 @@ export const useSettingsStore = create<SettingsState>((set, get) => ({
     }
   },
 
-  setAppSettings: (settings) => set({ appSettings: settings }),
+  setAppSettings: (settings) => {
+    if (settings?.language && settings.language !== i18n.language) {
+      i18n.changeLanguage(settings.language);
+    }
+    set({ appSettings: settings });
+  },
 
   setTheme: (theme) => set({ theme }),
 
@@ -48,6 +55,10 @@ export const useSettingsStore = create<SettingsState>((set, get) => ({
       set({ theme: newSettings.theme });
     }
 
+    if (newSettings.language && newSettings.language !== i18n.language) {
+      i18n.changeLanguage(newSettings.language);
+    }
+
     const { searchCriteria: _searchCriteria, ...settingsToSave } = newSettings as any;
     set({ appSettings: newSettings });
 
@@ -55,6 +66,18 @@ export const useSettingsStore = create<SettingsState>((set, get) => ({
       await invoke(Invokes.SaveSettings, { settings: settingsToSave });
     } catch (err) {
       console.error('Failed to save settings:', err);
+    }
+  },
+
+  setLanguage: (language: Language) => {
+    i18n.changeLanguage(language);
+    const currentSettings = get().appSettings;
+    if (currentSettings) {
+      const newSettings = { ...currentSettings, language };
+      set({ appSettings: newSettings });
+      invoke(Invokes.SaveSettings, { settings: newSettings }).catch((err) => {
+        console.error('Failed to save language setting:', err);
+      });
     }
   },
 }));
