@@ -527,7 +527,7 @@ export default function MetadataPanel() {
                             weight={TextWeights.semibold}
                             className="uppercase tracking-wider mb-2 block"
                           >
-                            Rating
+                            {t('metadata.rating')}
                           </Text>
                           <div className="flex items-center gap-2">
                             {[1, 2, 3, 4, 5].map((star) => (

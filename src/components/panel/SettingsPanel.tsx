@@ -129,16 +129,16 @@ const thumbnailResolutions: OptionItem<number>[] = [
 ];
 
 const zoomMultiplierOptions: OptionItem<number>[] = [
-  { value: 1.0, label: '1.0x (Native)' },
-  { value: 0.75, label: '0.75x' },
-  { value: 0.5, label: '0.50x (Half)' },
-  { value: 0.25, label: '0.25x' },
+  { value: 1.0, label: 'settings.processing.zoomNative' },
+  { value: 0.75, label: 'settings.processing.zoom75x' },
+  { value: 0.5, label: 'settings.processing.zoomHalf' },
+  { value: 0.25, label: 'settings.processing.zoom25x' },
 ];
 
 const livePreviewQualityOptions: OptionItem<string>[] = [
-  { value: 'full', label: 'Full Resolution' },
-  { value: 'high', label: 'High Quality' },
-  { value: 'performance', label: 'Performance' },
+  { value: 'full', label: 'settings.processing.livePreviewFull' },
+  { value: 'high', label: 'settings.processing.livePreviewHigh' },
+  { value: 'performance', label: 'settings.processing.livePreviewPerformance' },
 ];
 
 const _livePreviewQualityOptionKeys: Record<string, string> = {
@@ -148,7 +148,7 @@ const _livePreviewQualityOptionKeys: Record<string, string> = {
 };
 
 const backendOptions: OptionItem<string>[] = [
-  { value: 'auto', label: 'Auto' },
+  { value: 'auto', label: 'settings.processing.auto' },
   { value: 'vulkan', label: 'Vulkan' },
   { value: 'dx12', label: 'DirectX 12' },
   { value: 'metal', label: 'Metal' },
@@ -156,10 +156,10 @@ const backendOptions: OptionItem<string>[] = [
 ];
 
 const linearRawOptions: OptionItem<string>[] = [
-  { value: 'auto', label: 'Auto' },
-  { value: 'gamma', label: 'Apply Gamma' },
-  { value: 'skip_calib', label: 'Skip Calibrate' },
-  { value: 'gamma_skip_calib', label: 'Apply Gamma & Skip Calibrate' },
+  { value: 'auto', label: 'settings.processing.auto' },
+  { value: 'gamma', label: 'settings.processing.applyGamma' },
+  { value: 'skip_calib', label: 'settings.processing.skipCalibrate' },
+  { value: 'gamma_skip_calib', label: 'settings.processing.applyGammaSkipCalibrate' },
 ];
 
 const languageOptions: OptionItem<string>[] = [
@@ -168,14 +168,14 @@ const languageOptions: OptionItem<string>[] = [
 ];
 
 const tonemapperOptions: OptionItem<string>[] = [
-  { value: 'agx', label: 'AgX' },
-  { value: 'basic', label: 'Basic' },
+  { value: 'agx', label: 'settings.processing.agx' },
+  { value: 'basic', label: 'settings.processing.basic' },
 ];
 
 const settingCategories = [
-  { id: 'general', label: 'General', icon: SlidersHorizontal, i18nKey: 'settings.general.title' },
-  { id: 'processing', label: 'Processing', icon: Cpu, i18nKey: 'settings.processing.title' },
-  { id: 'shortcuts', label: 'Controls', icon: Keyboard, i18nKey: 'settings.controls' },
+  { id: 'general', label: 'settings.general.title', icon: SlidersHorizontal, i18nKey: 'settings.general.title' },
+  { id: 'processing', label: 'settings.processing.title', icon: Cpu, i18nKey: 'settings.processing.title' },
+  { id: 'shortcuts', label: 'settings.controls', icon: Keyboard, i18nKey: 'settings.controls' },
 ];
 
 const KeybindRow = ({
@@ -187,6 +187,7 @@ const KeybindRow = ({
   onStartRecording,
   isConflicting,
 }: KeybindRowProps) => {
+  const { t } = useTranslation();
   const recording = recordingAction === def.action;
 
   useEffect(() => {
@@ -212,7 +213,7 @@ const KeybindRow = ({
 
   return (
     <div className="flex justify-between items-center py-2">
-      <Text variant={TextVariants.label}>{def.description}</Text>
+      <Text variant={TextVariants.label}>{t(def.description)}</Text>
       <div className="flex items-center gap-1">
         {isConflicting && <span className="text-yellow-400 text-xs">⚠</span>}
         <button onClick={() => onStartRecording(def.action)} className="flex items-center gap-1 flex-wrap shrink-0">
@@ -224,7 +225,7 @@ const KeybindRow = ({
               weight={TextWeights.semibold}
               className="px-2 py-1 font-sans bg-bg-primary border border-accent rounded-md animate-pulse"
             >
-              Press a key... (Esc to clear)
+              {t('settings.keyboard.pressKey')}
             </Text>
           ) : (
             <Text
@@ -237,7 +238,7 @@ const KeybindRow = ({
               {displayCombo ? (
                 displayCombo.map((k) => formatKeyCode(k, osPlatform)).join(' + ')
               ) : (
-                <span className="text-text-secondary italic">Not assigned</span>
+                <span className="text-text-secondary italic">{t('settings.keyboard.notAssigned')}</span>
               )}
             </Text>
           )}
@@ -294,9 +295,9 @@ const DataActionItem = ({
 };
 
 const aiProviders = [
-  { id: 'cpu', label: 'CPU', icon: Cpu },
-  { id: 'ai-connector', label: 'AI Connector', icon: Server },
-  { id: 'cloud', label: 'Cloud', icon: Cloud },
+  { id: 'cpu', label: 'settings.ai.cpu', icon: Cpu },
+  { id: 'ai-connector', label: 'settings.ai.aiConnector', icon: Server },
+  { id: 'cloud', label: 'settings.ai.cloud', icon: Cloud },
 ];
 
 interface AiProviderSwitchProps {
@@ -305,6 +306,7 @@ interface AiProviderSwitchProps {
 }
 
 const AiProviderSwitch = ({ selectedProvider, onProviderChange }: AiProviderSwitchProps) => {
+  const { t } = useTranslation();
   return (
     <div className="relative flex w-full p-1 bg-bg-primary rounded-md border border-border-color">
       {aiProviders.map((provider) => (
@@ -330,7 +332,7 @@ const AiProviderSwitch = ({ selectedProvider, onProviderChange }: AiProviderSwit
           )}
           <span className="relative z-10 flex items-center">
             <provider.icon size={16} className="mr-2" />
-            {provider.label}
+            {t(provider.label)}
           </span>
         </button>
       ))}
@@ -371,7 +373,7 @@ const CloudDashboard = () => {
           <div>
             <Text variant={TextVariants.heading}>{user?.fullName || user?.primaryEmailAddress?.emailAddress}</Text>
             <Text variant={TextVariants.small} color={isPro ? TextColors.success : TextColors.error}>
-              {isPro ? 'Cloud Subscription Active' : 'No Active Subscription'}
+              {isPro ? t('settings.cloud.subscriptionActive') : t('settings.cloud.noActiveSubscription')}
             </Text>
           </div>
         </div>
@@ -411,8 +413,8 @@ const CloudDashboard = () => {
         </div>
       ) : (
         <div className="bg-red-900/10 border border-red-500/50 p-4 rounded-md text-center">
-          <Text className="mb-3">To use Cloud AI features, you need a Cloud subscription.</Text>
-          <Button onClick={() => open('https://www.getrapidraw.com/cloud')}>Upgrade on Website</Button>
+          <Text className="mb-3">{t('settings.cloud.needSubscription')}</Text>
+          <Button onClick={() => open('https://www.getrapidraw.com/cloud')}>{t('settings.cloud.upgrade')}</Button>
         </div>
       )}
     </div>
@@ -420,8 +422,8 @@ const CloudDashboard = () => {
 };
 
 const canvasInputModes = [
-  { id: 'mouse', label: 'Mouse', icon: Mouse },
-  { id: 'trackpad', label: 'Touchpad', icon: Touchpad },
+  { id: 'mouse', label: 'settings.input.mouse', icon: Mouse },
+  { id: 'trackpad', label: 'settings.input.trackpad', icon: Touchpad },
 ];
 
 interface CanvasInputModeSwitchProps {
@@ -430,6 +432,7 @@ interface CanvasInputModeSwitchProps {
 }
 
 const CanvasInputModeSwitch = ({ mode, onModeChange }: CanvasInputModeSwitchProps) => {
+  const { t } = useTranslation();
   return (
     <div className="relative flex w-full p-1 bg-bg-primary rounded-md border border-border-color">
       {canvasInputModes.map((item) => (
@@ -455,7 +458,7 @@ const CanvasInputModeSwitch = ({ mode, onModeChange }: CanvasInputModeSwitchProp
           )}
           <span className="relative z-10 flex items-center">
             <item.icon size={16} className="mr-2" />
-            {item.label}
+            {t(item.label)}
           </span>
         </button>
       ))}
@@ -464,8 +467,8 @@ const CanvasInputModeSwitch = ({ mode, onModeChange }: CanvasInputModeSwitchProp
 };
 
 const previewModes = [
-  { id: 'static', label: 'Fixed Resolution', icon: ImageIcon },
-  { id: 'dynamic', label: 'Dynamic', icon: Scaling },
+  { id: 'static', label: 'settings.preview.fixedResolution', icon: ImageIcon },
+  { id: 'dynamic', label: 'settings.preview.dynamic', icon: Scaling },
 ];
 
 interface PreviewModeSwitchProps {
@@ -474,6 +477,7 @@ interface PreviewModeSwitchProps {
 }
 
 const PreviewModeSwitch = ({ mode, onModeChange }: PreviewModeSwitchProps) => {
+  const { t } = useTranslation();
   return (
     <div className="relative flex w-full p-1 bg-bg-primary rounded-md border border-border-color">
       {previewModes.map((item) => (
@@ -499,7 +503,7 @@ const PreviewModeSwitch = ({ mode, onModeChange }: PreviewModeSwitchProps) => {
           )}
           <span className="relative z-10 flex items-center">
             <item.icon size={16} className="mr-2" />
-            {item.label}
+            {t(item.label)}
           </span>
         </button>
       ))}
@@ -1027,6 +1031,7 @@ export default function SettingsPanel({
                         options={THEMES.map((theme: ThemeProps) => ({ value: theme.id, label: theme.name }))}
                         value={appSettings?.theme || DEFAULT_THEME_ID}
                         triggerClassName="bg-bg-primary"
+                        translate={t}
                       />
                     </SettingItem>
 
@@ -1106,7 +1111,7 @@ export default function SettingsPanel({
                       <Dropdown
                         onChange={(value: any) => onSettingsChange({ ...appSettings, fontFamily: value })}
                         options={[
-                          { value: 'poppins', label: 'Poppins' },
+                          { value: 'poppins', label: t('settings.general.poppins') },
                           { value: 'system', label: t('settings.general.systemDefault') },
                         ]}
                         value={appSettings?.fontFamily || 'poppins'}
@@ -1699,6 +1704,7 @@ export default function SettingsPanel({
                                     options={zoomMultiplierOptions}
                                     value={processingSettings.highResZoomMultiplier}
                                     triggerClassName="bg-bg-primary"
+                                    translate={t}
                                   />
                                 </SettingItem>
 
@@ -1967,6 +1973,7 @@ export default function SettingsPanel({
                         options={linearRawOptions}
                         value={appSettings?.linearRawMode || 'auto'}
                         triggerClassName="bg-bg-primary"
+                        translate={t}
                       />
                     </SettingItem>
 
@@ -2005,6 +2012,7 @@ export default function SettingsPanel({
                                   options={tonemapperOptions}
                                   value={appSettings?.defaultRawTonemapper || 'agx'}
                                   triggerClassName="bg-bg-primary"
+                                  translate={t}
                                 />
                               </SettingItem>
 
@@ -2019,6 +2027,7 @@ export default function SettingsPanel({
                                   options={tonemapperOptions}
                                   value={appSettings?.defaultNonRawTonemapper || 'basic'}
                                   triggerClassName="bg-bg-primary"
+                                  translate={t}
                                 />
                               </SettingItem>
                             </div>
@@ -2334,7 +2343,7 @@ export default function SettingsPanel({
                       const userKb = appSettings?.keybinds || {};
                       return (
                         <div key={section.id}>
-                          <Text variant={TextVariants.heading}>{section.label}</Text>
+                          <Text variant={TextVariants.heading}>{t(section.label)}</Text>
                           <div className="divide-y divide-border-color">
                             {sectionDefs.map((def) => (
                               <KeybindRow

@@ -691,9 +691,13 @@
       "font": "Font",
       "fontDesc": "Change the application font.",
       "systemDefault": "System Default",
+      "poppins": "Poppins",
       "nativeTitlebar": "Native Titlebar",
       "nativeTitlebarDesc": "Use your system's default window titlebar instead of RapidRAW's custom one.",
-      "enableOsTitlebar": "Enable OS Titlebar"
+      "enableOsTitlebar": "Enable OS Titlebar",
+      "dark": "Dark",
+      "light": "Light",
+      "grey": "Grey"
     },
     "adjustmentsVisibility": "Adjustments Visibility",
     "adjustmentsVisibilityDesc": "Hide adjustment sections you don't use often to simplify the editing panel. Your settings will be preserved and applied even when hidden.",
@@ -791,7 +795,17 @@
       "defaultRawTonemapper": "Default RAW Tonemapper",
       "defaultRawTonemapperDesc": "The tonemapper to apply to RAW images.",
       "defaultNonRawTonemapper": "Default Non-RAW Tonemapper",
-      "defaultNonRawTonemapperDesc": "The tonemapper to apply to non-RAW images (e.g., JPEG, PNG)."
+      "defaultNonRawTonemapperDesc": "The tonemapper to apply to non-RAW images (e.g., JPEG, PNG).",
+      "zoomNative": "1.0x (Native)",
+      "zoom75x": "0.75x",
+      "zoomHalf": "0.50x (Half)",
+      "zoom25x": "0.25x",
+      "auto": "Auto",
+      "applyGamma": "Apply Gamma",
+      "skipCalibrate": "Skip Calibrate",
+      "applyGammaSkipCalibrate": "Apply Gamma & Skip Calibrate",
+      "agx": "AgX",
+      "basic": "Basic"
     },
     "generativeAi": "Generative AI",
     "generativeAiDesc": "RapidRAW's AI is built for flexibility. Choose your ideal workflow, from fast local tools to powerful self-hosting.",
@@ -852,7 +866,30 @@
     "connectionFailed": "Connection failed.",
     "goToHome": "Go to Home",
     "addAiTag": "Add AI tag",
-    "addShortcut": "Add Shortcut"
+    "addShortcut": "Add Shortcut",
+    "ai": {
+      "cpu": "CPU",
+      "aiConnector": "AI Connector",
+      "cloud": "Cloud"
+    },
+    "preview": {
+      "fixedResolution": "Fixed Resolution",
+      "dynamic": "Dynamic"
+    },
+    "input": {
+      "mouse": "Mouse",
+      "trackpad": "Touchpad"
+    },
+    "keyboard": {
+      "pressKey": "Press a key... (Esc to clear)",
+      "notAssigned": "Not assigned"
+    },
+    "cloud": {
+      "subscriptionActive": "Cloud Subscription Active",
+      "noActiveSubscription": "No Active Subscription",
+      "needSubscription": "To use Cloud AI features, you need a Cloud subscription.",
+      "upgrade": "Upgrade on Website"
+    }
   },
   "modal": {
     "confirmDelete": "Are you sure you want to delete?",
@@ -1007,5 +1044,62 @@
   },
   "imagePicker": {
     "clearImage": "Clear Image"
+  },
+  "keyboard": {
+    "sections": {
+      "library": "Library",
+      "editing": "Editing",
+      "view": "View",
+      "rating": "Rating & Labels",
+      "panels": "Panels"
+    },
+    "actions": {
+      "open_image": "Open selected image",
+      "copy_files": "Copy selected file(s)",
+      "paste_files": "Paste file(s) to current folder",
+      "select_all": "Select all images",
+      "delete_selected": "Delete selected file(s)",
+      "preview_prev": "Previous image",
+      "preview_next": "Next image",
+      "zoom_in_step": "Zoom in (by step)",
+      "zoom_out_step": "Zoom out (by step)",
+      "cycle_zoom": "Cycle zoom (Fit, 2x Fit, 100%)",
+      "zoom_in": "Zoom in",
+      "zoom_out": "Zoom out",
+      "zoom_fit": "Zoom to fit",
+      "zoom_100": "Zoom to 100%",
+      "toggle_fullscreen": "Toggle fullscreen",
+      "show_original": "Show original (before/after)",
+      "rate_0": "Star rating: 0",
+      "rate_1": "Star rating: 1",
+      "rate_2": "Star rating: 2",
+      "rate_3": "Star rating: 3",
+      "rate_4": "Star rating: 4",
+      "rate_5": "Star rating: 5",
+      "color_label_none": "Color label: None",
+      "color_label_red": "Color label: Red",
+      "color_label_yellow": "Color label: Yellow",
+      "color_label_green": "Color label: Green",
+      "color_label_blue": "Color label: Blue",
+      "color_label_purple": "Color label: Purple",
+      "toggle_adjustments": "Toggle Adjustments panel",
+      "toggle_crop_panel": "Toggle Crop panel",
+      "toggle_masks": "Toggle Masks panel",
+      "toggle_ai": "Toggle AI panel",
+      "toggle_presets": "Toggle Presets panel",
+      "toggle_metadata": "Toggle Metadata panel",
+      "toggle_analytics": "Toggle Analytics display",
+      "toggle_export": "Toggle Export panel",
+      "toggle_library_exif": "Toggle EXIF overlay",
+      "undo": "Undo adjustment",
+      "redo": "Redo adjustment",
+      "copy_adjustments": "Copy selected adjustments",
+      "paste_adjustments": "Paste copied adjustments",
+      "rotate_left": "Rotate 90° counter-clockwise",
+      "rotate_right": "Rotate 90° clockwise",
+      "toggle_crop": "Toggle Crop / Straighten",
+      "brush_size_up": "Increase brush size",
+      "brush_size_down": "Decrease brush size"
+    }
   }
 }
