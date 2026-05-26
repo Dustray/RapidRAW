@@ -222,7 +222,10 @@
       "saturation": "Saturation",
       "hue": "Hue",
       "luminance": "Luminance",
-      "toggleSliders": "Toggle Sliders"
+      "toggleSliders": "Toggle Sliders",
+      "colorMixer": "Color Mixer",
+      "presence": "Presence",
+      "colorGrading": "Color Grading"
     },
     "details": {
       "title": "Details",
@@ -243,6 +246,8 @@
     },
     "effects": {
       "title": "Effects",
+      "creative": "Creative",
+      "lut": "LUT",
       "vignette": "Vignette",
       "grain": "Grain",
       "haze": "Haze",
@@ -279,6 +284,7 @@
       "balance": "Balance"
     },
     "colorCalibration": {
+      "title": "Color Calibration",
       "shadowsTint": "Tint",
       "hue": "Hue",
       "saturation": "Saturation"
@@ -421,7 +427,10 @@
       "linear": "Linear",
       "radialType": "Radial",
       "others": "Others",
-      "quickErase": "Quick Erase"
+      "quickErase": "Quick Erase",
+      "color": "Color",
+      "luminance": "Luminance",
+      "flow": "Flow"
     }
   },
   "export": {
@@ -602,7 +611,13 @@
     "inpainting": "Inpainting",
     "comingSoon": "Coming Soon",
     "createNewEdit": "Create New {{name}} Edit",
-    "resetSelection": "Reset Selection"
+    "resetSelection": "Reset Selection",
+    "editSettings": "Edit Settings",
+    "generating": "Generating...",
+    "inpaintSelection": "Inpaint Selection",
+    "generateWithAI": "Generate with AI",
+    "properties": "Properties",
+    "selectionProperties": "Selection Properties"
   },
   "settings": {
     "title": "Settings",
@@ -817,6 +832,7 @@
       "original": "Original"
     },
     "negativeConversion": {
+      "colorTiming": "Color Timing",
       "redCyan": "Red (Cyan)",
       "greenMagenta": "Green (Magenta)",
       "blueYellow": "Blue (Yellow)",

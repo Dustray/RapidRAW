@@ -222,7 +222,10 @@
       "saturation": "饱和度",
       "hue": "色相",
       "luminance": "亮度",
-      "toggleSliders": "切换滑块"
+      "toggleSliders": "切换滑块",
+      "colorMixer": "颜色混合器",
+      "presence": "质感",
+      "colorGrading": "颜色分级"
     },
     "details": {
       "title": "细节",
@@ -243,6 +246,8 @@
     },
     "effects": {
       "title": "效果",
+      "creative": "创意",
+      "lut": "LUT",
       "vignette": "暗角",
       "grain": "颗粒",
       "haze": "朦胧",
@@ -279,6 +284,7 @@
       "balance": "平衡"
     },
     "colorCalibration": {
+      "title": "颜色校准",
       "shadowsTint": "色调",
       "hue": "色相",
       "saturation": "饱和度"
@@ -416,12 +422,15 @@
       "subject": "主体",
       "foreground": "前景",
       "sky": "天空",
-      "wholeImage": "整张图像",
-      "quickEraser": "快速擦除",
+      "wholeImage": "整个图像",
+      "quickEraser": "快速橡皮擦",
       "linear": "线性",
       "radialType": "径向",
       "others": "其他",
-      "quickErase": "快速擦除"
+      "quickErase": "快速擦除",
+      "color": "颜色",
+      "luminance": "亮度",
+      "flow": "流动"
     }
   },
   "export": {
@@ -602,7 +611,13 @@
     "inpainting": "修复",
     "comingSoon": "即将推出",
     "createNewEdit": "创建新的{{name}}编辑",
-    "resetSelection": "重置选区"
+    "resetSelection": "重置选区",
+    "editSettings": "编辑设置",
+    "generating": "生成中...",
+    "inpaintSelection": "修复选区",
+    "generateWithAI": "使用AI生成",
+    "properties": "属性",
+    "selectionProperties": "选区属性"
   },
   "settings": {
     "title": "设置",
@@ -817,6 +832,7 @@
       "original": "原图"
     },
     "negativeConversion": {
+      "colorTiming": "颜色定时",
       "redCyan": "红色（青色）",
       "greenMagenta": "绿色（品红色）",
       "blueYellow": "蓝色（黄色）",

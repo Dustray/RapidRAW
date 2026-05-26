@@ -300,7 +300,7 @@ const ColorWheel = ({
       <div className="w-full" style={lumWrapperStyle}>
         <Slider
           defaultValue={defaultValue.luminance}
-          label={isExpanded ? 'Luminance' : <Sun size={16} className="text-text-secondary" />}
+          label={isExpanded ? t('color.luminance') : <Sun size={16} className="text-text-secondary" />}
           max={100}
           min={-100}
           onChange={handleLumChange}

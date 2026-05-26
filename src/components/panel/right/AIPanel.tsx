@@ -1081,7 +1081,7 @@ export default function AIPanel() {
                 className="flex-1 min-h-0"
               >
                 <Text variant={TextVariants.heading} className="mb-2">
-                  Edit Settings
+                  {t('ai.editSettings')}
                 </Text>
                 <SettingsPanel
                   container={activeContainer || null}
@@ -1831,17 +1831,17 @@ function SettingsPanel({
             )}
             <span className="ml-2">
               {isGeneratingAi || displayContainer.isLoading
-                ? 'Generating...'
+                ? t('ai.generating')
                 : useFastInpaint
-                  ? 'Inpaint Selection'
-                  : 'Generate with AI'}
+                  ? t('ai.inpaintSelection')
+                  : t('ai.generateWithAI')}
             </span>
           </Button>
         </div>
       </CollapsibleSection>
 
       <CollapsibleSection
-        title={isComponentMode ? `${getSubMaskName(activeSubMask)} Properties` : 'Selection Properties'}
+        title={isComponentMode ? `${getSubMaskName(activeSubMask)} ${t('ai.properties')}` : t('ai.selectionProperties')}
         isOpen={collapsibleState.properties}
         onToggle={() => handleToggleSection('properties')}
         canToggleVisibility={false}

@@ -219,7 +219,7 @@ export default function NegativeConversionModal({
           className={clsx('transition-opacity duration-200', isSaving && 'opacity-50 pointer-events-none grayscale')}
         >
           <Text variant={TextVariants.heading} className="mb-2">
-            Color Timing
+            {t('modal.negativeConversion.colorTiming')}
           </Text>
           <div className="space-y-3">
             <Slider
