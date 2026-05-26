@@ -105,7 +105,7 @@ export default function EffectsPanel({
           {adjustmentVisibility.vignette !== false && (
             <div className="p-2 bg-bg-tertiary rounded-md">
               <Text variant={TextVariants.heading} className="mb-2">
-                Vignette
+                {t('adjustments.effects.vignette')}
               </Text>
               <Slider
                 label={t('adjustments.effects.vignetteAmount')}

@@ -33,7 +33,7 @@ export default function DetailsPanel({
       {adjustmentVisibility.sharpening !== false && (
         <div className="p-2 bg-bg-tertiary rounded-md">
           <Text variant={TextVariants.heading} className="mb-2">
-            Sharpening
+            {t('adjustments.details.sharpening')}
           </Text>
           <Slider
             label={t('adjustments.details.sharpness')}
@@ -61,7 +61,7 @@ export default function DetailsPanel({
       {adjustmentVisibility.presence !== false && (
         <div className="p-2 bg-bg-tertiary rounded-md">
           <Text variant={TextVariants.heading} className="mb-2">
-            Presence
+            {t('adjustments.details.presence')}
           </Text>
           <Slider
             label={t('adjustments.details.clarity')}
@@ -107,7 +107,7 @@ export default function DetailsPanel({
       {adjustmentVisibility.noiseReduction !== false && (
         <div className="p-2 bg-bg-tertiary rounded-md">
           <Text variant={TextVariants.heading} className="mb-2">
-            Noise Reduction
+            {t('adjustments.details.noiseReduction')}
           </Text>
           <Slider
             label={t('adjustments.details.luminanceNoiseReduction')}
@@ -133,7 +133,7 @@ export default function DetailsPanel({
       {!isForMask && adjustmentVisibility.chromaticAberration !== false && (
         <div className="p-2 bg-bg-tertiary rounded-md">
           <Text variant={TextVariants.heading} className="mb-2">
-            Chromatic Aberration
+            {t('adjustments.details.chromaticAberration')}
           </Text>
           <Slider
             label={t('adjustments.details.redCyan')}
