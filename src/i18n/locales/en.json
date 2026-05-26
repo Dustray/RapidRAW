@@ -195,7 +195,7 @@
   "adjustments": {
     "title": "Adjustments",
     "chromaticAberration": "Chromatic Aberration",
-    "colorCalibration": "Color Calibration",
+    "colorCalibrationT": "Color Calibration",
     "basic": {
       "title": "Basic",
       "evShift": "EV Shift",
@@ -569,6 +569,7 @@
     "authorAndCopyright": "Author & Copyright",
     "organization": "Organization",
     "ratingAndLabels": "Rating & Labels",
+    "rating": "Rating",
     "colorLabel": "Color Label",
     "gpsLocation": "GPS Location",
     "noImageSelected": "No image selected.",
@@ -908,6 +909,7 @@
     "enterNewFolderName": "Enter new folder name...",
     "enterFolderName": "Enter folder name...",
     "transform": {
+      "title": "Transform",
       "amount": "Amount",
       "vertical": "Vertical",
       "horizontal": "Horizontal",
@@ -918,7 +920,11 @@
       "toggleGrid": "Toggle Grid",
       "toggleHelperLines": "Toggle Helper Lines",
       "holdToCompare": "Hold to Compare",
-      "original": "Original"
+      "original": "Original",
+      "xAxis": "X Axis",
+      "yAxis": "Y Axis",
+      "cancel": "Cancel",
+      "apply": "Apply"
     },
     "negativeConversion": {
       "colorTiming": "Color Timing",
@@ -1106,5 +1112,326 @@
       "brush_size_up": "Increase brush size",
       "brush_size_down": "Decrease brush size"
     }
+  },
+  "contextMenu": {
+    "albumIcons": {
+      "folderDefault": "Folder (Default)",
+      "travel": "Travel",
+      "nature": "Nature",
+      "summer": "Summer",
+      "photography": "Photography",
+      "locations": "Locations",
+      "favorites": "Favorites",
+      "featured": "Featured",
+      "people": "People",
+      "person": "Person",
+      "automotive": "Automotive",
+      "portfolio": "Portfolio"
+    },
+    "editor": {
+      "emptyGroup": "(Empty Group)",
+      "exportImage": "Export Image",
+      "undo": "Undo",
+      "redo": "Redo",
+      "copyAdjustments": "Copy Adjustments",
+      "pasteAdjustments": "Paste Adjustments",
+      "productivity": "Productivity",
+      "autoAdjustImage": "Auto Adjust Image",
+      "denoiseImage": "Denoise Image",
+      "convertNegative": "Convert Negative",
+      "stitchPanorama": "Stitch Panorama",
+      "mergeToHdr": "Merge to HDR",
+      "frameImage": "Frame Image",
+      "cullImage": "Cull Image",
+      "rating": "Rating",
+      "colorLabel": "Color Label",
+      "noLabel": "No Label",
+      "tagging": "Tagging",
+      "resetAdjustments": "Reset Adjustments",
+      "cancel": "Cancel",
+      "confirmReset": "Confirm Reset"
+    },
+    "deleteConfirm": {
+      "deleteImage": "Delete Image",
+      "deleteImages": "Delete {{count}} Images",
+      "exportImage": "Export Image",
+      "exportImages": "Export {{count}} Images",
+      "cancel": "Cancel",
+      "confirmDeleteVirtual": "Confirm Delete + Virtual Copies",
+      "deleteSelectedOnly": "Delete Selected Only",
+      "deleteAssociated": "Delete + Associated",
+      "confirmDelete": "Confirm Delete"
+    },
+    "library": {
+      "pasteAdjustments": "Paste Adjustments",
+      "pasteAdjustmentsMultiple": "Paste Adjustments to {{count}} Images",
+      "resetAdjustments": "Reset Adjustments",
+      "resetAdjustmentsMultiple": "Reset Adjustments on {{count}} Images",
+      "copyImage": "Copy Image",
+      "copyImages": "Copy {{count}} Images",
+      "autoAdjustImage": "Auto Adjust Image",
+      "autoAdjustImages": "Auto Adjust Images",
+      "renameImage": "Rename Image",
+      "renameImages": "Rename {{count}} Images",
+      "cullImage": "Cull Image",
+      "cullImages": "Cull Images",
+      "frameImage": "Frame Image",
+      "createCollage": "Create Collage",
+      "stitchPanorama": "Stitch Panorama",
+      "convertNegative": "Convert Negative",
+      "convertNegatives": "Convert Negatives",
+      "denoiseImage": "Denoise Image",
+      "denoiseImages": "Denoise Images",
+      "editImage": "Edit Image",
+      "copyAdjustments": "Copy Adjustments",
+      "productivity": "Productivity",
+      "duplicateImage": "Duplicate Image",
+      "physicalCopy": "Physical Copy",
+      "virtualCopy": "Virtual Copy",
+      "rating": "Rating",
+      "noRating": "No Rating",
+      "starRating": "{{rating}} Star{{rating !== 1 ? 's' : ''}}",
+      "colorLabel": "Color Label",
+      "noLabel": "No Label",
+      "tagging": "Tagging",
+      "addToAlbum": "Add to Album",
+      "noAlbumsAvailable": "No Albums Available",
+      "removeFromAlbum": "Remove from Album",
+      "removeFromAlbumMultiple": "Remove {{count}} Images from Album",
+      "showInFileExplorer": "Show in File Explorer",
+      "cancel": "Cancel",
+      "confirmReset": "Confirm Reset"
+    },
+    "folderTree": {
+      "copyImageHere": "Copy image here",
+      "copyImagesHere": "Copy {{numCopied}} images here",
+      "moveImageHere": "Move image here",
+      "moveImagesHere": "Move {{numCopied}} images here",
+      "unpinFolder": "Unpin Folder",
+      "pinFolder": "Pin Folder",
+      "removeRootFolder": "Remove Root Folder",
+      "newFolder": "New Folder",
+      "renameFolder": "Rename Folder",
+      "changeIcon": "Change Icon",
+      "paste": "Paste",
+      "importImages": "Import Images",
+      "showInFileExplorer": "Show in File Explorer",
+      "refreshFolders": "Refresh Folders",
+      "deleteFolder": "Delete Folder",
+      "cancel": "Cancel",
+      "confirm": "Confirm"
+    },
+    "album": {
+      "newAlbum": "New Album",
+      "newGroup": "New Group",
+      "renameAlbum": "Rename Album",
+      "changeIcon": "Change Icon",
+      "moveTo": "Move To...",
+      "cancel": "Cancel",
+      "paste": "Paste",
+      "refreshView": "Refresh View",
+      "importImages": "Import Images",
+      "alreadyHere": "Already Here",
+      "moveHere": "Move Here",
+      "current": "Current",
+      "alreadyAtRoot": "Already at Root",
+      "rootDirectory": "Root Directory",
+      "deleteGroup": "Delete Group",
+      "deleteAlbum": "Delete Album",
+      "confirmDeleteAlbum": "Confirm Delete Album",
+      "confirmDeleteGroupNested": "Confirm Delete Group & All Nested Albums",
+      "confirmDeleteGroup": "Confirm Delete Album Group",
+      "addCopiedImage": "Add copied image to album",
+      "addCopiedImages": "Add {{count}} copied images to album"
+    }
+  },
+  "fileOperations": {
+    "deleteConfirm": {
+      "title": "Confirm Delete",
+      "delete": "Delete",
+      "deleteWithVirtualTitle": "Delete Image and All Virtual Copies?",
+      "deleteWithVirtualDesc": "Are you sure you want to permanently delete this image and all of its virtual copies? This action cannot be undone.",
+      "deleteAll": "Delete All",
+      "deleteSingleDesc": "Are you sure you want to permanently delete this image? This action cannot be undone. Right-click for more options (e.g., deleting associated files).",
+      "deleteSelectedOnly": "Delete Selected Only",
+      "deleteMultipleDesc": "Are you sure you want to permanently delete these {{count}} images? This action cannot be undone. Right-click for more options (e.g., deleting associated files)."
+    }
+  },
+  "imagePicker": {
+    "selectImage": "Select an image file",
+    "select": "Select",
+    "clearImage": "Clear Image"
+  },
+  "panoramaModal": {
+    "failed": "Panorama Failed",
+    "openInEditor": "Open in Editor",
+    "close": "Close",
+    "cancel": "Cancel",
+    "savedSuccessfully": "Panorama Saved Successfully!",
+    "stitchingPanorama": "Stitching Panorama",
+    "processingTimeNote": "This may take a few minutes depending on the number and size of images.",
+    "stitchPanorama": "Stitch Panorama",
+    "description": "Combine {{count}} overlapping images into a seamless panorama.",
+    "descriptionNoCount": "Combine your overlapping images into a seamless panorama."
+  },
+  "hdrModal": {
+    "failed": "HDR Merge Failed",
+    "openInEditor": "Open in Editor",
+    "close": "Close",
+    "cancel": "Cancel",
+    "savedSuccessfully": "HDR Saved Successfully!",
+    "mergingHdr": "Merging HDR",
+    "processingTimeNote": "This may take a few minutes depending on the number and size of your exposures.",
+    "mergeToHdr": "Merge to HDR",
+    "description": "Combine {{count}} bracketed exposures into a single High Dynamic Range image.",
+    "descriptionNoCount": "Combine your bracketed exposures into a single High Dynamic Range image."
+  },
+  "denoiseModal": {
+    "processingFailed": "Processing Failed",
+    "savedSuccessfully": "Image Saved Successfully!",
+    "gpuNote": "NIND Denoise does not yet support GPU acceleration due to dependency limitations.",
+    "openInEditor": "Open in Editor",
+    "close": "Close",
+    "cancel": "Cancel",
+    "batchDenoiseSave": "Batch Denoise & Save",
+    "retry": "Retry",
+    "start": "Start",
+    "save": "Save",
+    "method": "Method",
+    "qualityTileSize": "Quality / Tile Size",
+    "strength": "Strength",
+    "processingTimeNote": "This may take a few minutes depending on image size and selected method.",
+    "panZoomEnabled": "Pan & Zoom enabled",
+    "reset": "Reset",
+    "denoisingProgress": "Denoising {{current}} of {{total}}...",
+    "downloadingModel": "Downloading {{model}}...",
+    "initializing": "Initializing...",
+    "denoisingInProgress": "Denoising in Progress",
+    "denoiseImages": "Denoise Images",
+    "denoiseImage": "Denoise Image",
+    "description": "Remove noise from your image using AI-powered or traditional denoising."
+  },
+  "cullingModal": {
+    "markAsRejected": "Mark as Rejected (Red Label)",
+    "setRatingToOne": "Set Rating to 1 Stars",
+    "moveToTrash": "Move to Trash",
+    "failed": "Culling Failed",
+    "close": "Close",
+    "noIssuesFound": "No issues found!",
+    "allUniqueAndSharp": "All images seem to be unique and sharp.",
+    "done": "Done",
+    "starting": "Starting...",
+    "cullingFailed": "Culling Failed",
+    "cullingSuggestions": "Culling Suggestions",
+    "similarGroups": "Similar Groups",
+    "blurryImages": "Blurry Images",
+    "group": "Group {{index}}",
+    "bestImage": "Best Image",
+    "duplicates": "Duplicates ({{count}})",
+    "cancel": "Cancel",
+    "applyTo": "Apply to {{count}} image{{plural}}"
+  },
+  "collageModal": {
+    "errorOccurred": "An Error Occurred",
+    "done": "Done",
+    "close": "Close",
+    "cancel": "Cancel",
+    "saving": "Saving...",
+    "saveCollage": "Save Collage",
+    "widthPlaceholder": "W",
+    "heightPlaceholder": "H",
+    "collageSaved": "Collage Saved!"
+  },
+  "lensCorrectionModal": {
+    "detecting": "Detecting...",
+    "notFound": "Not Found",
+    "lensFound": "Lens Found",
+    "autoDetectLens": "Auto-detect Lens",
+    "title": "Lens Correction",
+    "resetTooltip": "Reset Lens Correction",
+    "zoomOutTooltip": "Zoom Out",
+    "zoomInTooltip": "Zoom In",
+    "resetZoomTooltip": "Reset Zoom",
+    "holdToCompareTooltip": "Hold to Compare",
+    "cancel": "Cancel",
+    "apply": "Apply",
+    "manageLensesInSettings": "Manage your lenses in Settings"
+  },
+  "negativeConversionModal": {
+    "title": "Negative Conversion",
+    "resetTooltip": "Reset",
+    "zoomOutTooltip": "Zoom Out",
+    "zoomInTooltip": "Zoom In",
+    "resetViewTooltip": "Reset View"
+  },
+  "transformModal": {
+    "title": "Transform",
+    "resetTooltip": "Reset Transform",
+    "toggleGridTooltip": "Toggle Grid",
+    "toggleHelperLinesTooltip": "Toggle Helper Lines",
+    "zoomOutTooltip": "Zoom Out",
+    "zoomInTooltip": "Zoom In",
+    "resetZoomTooltip": "Reset Zoom",
+    "holdToCompareTooltip": "Hold to Compare"
+  },
+  "copyPasteSettingsModal": {
+    "includedAdjustments": "Included Adjustments",
+    "selectAll": "Select All",
+    "selectNone": "Select None",
+    "cancel": "Cancel",
+    "save": "Save"
+  },
+  "importSettingsModal": {
+    "dateFormat": "Date Format",
+    "dateFormatPlaceholder": "e.g., YYYY/MM-DD"
+  },
+  "folderTree": {
+    "addFolder": "Add folder"
+  },
+  "settingsPanel": {
+    "languageOption": "中文 (Chinese)",
+    "specialThanksYou": "<span class=\"font-semibold text-accent\">You</span>: For using and supporting RapidRAW. Your interest keeps this project alive and evolving.",
+    "cloudAiBenefits": {
+      "convenience": "Maximum convenience, no setup",
+      "sameResults": "Same results as self-hosting",
+      "noHardwareRequired": "No powerful hardware required"
+    }
+  },
+  "communityPage": {
+    "save": "Save",
+    "saving": "Saving...",
+    "saved": "Saved",
+    "getFeatured": "Want to get your preset featured?",
+    "createIssue": "Create an issue on GitHub"
+  },
+  "editorToolbar": {
+    "virtualCopy": "VC",
+    "iso": "ISO"
+  },
+  "filmstrip": {
+    "virtualCopyTooltip": "Virtual Copy",
+    "virtualCopy": "VC"
+  },
+  "libraryItems": {
+    "virtualCopy": "VC"
+  },
+  "metadataPanel": {
+    "virtualCopy": "VC"
+  },
+  "aiPanel": {
+    "dropToCreateEdit": "Drop here to create a new edit",
+    "deleteComponentTooltip": "Delete Component",
+    "promptPlaceholder": "e.g., a field of flowers"
+  },
+  "cropPanel": {
+    "widthPlaceholder": "W",
+    "heightPlaceholder": "H"
+  },
+  "colorAdjustment": {
+    "toggleSlidersTooltip": "Toggle Sliders"
+  },
+  "curvesAdjustment": {
+    "resetAllParametric": "Reset All Parametric Curves",
+    "resetAllPoint": "Reset All Point Curves"
   }
 }

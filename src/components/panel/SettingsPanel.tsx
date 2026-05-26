@@ -1173,7 +1173,7 @@ export default function SettingsPanel({
                       }
                     />
                     <Switch
-                      label={t('adjustments.colorCalibration')}
+                      label={t('adjustments.colorCalibrationT')}
                       checked={appSettings?.adjustmentVisibility?.colorCalibration ?? true}
                       onChange={(checked) =>
                         onSettingsChange({

@@ -756,7 +756,7 @@ export default function CollageModal({ isOpen, onClose, onSave, sourceImages }: 
         <div className="flex flex-col items-center justify-center h-full text-center">
           <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-4" />
           <Text variant={TextVariants.heading} className="mb-2">
-            Collage Saved!
+            {t('collageModal.collageSaved')}
           </Text>
         </div>
       );
@@ -904,12 +904,12 @@ export default function CollageModal({ isOpen, onClose, onSave, sourceImages }: 
                 onClick={onClose}
                 className="px-4 py-2 rounded-md text-text-secondary hover:bg-surface transition-colors"
               >
-                {savedPath || error ? (savedPath ? 'Done' : 'Close') : 'Cancel'}
+                {savedPath || error ? (savedPath ? t('collageModal.done') : t('collageModal.close')) : t('collageModal.cancel')}
               </button>
               {!savedPath && !error && (
                 <Button onClick={handleSave} disabled={isSaving || isLoading || !activeLayout}>
                   {isSaving ? <Loader2 className="animate-spin mr-2" /> : <Save size={16} className="mr-2" />}
-                  {isSaving ? 'Saving...' : 'Save Collage'}
+                  {isSaving ? t('collageModal.saving') : t('collageModal.saveCollage')}
                 </Button>
               )}
             </div>
