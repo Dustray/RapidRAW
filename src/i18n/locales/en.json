@@ -857,7 +857,6 @@
     "aiTagsCleared": "{{count}} files updated. AI tags removed.",
     "confirmAiTagDeletion": "Confirm AI Tag Deletion",
     "confirmClearAiTagsDesc": "Are you sure you want to remove all AI-generated tags from all images in all active root folders?\\n\\nThis will not affect user-added tags. This action cannot be undone.",
-    "clearAllTags": "Clear All Tags",
     "clearingAllTags": "Clearing all tags from sidecar files...",
     "allTagsCleared": "{{count}} files updated. All non-color tags removed.",
     "confirmAllTagDeletion": "Confirm All Tag Deletion",
