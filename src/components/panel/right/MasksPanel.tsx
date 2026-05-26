@@ -181,13 +181,13 @@ const BrushTools = ({
         className={`p-2 rounded-md text-sm font-medium transition-colors flex items-center justify-center gap-2 ${settings.tool === ToolType.Brush ? 'text-primary bg-surface' : 'bg-surface text-text-secondary hover:bg-card-active'}`}
         onClick={() => onSettingsChange((s: any) => ({ ...s, tool: ToolType.Brush }))}
       >
-        Brush
+        {t('masks.brush')}
       </button>
       <button
         className={`p-2 rounded-md text-sm font-medium transition-colors flex items-center justify-center gap-2 ${settings.tool === ToolType.Eraser ? 'text-primary bg-surface' : 'bg-surface text-text-secondary hover:bg-card-active'}`}
         onClick={() => onSettingsChange((s: any) => ({ ...s, tool: ToolType.Eraser }))}
       >
-        Eraser
+        {t('masks.eraser')}
       </button>
     </div>
   </>
@@ -241,6 +241,7 @@ function DepthRangePicker({
   onChange: (values: { minDepth: number; maxDepth: number; minFade: number; maxFade: number }) => void;
   onDragStateChange?: (isDragging: boolean) => void;
 }) {
+  const { t } = useTranslation();
   const trackRef = useRef<HTMLDivElement>(null);
   const [activeHandle, setActiveHandle] = useState<string | null>(null);
   const [dragValues, setDragValues] = useState<{
@@ -415,7 +416,7 @@ function DepthRangePicker({
             isLabelHovered ? 'opacity-0' : 'opacity-100'
           }`}
         >
-          Depth Range
+          {t('masks.depthRange')}
         </Text>
         <Text
           variant={TextVariants.label}
@@ -424,7 +425,7 @@ function DepthRangePicker({
             isLabelHovered ? 'opacity-100' : 'opacity-0'
           }`}
         >
-          Reset
+          {t('common.reset')}
         </Text>
       </div>
       <div ref={trackRef} className="relative rounded-md overflow-hidden mt-2 select-none" style={{ height: 44 }}>
@@ -547,8 +548,8 @@ function DepthRangePicker({
         ))}
       </div>
       <Text as="div" variant={TextVariants.small} className="flex justify-between select-none px-1">
-        <span>Near</span>
-        <span>Far</span>
+        <span>{t('masks.near')}</span>
+        <span>{t('masks.far')}</span>
       </Text>
     </div>
   );
@@ -922,8 +923,8 @@ export default function MasksPanel() {
     if (targetContainerId && hasComponents) {
       options.push(
         { type: OPTION_SEPARATOR },
-        buildModeSubmenu('Subtract from Mask', Minus, SubMaskMode.Subtractive),
-        buildModeSubmenu('Intersect Mask with', SquaresIntersect, SubMaskMode.Intersect),
+        buildModeSubmenu(t('masks.subtractFromMask'), Minus, SubMaskMode.Subtractive),
+        buildModeSubmenu(t('masks.intersectMaskWith'), SquaresIntersect, SubMaskMode.Intersect),
       );
     }
 
@@ -1239,8 +1240,8 @@ export default function MasksPanel() {
       onClick: () => handleAddMaskContainer(m.type),
     }));
     showContextMenu(e.clientX, e.clientY, [
-      { label: 'Paste Mask', icon: ClipboardPaste, disabled: !copiedMask, onClick: () => handlePasteMask() },
-      { label: 'Add New Mask', icon: Plus, submenu: newMaskSubMenu },
+      { label: t('masks.pasteMask'), icon: ClipboardPaste, disabled: !copiedMask, onClick: () => handlePasteMask() },
+      { label: t('masks.addNewMask'), icon: Plus, submenu: newMaskSubMenu },
     ]);
   };
 
@@ -1253,7 +1254,7 @@ export default function MasksPanel() {
     >
       <div className="flex flex-col h-full select-none overflow-hidden" onContextMenu={handlePanelContextMenu}>
         <div className="p-4 flex justify-between items-center shrink-0 border-b border-surface">
-          <Text variant={TextVariants.title}>Masking</Text>
+          <Text variant={TextVariants.title}>{t('masks.masking')}</Text>
           <div className="flex items-center gap-1">
             <button
               className={clsx(
@@ -1261,7 +1262,7 @@ export default function MasksPanel() {
                 isWaveformVisible ? 'bg-surface hover:bg-card-active' : 'hover:bg-surface',
               )}
               onClick={onToggleWaveform}
-              data-tooltip="Toggle Analytics Display"
+              data-tooltip={t('controls.toggleAnalytics')}
             >
               <ChartArea size={18} />
             </button>
@@ -1317,7 +1318,7 @@ export default function MasksPanel() {
                 onClick={handleDeselect}
               >
                 <Text variant={TextVariants.heading} className="mb-2">
-                  Create New Mask
+                  {t('masks.createNewMask')}
                 </Text>
                 <div className="grid grid-cols-3 gap-2" onClick={(e) => e.stopPropagation()}>
                   {MASK_PANEL_CREATION_TYPES.map((maskType: MaskType) => (
@@ -1346,7 +1347,7 @@ export default function MasksPanel() {
                 onClick={handleDeselect}
               >
                 <Text variant={TextVariants.heading} className="mb-2">
-                  Masks
+                  {t('masks.masks')}
                 </Text>
 
                 <AnimatePresence

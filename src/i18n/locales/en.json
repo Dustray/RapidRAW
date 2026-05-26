@@ -43,7 +43,20 @@
     "disabled": "Disabled",
     "clear": "Clear",
     "open": "Open",
-    "processing": "Processing..."
+    "processing": "Processing...",
+    "add": "Add",
+    "new": "New",
+    "edit": "Edit",
+    "duplicate": "Duplicate",
+    "invert": "Invert",
+    "zoomIn": "Zoom In",
+    "zoomOut": "Zoom Out",
+    "zoomReset": "Reset Zoom",
+    "toggle": "Toggle",
+    "ready": "Ready",
+    "comingSoon": "Coming Soon",
+    "width": "Width",
+    "height": "Height"
   },
   "library": {
     "title": "Library",
@@ -100,11 +113,16 @@
       "searchPlaceholder": "Search folders...",
       "pinned": "Pinned",
       "albums": "Albums",
-      "folders": "Folders"
+      "folders": "Folders",
+      "expand": "Expand",
+      "collapse": "Collapse",
+      "clearSearch": "Clear search"
     },
     "tagging": {
-      "addTagPlaceholder": "Add a tag..."
-    }
+      "addTagPlaceholder": "Add a tag...",
+      "addTag": "Add tag"
+    },
+    "virtualCopy": "Virtual Copy"
   },
   "editor": {
     "title": "Editor",
@@ -140,7 +158,8 @@
       "aiGeneration": "AI Generation",
       "shutterSpeed": "Shutter Speed",
       "aperture": "Aperture",
-      "focalLength": "Focal Length"
+      "focalLength": "Focal Length",
+      "iso": "ISO"
     }
   },
   "adjustments": {
@@ -164,7 +183,8 @@
       "vibrance": "Vibrance",
       "saturation": "Saturation",
       "hue": "Hue",
-      "luminance": "Luminance"
+      "luminance": "Luminance",
+      "toggleSliders": "Toggle Sliders"
     },
     "details": {
       "title": "Details",
@@ -227,7 +247,13 @@
       "saturation": "Saturation"
     },
     "lut": {
-      "intensity": "Intensity"
+      "intensity": "Intensity",
+      "selectLut": "Select a LUT file",
+      "selectLutFile": "Select a LUT file",
+      "select": "Select",
+      "clearLut": "Clear LUT",
+      "lutFiles": "LUT Files",
+      "lut": "LUT"
     }
   },
   "crop": {
@@ -238,7 +264,19 @@
     "aspectRatio": "Aspect Ratio",
     "straighten": "Straighten",
     "angle": "Angle",
-    "flip": "Flip"
+    "flip": "Flip",
+    "resetCrop": "Reset Crop & Transform",
+    "customAspectRatio": "Enter custom aspect ratio",
+    "straightenTool": "Straighten Tool (S)",
+    "resetFineRotation": "Reset Fine Rotation",
+    "rotateCCW": "Rotate 90° counter-clockwise",
+    "rotateCW": "Rotate 90° clockwise",
+    "flipHorizontal": "Flip image horizontally",
+    "flipVertical": "Flip image vertically",
+    "perspective": "Perspective and keystone correction",
+    "lensDistortion": "Lens distortion correction",
+    "xAxis": "X Axis",
+    "yAxis": "Y Axis"
   },
   "masks": {
     "title": "Masks",
@@ -254,7 +292,30 @@
     "brushSize": "Brush Size",
     "brushFeather": "Brush Feather",
     "flow": "Flow",
-    "opacity": "Opacity"
+    "opacity": "Opacity",
+    "eraser": "Eraser",
+    "depthRange": "Depth Range",
+    "near": "Near",
+    "far": "Far",
+    "createNewMask": "Create New Mask",
+    "masks": "Masks",
+    "masking": "Masking",
+    "addNewMask": "Add New Mask",
+    "pasteMask": "Paste Mask",
+    "maskAdjustments": "Mask Adjustments",
+    "dropToCreate": "Drop here to create a new mask",
+    "showMoreMaskTypes": "Show More Mask Types",
+    "addToCurrentMask": "Add to Current Mask or Create New (Right-click)",
+    "createMask": "Create New Mask",
+    "subtractFromMask": "Subtract from Mask",
+    "intersectMaskWith": "Intersect Mask with",
+    "resetSelection": "Reset Selection",
+    "deleteComponent": "Delete Component",
+    "toggleAnalytics": "Toggle Analytics Display",
+    "resetMasking": "Reset Masking",
+    "grow": "Grow",
+    "tolerance": "Tolerance",
+    "globalFeather": "Global Feather"
   },
   "export": {
     "title": "Export",
@@ -328,7 +389,12 @@
     "saveEditedImage": "Save Edited Image",
     "failedToStartExport": "Failed to start export.",
     "selectPreset": "Select a preset...",
-    "presetName": "Preset Name"
+    "presetName": "Preset Name",
+    "savePreset": "Save current settings as new preset",
+    "deletePreset": "Delete preset",
+    "overwritePreset": "Overwrite selected preset",
+    "saved": "Saved!",
+    "selectPresetToApply": "Select a preset to apply"
   },
   "rightPanel": {
     "info": "Info",
@@ -341,6 +407,7 @@
   },
   "metadata": {
     "title": "Metadata",
+    "metadata": "Metadata",
     "camera": "Camera",
     "lens": "Lens",
     "aperture": "Aperture",
@@ -354,7 +421,20 @@
     "latitude": "Latitude",
     "longitude": "Longitude",
     "altitude": "Altitude",
-    "addTagPlaceholder": "Add tag..."
+    "addTagPlaceholder": "Add tag...",
+    "title": "Title",
+    "author": "Author",
+    "copyright": "Copyright",
+    "comments": "Comments",
+    "clickToEdit": "Click to edit",
+    "emptyClickToAdd": "Empty (Click to add)",
+    "openMap": "Click to open map in a new tab",
+    "fileInformation": "File Information",
+    "cameraDetails": "Camera Details",
+    "none": "None",
+    "tags": "Tags",
+    "noTags": "No tags",
+    "extendedExif": "Extended EXIF"
   },
   "presets": {
     "title": "Presets",
@@ -362,7 +442,11 @@
     "deletePreset": "Delete Preset",
     "applyPreset": "Apply Preset",
     "presetName": "Preset Name",
-    "noPresets": "No presets saved"
+    "noPresets": "No presets saved",
+    "exploreCommunity": "Explore Community Presets",
+    "importPresets": "Import presets from .rrpreset file",
+    "exportPresets": "Export all presets to .rrpreset file",
+    "saveAsNew": "Save as new preset"
   },
   "ai": {
     "title": "AI",
@@ -380,7 +464,36 @@
     "brushFeather": "Brush Feather",
     "builtinAiLabel": "Built-in AI:",
     "useBasicInpainting": "Use basic inpainting",
-    "generativeReplace": "Generative Replace"
+    "generativeReplace": "Generative Replace",
+    "ready": "Ready",
+    "upgradeRequired": "Upgrade Required",
+    "notLoggedIn": "Not Logged In",
+    "notDetected": "Not Detected",
+    "resetInpainting": "Reset Inpainting",
+    "subtractFromEdit": "Subtract from Edit",
+    "intersectEditWith": "Intersect Edit with",
+    "pasteEdit": "Paste Edit",
+    "addNewEdit": "Add New Edit",
+    "duplicateEdit": "Duplicate Edit",
+    "duplicateAndInvertEdit": "Duplicate and Invert Edit",
+    "copyEdit": "Copy Edit",
+    "deleteEdit": "Delete Edit",
+    "hideEdit": "Hide Edit",
+    "showEdit": "Show Edit",
+    "rename": "Rename",
+    "aiBackend": "AI Backend:",
+    "cloudAi": "Cloud AI:",
+    "monthlyUsage": "Monthly Usage",
+    "proSubscriptionRequired": "Pro subscription required. Upgrade in Settings.",
+    "logInViaSettings": "Log in via Settings to use Cloud AI.",
+    "aiConnector": "AI Connector:",
+    "connectedToLocalBackend": "Connected to local generative backend.",
+    "simpleInpaintingOnly": "Only simple inpainting available. Start your local backend.",
+    "usingBasicLocalCpu": "Using basic local CPU. Select Cloud or AI Connector in settings for generative replace.",
+    "inpainting": "Inpainting",
+    "comingSoon": "Coming Soon",
+    "createNewEdit": "Create New {{name}} Edit",
+    "resetSelection": "Reset Selection"
   },
   "settings": {
     "title": "Settings",
@@ -540,24 +653,27 @@
     "sidecarFilesDeleted": "{{count}} sidecar files deleted successfully.",
     "deleteAllEdits": "Delete All Edits",
     "confirmDeletion": "Confirm Deletion",
-    "confirmDeleteSidecarsDesc": "Are you sure you want to delete all sidecar files?\n\nThis will permanently remove all your edits for all images inside all active root folders and their subfolders.",
+    "confirmDeleteSidecarsDesc": "Are you sure you want to delete all sidecar files?\\n\\nThis will permanently remove all your edits for all images inside all active root folders and their subfolders.",
     "clearingAiTags": "Clearing AI tags from all sidecar files...",
     "aiTagsCleared": "{{count}} files updated. AI tags removed.",
     "confirmAiTagDeletion": "Confirm AI Tag Deletion",
-    "confirmClearAiTagsDesc": "Are you sure you want to remove all AI-generated tags from all images in all active root folders?\n\nThis will not affect user-added tags. This action cannot be undone.",
+    "confirmClearAiTagsDesc": "Are you sure you want to remove all AI-generated tags from all images in all active root folders?\\n\\nThis will not affect user-added tags. This action cannot be undone.",
     "clearAllTags": "Clear All Tags",
     "clearingAllTags": "Clearing all tags from sidecar files...",
     "allTagsCleared": "{{count}} files updated. All non-color tags removed.",
     "confirmAllTagDeletion": "Confirm All Tag Deletion",
-    "confirmClearAllTagsDesc": "Are you sure you want to remove all AI-generated and user-added tags from all images in all active root folders?\n\nThis action cannot be undone.",
+    "confirmClearAllTagsDesc": "Are you sure you want to remove all AI-generated and user-added tags from all images in all active root folders?\\n\\nThis action cannot be undone.",
     "clearingThumbnailCache": "Clearing thumbnail cache...",
     "thumbnailCacheCleared": "Thumbnail cache cleared successfully.",
     "clearCache": "Clear Cache",
     "confirmCacheDeletion": "Confirm Cache Deletion",
-    "confirmClearCacheDesc": "Are you sure you want to clear the thumbnail cache?\n\nAll thumbnails will need to be regenerated, which may be slow for large folders.",
+    "confirmClearCacheDesc": "Are you sure you want to clear the thumbnail cache?\\n\\nAll thumbnails will need to be regenerated, which may be slow for large folders.",
     "testingConnection": "Testing...",
     "connectionSuccessful": "Connection successful!",
-    "connectionFailed": "Connection failed."
+    "connectionFailed": "Connection failed.",
+    "goToHome": "Go to Home",
+    "addAiTag": "Add AI tag",
+    "addShortcut": "Add Shortcut"
   },
   "modal": {
     "confirmDelete": "Are you sure you want to delete?",
@@ -576,14 +692,21 @@
       "horizontal": "Horizontal",
       "rotate": "Rotate",
       "aspect": "Aspect",
-      "scale": "Scale"
+      "scale": "Scale",
+      "resetTransform": "Reset Transform",
+      "toggleGrid": "Toggle Grid",
+      "toggleHelperLines": "Toggle Helper Lines",
+      "holdToCompare": "Hold to Compare"
     },
     "negativeConversion": {
       "redCyan": "Red (Cyan)",
       "greenMagenta": "Green (Magenta)",
       "blueYellow": "Blue (Yellow)",
       "exposure": "Exposure",
-      "contrastGrade": "Contrast (Grade)"
+      "contrastGrade": "Contrast (Grade)",
+      "reset": "Reset",
+      "resetView": "Reset View",
+      "holdToViewOriginal": "Hold to View Original"
     },
     "import": {
       "organizeByDate": "Organize into subfolders by date",
@@ -594,7 +717,9 @@
       "amount": "Amount",
       "chromaticAberration": "Chromatic Aberration",
       "vignetting": "Vignetting",
-      "chooseSavedLens": "Choose Saved Lens"
+      "chooseSavedLens": "Choose Saved Lens",
+      "resetLensCorrection": "Reset Lens Correction",
+      "holdToCompare": "Hold to Compare"
     },
     "culling": {
       "groupSimilarImages": "Group Similar Images",
@@ -610,7 +735,11 @@
     "collage": {
       "keepAspectRatio": "Keep Original Aspect Ratio",
       "spacing": "Spacing",
-      "borderRadius": "Border Radius"
+      "borderRadius": "Border Radius",
+      "shuffleImages": "Shuffle Images"
+    },
+    "denoise": {
+      "gpuAccelerationNote": "NIND Denoise does not yet support GPU acceleration due to dependency limitations."
     }
   },
   "toast": {
@@ -627,6 +756,26 @@
     "failedImport": "Failed to import"
   },
   "community": {
-    "searchPresets": "Search presets..."
+    "searchPresets": "Search presets...",
+    "communityPresets": "Community Presets"
+  },
+  "controls": {
+    "autoAdjust": "Auto Adjust Image",
+    "toggleAnalytics": "Toggle Analytics Display",
+    "resetAdjustments": "Reset Adjustments"
+  },
+  "bottomBar": {
+    "copySettings": "Copy Settings",
+    "pasteSettings": "Paste Settings",
+    "copyAndPaste": "Copy & Paste Settings",
+    "export": "Export",
+    "resetZoom": "Reset Zoom to Fit Window",
+    "customZoom": "Click to enter custom zoom percentage"
+  },
+  "mainLibrary": {
+    "goToSettings": "Go to Settings"
+  },
+  "imagePicker": {
+    "clearImage": "Clear Image"
   }
 }

@@ -537,7 +537,7 @@ export default function FolderTree({
         <button
           className="absolute top-1/2 -translate-y-1/2 right-1 w-6 h-10 hover:bg-card-active rounded-md flex items-center justify-center z-30"
           onClick={() => setIsVisible(true)}
-          data-tooltip="Expand"
+          data-tooltip={t('library.folderTree.expand')}
         >
           <ChevronRight size={16} />
         </button>
@@ -556,7 +556,7 @@ export default function FolderTree({
                     transition={{ duration: 0.2, ease: 'easeInOut' }}
                     className="bg-surface rounded-md hover:bg-card-active flex items-center justify-center shrink-0 overflow-hidden transition-colors"
                     onClick={() => setIsVisible(false)}
-                    data-tooltip="Collapse"
+                    data-tooltip={t('library.folderTree.collapse')}
                   >
                     <ChevronLeft size={17.5} className="text-text-secondary shrink-0" />
                   </motion.button>
@@ -575,7 +575,7 @@ export default function FolderTree({
                   <button
                     onClick={() => setSearchQuery('')}
                     className="absolute right-2 top-1/2 -translate-y-1/2 p-1 rounded-full hover:bg-card-active"
-                    data-tooltip="Clear search"
+                    data-tooltip={t('library.folderTree.clearSearch')}
                   >
                     <X size={16} className="text-text-secondary" />
                   </button>

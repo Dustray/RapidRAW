@@ -43,7 +43,21 @@
     "disabled": "已禁用",
     "clear": "清除",
     "open": "打开",
-    "processing": "处理中..."
+    "processing": "处理中...",
+    "add": "添加",
+    "new": "新建",
+    "edit": "编辑",
+    "duplicate": "复制",
+    "invert": "反相",
+    "zoomIn": "放大",
+    "zoomOut": "缩小",
+    "zoomReset": "重置缩放",
+    "toggle": "切换",
+    "ready": "就绪",
+    "comingSoon": "即将推出",
+    "width": "宽度",
+    "height": "高度",
+    "none": "无"
   },
   "library": {
     "title": "图库",
@@ -100,11 +114,15 @@
       "searchPlaceholder": "搜索文件夹...",
       "pinned": "已固定",
       "albums": "相册",
-      "folders": "文件夹"
+      "folders": "文件夹",
+      "expand": "展开",
+      "collapse": "折叠"
     },
     "tagging": {
-      "addTagPlaceholder": "添加标签..."
-    }
+      "addTagPlaceholder": "添加标签...",
+      "addTag": "添加标签"
+    },
+    "virtualCopy": "虚拟副本"
   },
   "editor": {
     "title": "编辑器",
@@ -140,7 +158,8 @@
       "aiGeneration": "AI生成",
       "shutterSpeed": "快门速度",
       "aperture": "光圈",
-      "focalLength": "焦距"
+      "focalLength": "焦距",
+      "iso": "ISO"
     }
   },
   "adjustments": {
@@ -164,7 +183,8 @@
       "vibrance": "自然饱和度",
       "saturation": "饱和度",
       "hue": "色相",
-      "luminance": "亮度"
+      "luminance": "亮度",
+      "toggleSliders": "切换滑块"
     },
     "details": {
       "title": "细节",
@@ -227,7 +247,13 @@
       "saturation": "饱和度"
     },
     "lut": {
-      "intensity": "强度"
+      "intensity": "强度",
+      "selectLut": "选择 LUT 文件",
+      "selectLutFile": "选择 LUT 文件",
+      "select": "选择",
+      "clearLut": "清除 LUT",
+      "lutFiles": "LUT 文件",
+      "lut": "LUT"
     }
   },
   "crop": {
@@ -238,7 +264,19 @@
     "aspectRatio": "宽高比",
     "straighten": "拉直",
     "angle": "角度",
-    "flip": "翻转"
+    "flip": "翻转",
+    "resetCrop": "重置裁剪和变换",
+    "customAspectRatio": "输入自定义宽高比",
+    "straightenTool": "拉直工具 (S)",
+    "resetFineRotation": "重置精细旋转",
+    "rotateCCW": "逆时针旋转90°",
+    "rotateCW": "顺时针旋转90°",
+    "flipHorizontal": "水平翻转图像",
+    "flipVertical": "垂直翻转图像",
+    "perspective": "透视和梯形校正",
+    "lensDistortion": "镜头畸变校正",
+    "xAxis": "X轴",
+    "yAxis": "Y轴"
   },
   "masks": {
     "title": "蒙版",
@@ -254,7 +292,30 @@
     "brushSize": "画笔大小",
     "brushFeather": "画笔羽化",
     "flow": "流量",
-    "opacity": "不透明度"
+    "opacity": "不透明度",
+    "eraser": "橡皮擦",
+    "depthRange": "深度范围",
+    "near": "近",
+    "far": "远",
+    "createNewMask": "创建新蒙版",
+    "masks": "蒙版",
+    "masking": "蒙版",
+    "addNewMask": "添加新蒙版",
+    "pasteMask": "粘贴蒙版",
+    "maskAdjustments": "蒙版调整",
+    "dropToCreate": "拖放到此处创建新蒙版",
+    "showMoreMaskTypes": "显示更多蒙版类型",
+    "addToCurrentMask": "添加到当前蒙版或新建 (右键)",
+    "createMask": "创建新蒙版",
+    "subtractFromMask": "从蒙版中减去",
+    "intersectMaskWith": "与蒙版相交",
+    "resetSelection": "重置选区",
+    "deleteComponent": "删除组件",
+    "toggleAnalytics": "切换分析显示",
+    "resetMasking": "重置蒙版",
+    "grow": "增长",
+    "tolerance": "容差",
+    "globalFeather": "全局羽化"
   },
   "export": {
     "title": "导出",
@@ -328,7 +389,12 @@
     "saveEditedImage": "保存编辑后的图像",
     "failedToStartExport": "无法开始导出。",
     "selectPreset": "选择预设...",
-    "presetName": "预设名称"
+    "presetName": "预设名称",
+    "savePreset": "保存当前设置为新预设",
+    "deletePreset": "删除预设",
+    "overwritePreset": "覆盖选中的预设",
+    "saved": "已保存！",
+    "selectPresetToApply": "选择预设以应用"
   },
   "rightPanel": {
     "info": "信息",
@@ -341,6 +407,7 @@
   },
   "metadata": {
     "title": "元数据",
+    "metadata": "元数据",
     "camera": "相机",
     "lens": "镜头",
     "aperture": "光圈",
@@ -354,7 +421,20 @@
     "latitude": "纬度",
     "longitude": "经度",
     "altitude": "海拔",
-    "addTagPlaceholder": "添加标签..."
+    "addTagPlaceholder": "添加标签...",
+    "title": "标题",
+    "author": "作者",
+    "copyright": "版权",
+    "comments": "评论",
+    "clickToEdit": "点击编辑",
+    "emptyClickToAdd": "空（点击添加）",
+    "openMap": "点击在新标签页打开地图",
+    "fileInformation": "文件信息",
+    "cameraDetails": "相机详情",
+    "none": "无",
+    "tags": "标签",
+    "noTags": "无标签",
+    "extendedExif": "扩展 EXIF"
   },
   "presets": {
     "title": "预设",
@@ -362,7 +442,11 @@
     "deletePreset": "删除预设",
     "applyPreset": "应用预设",
     "presetName": "预设名称",
-    "noPresets": "没有已保存的预设"
+    "noPresets": "没有已保存的预设",
+    "exploreCommunity": "浏览社区预设",
+    "importPresets": "从 .rrpreset 文件导入预设",
+    "exportPresets": "导出所有预设到 .rrpreset 文件",
+    "saveAsNew": "另存为新预设"
   },
   "ai": {
     "title": "AI",
@@ -380,7 +464,36 @@
     "brushFeather": "画笔羽化",
     "builtinAiLabel": "内置 AI：",
     "useBasicInpainting": "使用基础修复",
-    "generativeReplace": "生成式替换"
+    "generativeReplace": "生成式替换",
+    "ready": "就绪",
+    "upgradeRequired": "需要升级",
+    "notLoggedIn": "未登录",
+    "notDetected": "未检测到",
+    "resetInpainting": "重置修复",
+    "subtractFromEdit": "从编辑中减去",
+    "intersectEditWith": "与编辑相交",
+    "pasteEdit": "粘贴编辑",
+    "addNewEdit": "添加新编辑",
+    "duplicateEdit": "复制编辑",
+    "duplicateAndInvertEdit": "复制并反相编辑",
+    "copyEdit": "复制编辑",
+    "deleteEdit": "删除编辑",
+    "hideEdit": "隐藏编辑",
+    "showEdit": "显示编辑",
+    "rename": "重命名",
+    "aiBackend": "AI后端：",
+    "cloudAi": "云AI：",
+    "monthlyUsage": "月度使用量",
+    "proSubscriptionRequired": "需要Pro订阅。在设置中升级。",
+    "logInViaSettings": "通过设置登录以使用云AI。",
+    "aiConnector": "AI连接器：",
+    "connectedToLocalBackend": "已连接到本地生成后端。",
+    "simpleInpaintingOnly": "仅可用基础修复。启动本地后端。",
+    "usingBasicLocalCpu": "使用基础本地CPU。在设置中选择云AI或AI连接器以进行生成式替换。",
+    "inpainting": "修复",
+    "comingSoon": "即将推出",
+    "createNewEdit": "创建新的{{name}}编辑",
+    "resetSelection": "重置选区"
   },
   "settings": {
     "title": "设置",
@@ -540,24 +653,27 @@
     "sidecarFilesDeleted": "已成功删除 {{count}} 个侧边车文件。",
     "deleteAllEdits": "删除所有编辑",
     "confirmDeletion": "确认删除",
-    "confirmDeleteSidecarsDesc": "确定要删除所有侧边车文件吗？\n\n这将永久删除所有活动根文件夹及其子文件夹中所有图像的编辑。",
+    "confirmDeleteSidecarsDesc": "确定要删除所有侧边车文件吗？\\n\\n这将永久删除所有活动根文件夹及其子文件夹中所有图像的编辑。",
     "clearingAiTags": "正在从所有侧边车文件中清除 AI 标签...",
     "aiTagsCleared": "已更新 {{count}} 个文件。AI 标签已移除。",
     "confirmAiTagDeletion": "确认 AI 标签删除",
-    "confirmClearAiTagsDesc": "确定要从所有活动根文件夹的所有图像中删除所有 AI 生成的标签吗？\n\n这不会影响用户添加的标签。此操作无法撤销。",
+    "confirmClearAiTagsDesc": "确定要从所有活动根文件夹的所有图像中删除所有 AI 生成的标签吗？\\n\\n这不会影响用户添加的标签。此操作无法撤销。",
     "clearAllTags": "清除所有标签",
     "clearingAllTags": "正在从侧边车文件中清除所有标签...",
     "allTagsCleared": "已更新 {{count}} 个文件。所有非颜色标签已移除。",
     "confirmAllTagDeletion": "确认所有标签删除",
-    "confirmClearAllTagsDesc": "确定要从所有活动根文件夹的所有图像中删除所有 AI 生成和用户添加的标签吗？\n\n此操作无法撤销。",
+    "confirmClearAllTagsDesc": "确定要从所有活动根文件夹的所有图像中删除所有 AI 生成和用户添加的标签吗？\\n\\n此操作无法撤销。",
     "clearingThumbnailCache": "正在清除缩略图缓存...",
     "thumbnailCacheCleared": "缩略图缓存已成功清除。",
     "clearCache": "清除缓存",
     "confirmCacheDeletion": "确认缓存删除",
-    "confirmClearCacheDesc": "确定要清除缩略图缓存吗？\n\n所有缩略图都需要重新生成，对于大文件夹可能会很慢。",
+    "confirmClearCacheDesc": "确定要清除缩略图缓存吗？\\n\\n所有缩略图都需要重新生成，对于大文件夹可能会很慢。",
     "testingConnection": "测试中...",
     "connectionSuccessful": "连接成功！",
-    "connectionFailed": "连接失败。"
+    "connectionFailed": "连接失败。",
+    "goToHome": "前往主页",
+    "addAiTag": "添加 AI 标签",
+    "addShortcut": "添加快捷方式"
   },
   "modal": {
     "confirmDelete": "确定要删除吗？",
@@ -576,14 +692,21 @@
       "horizontal": "水平",
       "rotate": "旋转",
       "aspect": "宽高比",
-      "scale": "缩放"
+      "scale": "缩放",
+      "resetTransform": "重置变换",
+      "toggleGrid": "切换网格",
+      "toggleHelperLines": "切换辅助线",
+      "holdToCompare": "按住以对比"
     },
     "negativeConversion": {
       "redCyan": "红色（青色）",
       "greenMagenta": "绿色（品红色）",
       "blueYellow": "蓝色（黄色）",
       "exposure": "曝光",
-      "contrastGrade": "对比度（分级）"
+      "contrastGrade": "对比度（分级）",
+      "reset": "重置",
+      "resetView": "重置视图",
+      "holdToViewOriginal": "按住以查看原图"
     },
     "import": {
       "organizeByDate": "按日期组织到子文件夹",
@@ -594,7 +717,9 @@
       "amount": "数量",
       "chromaticAberration": "色差",
       "vignetting": "暗角",
-      "chooseSavedLens": "选择已保存的镜头"
+      "chooseSavedLens": "选择已保存的镜头",
+      "resetLensCorrection": "重置镜头校正",
+      "holdToCompare": "按住以对比"
     },
     "culling": {
       "groupSimilarImages": "分组相似图片",
@@ -610,7 +735,11 @@
     "collage": {
       "keepAspectRatio": "保持原始宽高比",
       "spacing": "间距",
-      "borderRadius": "圆角半径"
+      "borderRadius": "圆角半径",
+      "shuffleImages": "随机打乱图片"
+    },
+    "denoise": {
+      "gpuAccelerationNote": "由于依赖限制，NIND Denoise 暂不支持 GPU 加速。"
     }
   },
   "toast": {
@@ -627,6 +756,26 @@
     "failedImport": "导入失败"
   },
   "community": {
-    "searchPresets": "搜索预设..."
+    "searchPresets": "搜索预设...",
+    "communityPresets": "社区预设"
+  },
+  "controls": {
+    "autoAdjust": "自动调整图像",
+    "toggleAnalytics": "切换分析显示",
+    "resetAdjustments": "重置调整"
+  },
+  "bottomBar": {
+    "copySettings": "复制设置",
+    "pasteSettings": "粘贴设置",
+    "copyAndPaste": "复制并粘贴设置",
+    "export": "导出",
+    "resetZoom": "重置缩放以适应窗口",
+    "customZoom": "点击输入自定义缩放百分比"
+  },
+  "mainLibrary": {
+    "goToSettings": "前往设置"
+  },
+  "imagePicker": {
+    "clearImage": "清除图像"
   }
 }

@@ -183,16 +183,17 @@ const ConnectionStatus = ({
 }: ConnectionStatusProps) => {
   const [isHovered, setIsHovered] = useState(false);
 
+  const { t } = useTranslation();
   let statusColor = 'bg-green-500';
-  let statusText = 'Ready';
-  let titleText = 'AI Backend:';
+  let statusText = t('ai.ready');
+  let titleText = t('ai.aiBackend');
   let hoverContent: React.ReactNode = null;
 
   if (aiProvider === 'cloud') {
-    titleText = 'Cloud AI:';
+    titleText = t('ai.cloudAi');
     if (isSignedIn && isPro) {
       statusColor = 'bg-green-500';
-      statusText = 'Ready';
+      statusText = t('ai.ready');
 
       const reqs = cloudUsage?.requests ?? 0;
       const limit = cloudUsage?.limit ?? 500;
@@ -201,7 +202,7 @@ const ConnectionStatus = ({
       hoverContent = (
         <div className="w-full mt-1">
           <div className="flex justify-between items-center mb-1.5">
-            <Text variant={TextVariants.small}>Monthly Usage</Text>
+            <Text variant={TextVariants.small}>{t('ai.monthlyUsage')}</Text>
             <Text variant={TextVariants.small}>
               {reqs} / {limit}
             </Text>
@@ -216,33 +217,33 @@ const ConnectionStatus = ({
       );
     } else if (isSignedIn && !isPro) {
       statusColor = 'bg-red-500';
-      statusText = 'Upgrade Required';
-      hoverContent = <Text variant={TextVariants.small}>Pro subscription required. Upgrade in Settings.</Text>;
+      statusText = t('ai.upgradeRequired');
+      hoverContent = <Text variant={TextVariants.small}>{t('ai.proSubscriptionRequired')}</Text>;
     } else {
       statusColor = 'bg-red-500';
-      statusText = 'Not Logged In';
-      hoverContent = <Text variant={TextVariants.small}>Log in via Settings to use Cloud AI.</Text>;
+      statusText = t('ai.notLoggedIn');
+      hoverContent = <Text variant={TextVariants.small}>{t('ai.logInViaSettings')}</Text>;
     }
   } else if (aiProvider === 'ai-connector') {
-    titleText = 'AI Connector:';
+    titleText = t('ai.aiConnector');
     if (isAIConnectorConnected) {
       statusColor = 'bg-green-500';
-      statusText = 'Ready';
-      hoverContent = <Text variant={TextVariants.small}>Connected to local generative backend.</Text>;
+      statusText = t('ai.ready');
+      hoverContent = <Text variant={TextVariants.small}>{t('ai.connectedToLocalBackend')}</Text>;
     } else {
       statusColor = 'bg-red-500';
-      statusText = 'Not Detected';
+      statusText = t('ai.notDetected');
       hoverContent = (
-        <Text variant={TextVariants.small}>Only simple inpainting available. Start your local backend.</Text>
+        <Text variant={TextVariants.small}>{t('ai.simpleInpaintingOnly')}</Text>
       );
     }
   } else {
     titleText = t('ai.builtinAiLabel');
     statusColor = 'bg-green-500';
-    statusText = 'Ready';
+    statusText = t('ai.ready');
     hoverContent = (
       <Text variant={TextVariants.small}>
-        Using basic local CPU. Select Cloud or AI Connector in settings for generative replace.
+        {t('ai.usingBasicLocalCpu')}
       </Text>
     );
   }
@@ -594,12 +595,12 @@ export default function AIPanel() {
         options.push(
           { type: OPTION_SEPARATOR },
           {
-            label: 'Subtract from Edit',
+            label: t('ai.subtractFromEdit'),
             icon: Minus,
             submenu: buildMenu(AI_SUB_MASK_COMPONENT_TYPES, SubMaskMode.Subtractive),
           },
           {
-            label: 'Intersect Edit with',
+            label: t('ai.intersectEditWith'),
             icon: SquaresIntersect,
             submenu: buildMenu(AI_SUB_MASK_COMPONENT_TYPES, SubMaskMode.Intersect),
           },
@@ -779,8 +780,8 @@ export default function AIPanel() {
     }));
 
     showContextMenu(e.clientX, e.clientY, [
-      { label: 'Paste Edit', icon: ClipboardPaste, disabled: !copiedPatch, onClick: () => handlePastePatch() },
-      { label: 'Add New Edit', icon: Plus, submenu: newEditSubMenu },
+      { label: t('ai.pasteEdit'), icon: ClipboardPaste, disabled: !copiedPatch, onClick: () => handlePastePatch() },
+      { label: t('ai.addNewEdit'), icon: Plus, submenu: newEditSubMenu },
     ]);
   };
 
@@ -924,11 +925,11 @@ export default function AIPanel() {
     >
       <div className="flex flex-col h-full select-none overflow-hidden" onContextMenu={handlePanelContextMenu}>
         <div className="p-4 flex justify-between items-center shrink-0 border-b border-surface">
-          <Text variant={TextVariants.title}>Inpainting</Text>
+          <Text variant={TextVariants.title}>{t('ai.inpainting')}</Text>
           <button
             className="p-2 rounded-full hover:bg-surface transition-colors"
             onClick={handleResetAllAiEdits}
-            data-tooltip="Reset Inpainting"
+            data-tooltip={t('ai.resetInpainting')}
           >
             <RotateCcw size={18} />
           </button>
@@ -1193,7 +1194,7 @@ function DraggableGridItem({ maskType, isGenerating, onClick }: any) {
                 : 'hover:bg-card-active active:bg-accent/20'
             }
             ${isDragging ? 'opacity-50' : ''}`}
-      data-tooltip={maskType.disabled ? 'Coming Soon' : `Create New ${maskType.name} Edit`}
+      data-tooltip={maskType.disabled ? t('ai.comingSoon') : t('ai.createNewEdit', { name: maskType.name })}
       whileTap={{ scale: 0.98 }}
       transition={{ type: 'spring', stiffness: 400, damping: 17 }}
     >
@@ -1266,29 +1267,29 @@ function ContainerRow({
     e.stopPropagation();
     showContextMenu(e.clientX, e.clientY, [
       {
-        label: 'Rename',
+        label: t('ai.rename'),
         icon: FileEdit,
         onClick: () => {
           setRenamingId(container.id);
           setTempName(container.name);
         },
       },
-      { label: 'Duplicate Edit', icon: PlusSquare, onClick: () => handleDuplicate(container) },
-      { label: 'Duplicate and Invert Edit', icon: RotateCcw, onClick: () => handleDuplicateAndInvert(container) },
-      { label: 'Copy Edit', icon: Copy, onClick: () => copyPatchToClipboard(container) },
+      { label: t('ai.duplicateEdit'), icon: PlusSquare, onClick: () => handleDuplicate(container) },
+      { label: t('ai.duplicateAndInvertEdit'), icon: RotateCcw, onClick: () => handleDuplicateAndInvert(container) },
+      { label: t('ai.copyEdit'), icon: Copy, onClick: () => copyPatchToClipboard(container) },
       {
-        label: 'Paste Edit',
+        label: t('ai.pasteEdit'),
         icon: ClipboardPaste,
         disabled: !copiedPatch,
         onClick: () => handlePastePatch(container.id),
       },
       { type: OPTION_SEPARATOR },
       {
-        label: 'Reset Selection',
+        label: t('ai.resetSelection'),
         icon: RotateCcw,
         onClick: () => updateContainer(container.id, { subMasks: [] }),
       },
-      { label: 'Delete Edit', icon: Trash2, isDestructive: true, onClick: () => handleDelete(container.id) },
+      { label: t('ai.deleteEdit'), icon: Trash2, isDestructive: true, onClick: () => handleDelete(container.id) },
     ]);
   };
 
@@ -1364,7 +1365,7 @@ function ContainerRow({
         <div className="flex opacity-0 group-hover:opacity-100 transition-opacity">
           <button
             className="p-1 hover:text-text-primary text-text-secondary"
-            data-tooltip={container.visible ? 'Hide Edit' : 'Show Edit'}
+            data-tooltip={container.visible ? t('ai.hideEdit') : t('ai.showEdit')}
             onClick={(e) => {
               e.stopPropagation();
               updateContainer(container.id, { visible: !container.visible });
@@ -1374,7 +1375,7 @@ function ContainerRow({
           </button>
           <button
             className="p-1 hover:text-red-500 text-text-secondary"
-            data-tooltip="Delete Edit"
+            data-tooltip={t('ai.deleteEdit')}
             onClick={(e) => {
               e.stopPropagation();
               handleDelete(container.id);
