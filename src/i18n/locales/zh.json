@@ -447,7 +447,14 @@
     "invertComponent": "反相组件",
     "invertMask": "反相蒙版",
     "selectPresetToApply": "选择要应用的预设",
-    "select": "选择"
+    "select": "选择",
+    "adjustmentsSection": {
+      "basic": "基础",
+      "curves": "曲线",
+      "color": "颜色",
+      "details": "细节",
+      "effects": "效果"
+    }
   },
   "export": {
     "title": "导出",
@@ -669,6 +676,14 @@
     "generateWithAI": "使用AI生成",
     "properties": "属性",
     "selectionProperties": "选区属性",
+    "createNewGenerativeEdit": "创建新的生成式编辑",
+    "fillSelectionToRemoveObject": "填充选区以移除对象。",
+    "fillSelectionBasedOnSurrounding": "基于周围像素填充选区。",
+    "describeWhatToGenerate": "描述您想在选区中生成什么。",
+    "invertComponent": "反转组件",
+    "invertSelection": "反转选区",
+    "aiModelDownloading": "AI模型下载中：",
+    "downloading": "下载中：",
     "feather": "羽化",
     "grow": "扩展",
     "renameComponent": "重命名",
@@ -1445,5 +1460,9 @@
   "curvesAdjustment": {
     "resetAllParametric": "重置所有参数曲线",
     "resetAllPoint": "重置所有点曲线"
+  },
+  "waveform": {
+    "showClippingWarnings": "显示过曝警告",
+    "hideClippingWarnings": "隐藏过曝警告"
   }
 }

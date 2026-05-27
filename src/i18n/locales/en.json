@@ -447,7 +447,14 @@
     "invertComponent": "Invert Component",
     "invertMask": "Invert Mask",
     "selectPresetToApply": "Select a preset to apply",
-    "select": "Select"
+    "select": "Select",
+    "adjustmentsSection": {
+      "basic": "Basic",
+      "curves": "Curves",
+      "color": "Color",
+      "details": "Details",
+      "effects": "Effects"
+    }
   },
   "export": {
     "title": "Export",
@@ -669,6 +676,14 @@
     "generateWithAI": "Generate with AI",
     "properties": "Properties",
     "selectionProperties": "Selection Properties",
+    "createNewGenerativeEdit": "Create New Generative Edit",
+    "fillSelectionToRemoveObject": "Fill selection to remove the object.",
+    "fillSelectionBasedOnSurrounding": "Fill selection based on surrounding pixels.",
+    "describeWhatToGenerate": "Describe what you want to generate in the selected area.",
+    "invertComponent": "Invert Component",
+    "invertSelection": "Invert Selection",
+    "aiModelDownloading": "AI Model Downloading:",
+    "downloading": "Downloading:",
     "feather": "Feather",
     "grow": "Grow",
     "renameComponent": "Rename",
@@ -1445,5 +1460,9 @@
   "curvesAdjustment": {
     "resetAllParametric": "Reset All Parametric Curves",
     "resetAllPoint": "Reset All Point Curves"
+  },
+  "waveform": {
+    "showClippingWarnings": "Show Clipping Warnings",
+    "hideClippingWarnings": "Hide Clipping Warnings"
   }
 }

@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence, LayoutGroup } from 'framer-motion';
 import { AlertOctagon } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { WaveformData } from '../../ui/AppProperties';
 import { DisplayMode } from '../../../utils/adjustments';
 
@@ -450,6 +451,7 @@ export default function Waveform({
   onToggleClipping,
   theme,
 }: WaveformProps) {
+  const { t } = useTranslation();
   const [isHovered, setIsHovered] = useState(false);
   const hoverTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -599,7 +601,7 @@ export default function Waveform({
                 <>
                   <button
                     onClick={onToggleClipping}
-                    data-tooltip={showClipping ? 'Hide Clipping Warnings' : 'Show Clipping Warnings'}
+                    data-tooltip={showClipping ? t('waveform.hideClippingWarnings') : t('waveform.showClippingWarnings')}
                     className={`relative flex items-center justify-center w-7 h-7 shrink-0 rounded-lg transition-colors duration-150 ${
                       showClipping ? 'bg-accent text-button-text' : 'text-text-primary hover:bg-bg-tertiary'
                     }`}

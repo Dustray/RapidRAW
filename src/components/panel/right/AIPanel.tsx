@@ -967,7 +967,7 @@ export default function AIPanel() {
                       cloudUsage={cloudUsage}
                     />
                     <Text variant={TextVariants.heading} className="mb-2 mt-8">
-                      Create New Generative Edit
+                      {t('ai.createNewGenerativeEdit')}
                     </Text>
                     <div className="grid grid-cols-3 gap-2" onClick={(e) => e.stopPropagation()}>
                       {AI_PANEL_CREATION_TYPES.map((maskType: MaskType) => (
@@ -1452,7 +1452,7 @@ function ContainerRow({
                     <div className="relative w-4 h-4 ml-1 shrink-0 flex items-center justify-center">
                       <Plus size={16} />
                     </div>
-                    <span className="select-none">{t('addNewComponent')}</span>
+                    <span className="select-none">{t('ai.addNewComponent')}</span>
                   </Text>
                 </motion.div>
               )}
@@ -1763,7 +1763,7 @@ function SettingsPanel({
             >
               <Loader2 size={16} className="animate-spin shrink-0" />
               <div className="leading-relaxed">
-                <Text variant={TextVariants.small}>Downloading: </Text>
+                <Text variant={TextVariants.small}>{t('ai.downloading')} </Text>
                 <span>{aiModelDownloadStatus}</span>
               </div>
             </Text>
@@ -1771,10 +1771,10 @@ function SettingsPanel({
 
           <Text variant={TextVariants.small}>
             {isQuickErasePatch
-              ? 'Fill selection to remove the object.'
+              ? t('ai.fillSelectionToRemoveObject')
               : useFastInpaint
-                ? 'Fill selection based on surrounding pixels.'
-                : 'Describe what you want to generate in the selected area.'}
+                ? t('ai.fillSelectionBasedOnSurrounding')
+                : t('ai.describeWhatToGenerate')}
           </Text>
 
           <div>
@@ -1851,7 +1851,7 @@ function SettingsPanel({
         <div className="space-y-4 pt-2">
           <Switch
             checked={!!(isComponentMode ? activeSubMask.invert : displayContainer.invert)}
-            label={isComponentMode ? 'Invert Component' : 'Invert Selection'}
+            label={isComponentMode ? t('ai.invertComponent') : t('ai.invertSelection')}
             onChange={(v) =>
               isComponentMode
                 ? updateSubMask(activeSubMask.id, { invert: v })

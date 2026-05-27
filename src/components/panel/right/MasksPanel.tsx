@@ -2411,7 +2411,7 @@ function SettingsPanel({
                 >
                   <Loader2 size={16} className="animate-spin shrink-0" />
                   <div className="leading-relaxed">
-                    <Text variant={TextVariants.small}>AI Model Downloading: </Text>
+                    <Text variant={TextVariants.small}>{t('ai.aiModelDownloading')} </Text>
                     <span>{aiModelDownloadStatus}</span>
                   </div>
                 </Text>
@@ -2480,7 +2480,7 @@ function SettingsPanel({
             details: DetailsPanel,
             effects: EffectsPanel,
           }[sectionName];
-          const title = sectionName.charAt(0).toUpperCase() + sectionName.slice(1);
+          const title = t(`masks.adjustmentsSection.${sectionName}`);
           return (
             <CollapsibleSection
               key={sectionName}
