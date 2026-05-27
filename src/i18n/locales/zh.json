@@ -56,8 +56,7 @@
     "ready": "就绪",
     "comingSoon": "即将推出",
     "width": "宽度",
-    "height": "高度",
-    "none": "无"
+    "height": "高度"
   },
   "library": {
     "title": "图库",
