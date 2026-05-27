@@ -1,10 +1,10 @@
 import { open } from '@tauri-apps/plugin-dialog';
 import { X } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import Slider from './Slider';
 import { useOsPlatform } from '../../hooks/useOsPlatform';
 import { toast } from 'react-toastify';
 import { invoke } from '@tauri-apps/api/core';
-import { useTranslation } from 'react-i18next';
 
 interface LUTControlProps {
   lutName: string | null;
@@ -24,21 +24,21 @@ export default function LUTControl({
   onDragStateChange,
 }: LUTControlProps) {
   const { t } = useTranslation();
-  const osPlatform = useOsPlatform(); 
+  const osPlatform = useOsPlatform();
   const isAndroid = osPlatform === 'android';
 
   const handleSelectFile = async () => {
     try {
       const LutExtensions = ['cube', '3dl', 'png', 'jpg', 'jpeg', 'tiff'];
       const expandExtensions = (exts: string[]) => {
-          return Array.from(new Set(exts.flatMap((ext) => [ext.toLowerCase(), ext.toUpperCase()])));
-        };
+        return Array.from(new Set(exts.flatMap((ext) => [ext.toLowerCase(), ext.toUpperCase()])));
+      };
       const allLutExtensions = expandExtensions(LutExtensions);
       const typeFilters = isAndroid
-        ? [ ] 
+        ? []
         : [
             {
-              name: t('adjustments.lut.lutFiles'),
+              name: t('ui.lut.filterLabel'),
               extensions: allLutExtensions,
             },
           ];
@@ -50,20 +50,20 @@ export default function LUTControl({
         let fileName = selected;
         if (isAndroid) {
           try {
-            fileName = await invoke<string>('resolve_android_content_uri_name', { 
-              uriStr: selected 
+            fileName = await invoke<string>('resolve_android_content_uri_name', {
+              uriStr: selected,
             });
           } catch (e) {
             console.error('Failed to resolve Android URI:', e);
           }
         }
-        const allowedExtensions = new Set(allLutExtensions.map(e => e.toLowerCase()));
+        const allowedExtensions = new Set(allLutExtensions.map((e) => e.toLowerCase()));
         const ext = fileName.split('.').pop()?.toLowerCase() || 'unknown';
         if (!allowedExtensions.has(ext)) {
-          toast.error(`Unsupported file format(s) detected: .${ext}`);
+          toast.error(t('ui.lut.unsupportedFormat', { ext }));
           return;
         }
- 
+
         onLutSelect(selected);
       }
     } catch (err) {
@@ -74,14 +74,14 @@ export default function LUTControl({
   return (
     <div className="mb-2">
       <div className="flex justify-between items-center mb-1">
-        <span className="text-sm font-medium text-text-secondary select-none">{t('adjustments.lut.lut')}</span>
+        <span className="text-sm font-medium text-text-secondary select-none">{t('ui.lut.label')}</span>
         <div className="group flex items-center">
           <button
             onClick={handleSelectFile}
             className="text-sm text-text-primary text-right select-none cursor-pointer truncate max-w-[150px] hover:text-accent transition-colors"
-            data-tooltip={lutName || t('adjustments.lut.selectLutFile')}
+            data-tooltip={lutName || t('ui.lut.selectLutFile')}
           >
-            {lutName || t('adjustments.lut.select')}
+            {lutName || t('ui.lut.select')}
           </button>
 
           {lutName && (
@@ -91,7 +91,7 @@ export default function LUTControl({
                          w-0 ml-0 opacity-0 group-hover:w-6 group-hover:ml-0 group-hover:opacity-100
                          overflow-hidden pointer-events-none group-hover:pointer-events-auto
                          transition-all duration-200 ease-in-out"
-              data-tooltip={t('adjustments.lut.clearLut')}
+              data-tooltip={t('ui.lut.clearLut')}
             >
               <X size={14} />
             </button>
@@ -100,7 +100,7 @@ export default function LUTControl({
       </div>
       {lutName && (
         <Slider
-          label={t('adjustments.lut.intensity')}
+          label={t('ui.lut.intensity')}
           min={0}
           max={100}
           step={1}

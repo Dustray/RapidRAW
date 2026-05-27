@@ -32,7 +32,8 @@ import Switch from '../ui/Switch';
 import Input from '../ui/Input';
 import Slider from '../ui/Slider';
 import { ThemeProps, THEMES, DEFAULT_THEME_ID } from '../../utils/themes';
-import { Invokes, Language } from '../ui/AppProperties';
+import { useTranslation } from 'react-i18next';
+import { Invokes } from '../ui/AppProperties';
 import {
   formatKeyCode,
   KeybindDefinition,
@@ -44,7 +45,6 @@ import Text from '../ui/Text';
 import { TextColors, TextVariants, TextWeights } from '../../types/typography';
 import { useOsPlatform } from '../../hooks/useOsPlatform';
 import { open } from '@tauri-apps/plugin-shell';
-import { useTranslation } from 'react-i18next';
 
 interface ConfirmModalState {
   confirmText: string;
@@ -129,53 +129,10 @@ const thumbnailResolutions: OptionItem<number>[] = [
 ];
 
 const zoomMultiplierOptions: OptionItem<number>[] = [
-  { value: 1.0, label: 'settings.processing.zoomNative' },
-  { value: 0.75, label: 'settings.processing.zoom75x' },
-  { value: 0.5, label: 'settings.processing.zoomHalf' },
-  { value: 0.25, label: 'settings.processing.zoom25x' },
-];
-
-const livePreviewQualityOptions: OptionItem<string>[] = [
-  { value: 'full', label: 'settings.processing.livePreviewFull' },
-  { value: 'high', label: 'settings.processing.livePreviewHigh' },
-  { value: 'performance', label: 'settings.processing.livePreviewPerformance' },
-];
-
-const _livePreviewQualityOptionKeys: Record<string, string> = {
-  full: 'settings.processing.livePreviewFull',
-  high: 'settings.processing.livePreviewHigh',
-  performance: 'settings.processing.livePreviewPerformance',
-};
-
-const backendOptions: OptionItem<string>[] = [
-  { value: 'auto', label: 'settings.processing.auto' },
-  { value: 'vulkan', label: 'Vulkan' },
-  { value: 'dx12', label: 'DirectX 12' },
-  { value: 'metal', label: 'Metal' },
-  { value: 'gl', label: 'OpenGL' },
-];
-
-const linearRawOptions: OptionItem<string>[] = [
-  { value: 'auto', label: 'settings.processing.auto' },
-  { value: 'gamma', label: 'settings.processing.applyGamma' },
-  { value: 'skip_calib', label: 'settings.processing.skipCalibrate' },
-  { value: 'gamma_skip_calib', label: 'settings.processing.applyGammaSkipCalibrate' },
-];
-
-const languageOptions: OptionItem<string>[] = [
-  { value: 'en', label: 'English' },
-  { value: 'zh', label: '中文 (Chinese)' },
-];
-
-const tonemapperOptions: OptionItem<string>[] = [
-  { value: 'agx', label: 'settings.processing.agx' },
-  { value: 'basic', label: 'settings.processing.basic' },
-];
-
-const settingCategories = [
-  { id: 'general', label: 'settings.general.title', icon: SlidersHorizontal, i18nKey: 'settings.general.title' },
-  { id: 'processing', label: 'settings.processing.title', icon: Cpu, i18nKey: 'settings.processing.title' },
-  { id: 'shortcuts', label: 'settings.controls', icon: Keyboard, i18nKey: 'settings.controls' },
+  { value: 1.0, label: '1.0x (Native)' },
+  { value: 0.75, label: '0.75x' },
+  { value: 0.5, label: '0.50x (Half)' },
+  { value: 0.25, label: '0.25x' },
 ];
 
 const KeybindRow = ({
@@ -207,13 +164,13 @@ const KeybindRow = ({
     };
     window.addEventListener('keydown', handler, { capture: true });
     return () => window.removeEventListener('keydown', handler, { capture: true });
-  }, [recording, def.action, onSave, onStartRecording]);
+  }, [recording, def.action, onSave, onStartRecording, osPlatform]);
 
   const displayCombo = currentCombo !== undefined ? (currentCombo.length ? currentCombo : null) : def.defaultCombo;
 
   return (
     <div className="flex justify-between items-center py-2">
-      <Text variant={TextVariants.label}>{t(def.description)}</Text>
+      <Text variant={TextVariants.label}>{def.description}</Text>
       <div className="flex items-center gap-1">
         {isConflicting && <span className="text-yellow-400 text-xs">⚠</span>}
         <button onClick={() => onStartRecording(def.action)} className="flex items-center gap-1 flex-wrap shrink-0">
@@ -225,7 +182,7 @@ const KeybindRow = ({
               weight={TextWeights.semibold}
               className="px-2 py-1 font-sans bg-bg-primary border border-accent rounded-md animate-pulse"
             >
-              {t('settings.keyboard.pressKey')}
+              {t('settings.controls.pressKey')}
             </Text>
           ) : (
             <Text
@@ -238,7 +195,7 @@ const KeybindRow = ({
               {displayCombo ? (
                 displayCombo.map((k) => formatKeyCode(k, osPlatform)).join(' + ')
               ) : (
-                <span className="text-text-secondary italic">{t('settings.keyboard.notAssigned')}</span>
+                <span className="text-text-secondary italic">{t('settings.controls.notAssigned')}</span>
               )}
             </Text>
           )}
@@ -273,32 +230,27 @@ const DataActionItem = ({
   title,
 }: DataActionItemProps) => {
   const { t } = useTranslation();
+
   return (
-  <div className="pb-8 border-b border-border-color last:border-b-0 last:pb-0">
-    <Text variant={TextVariants.heading} className="mb-2">
-      {title}
-    </Text>
-    <Text variant={TextVariants.small} className="mb-3">
-      {description}
-    </Text>
-    <Button variant="destructive" onClick={buttonAction} disabled={isProcessing || disabled}>
-      {icon}
-      {isProcessing ? t('common.processing') : buttonText}
-    </Button>
-    {message && (
-      <Text color={TextColors.accent} className="mt-3">
-        {message}
+    <div className="pb-8 border-b border-border-color last:border-b-0 last:pb-0">
+      <Text variant={TextVariants.heading} className="mb-2">
+        {title}
       </Text>
-    )}
-  </div>
+      <Text variant={TextVariants.small} className="mb-3">
+        {description}
+      </Text>
+      <Button variant="destructive" onClick={buttonAction} disabled={isProcessing || disabled}>
+        {icon}
+        {isProcessing ? t('settings.data.statuses.processing') : buttonText}
+      </Button>
+      {message && (
+        <Text color={TextColors.accent} className="mt-3">
+          {message}
+        </Text>
+      )}
+    </div>
   );
 };
-
-const aiProviders = [
-  { id: 'cpu', label: 'settings.ai.cpu', icon: Cpu },
-  { id: 'ai-connector', label: 'settings.ai.aiConnector', icon: Server },
-  { id: 'cloud', label: 'settings.ai.cloud', icon: Cloud },
-];
 
 interface AiProviderSwitchProps {
   selectedProvider: string;
@@ -307,6 +259,16 @@ interface AiProviderSwitchProps {
 
 const AiProviderSwitch = ({ selectedProvider, onProviderChange }: AiProviderSwitchProps) => {
   const { t } = useTranslation();
+
+  const aiProviders = useMemo(
+    () => [
+      { id: 'cpu', label: t('settings.processing.ai.providers.cpu'), icon: Cpu },
+      { id: 'ai-connector', label: t('settings.processing.ai.providers.aiConnector'), icon: Server },
+      { id: 'cloud', label: t('settings.processing.ai.providers.cloud'), icon: Cloud },
+    ],
+    [t],
+  );
+
   return (
     <div className="relative flex w-full p-1 bg-bg-primary rounded-md border border-border-color">
       {aiProviders.map((provider) => (
@@ -332,7 +294,7 @@ const AiProviderSwitch = ({ selectedProvider, onProviderChange }: AiProviderSwit
           )}
           <span className="relative z-10 flex items-center">
             <provider.icon size={16} className="mr-2" />
-            {t(provider.label)}
+            {provider.label}
           </span>
         </button>
       ))}
@@ -345,6 +307,7 @@ const CloudDashboard = () => {
   const { getToken } = useAuth();
   const { signOut } = useClerk();
   const [usage, setUsage] = useState<{ requests: number; limit: number; month: string } | null>(null);
+  const { t } = useTranslation();
 
   useEffect(() => {
     const fetchUsage = async () => {
@@ -373,7 +336,9 @@ const CloudDashboard = () => {
           <div>
             <Text variant={TextVariants.heading}>{user?.fullName || user?.primaryEmailAddress?.emailAddress}</Text>
             <Text variant={TextVariants.small} color={isPro ? TextColors.success : TextColors.error}>
-              {isPro ? t('settings.cloud.subscriptionActive') : t('settings.cloud.noActiveSubscription')}
+              {isPro
+                ? t('settings.processing.ai.cloud.signedIn.active')
+                : t('settings.processing.ai.cloud.signedIn.inactive')}
             </Text>
           </div>
         </div>
@@ -383,7 +348,7 @@ const CloudDashboard = () => {
             className="bg-transparent text-text-secondary hover:text-text-primary hover:bg-surface border-none shadow-none"
             onClick={() => open('https://www.getrapidraw.com/dashboard')}
           >
-            Manage <ExternalLinkIcon size={14} className="ml-1" />
+            {t('settings.processing.ai.cloud.signedIn.manage')} <ExternalLinkIcon size={14} className="ml-1" />
           </Button>
           <Button
             variant="ghost"
@@ -391,7 +356,7 @@ const CloudDashboard = () => {
               await signOut();
             }}
           >
-            Log Out
+            {t('settings.processing.ai.cloud.signedIn.logout')}
           </Button>
         </div>
       </div>
@@ -399,9 +364,12 @@ const CloudDashboard = () => {
       {isPro ? (
         <div className="bg-surface p-4 rounded-md">
           <div className="flex justify-between items-center mb-2">
-            <Text variant={TextVariants.label}>{t('monthlyUsage')}</Text>
+            <Text variant={TextVariants.label}>{t('settings.processing.ai.cloud.signedIn.usage')}</Text>
             <Text variant={TextVariants.small}>
-              {usage?.requests ?? 0} / {usage?.limit ?? 500} requests
+              {t('settings.processing.ai.cloud.signedIn.usageStats', {
+                requests: usage?.requests ?? 0,
+                limit: usage?.limit ?? 500,
+              })}
             </Text>
           </div>
           <div className="w-full bg-bg-primary rounded-full h-2">
@@ -413,18 +381,15 @@ const CloudDashboard = () => {
         </div>
       ) : (
         <div className="bg-red-900/10 border border-red-500/50 p-4 rounded-md text-center">
-          <Text className="mb-3">{t('settings.cloud.needSubscription')}</Text>
-          <Button onClick={() => open('https://www.getrapidraw.com/cloud')}>{t('settings.cloud.upgrade')}</Button>
+          <Text className="mb-3">{t('settings.processing.ai.cloud.signedOut.upgradeDesc')}</Text>
+          <Button onClick={() => open('https://www.getrapidraw.com/cloud')}>
+            {t('settings.processing.ai.cloud.signedOut.upgradeBtn')}
+          </Button>
         </div>
       )}
     </div>
   );
 };
-
-const canvasInputModes = [
-  { id: 'mouse', label: 'settings.input.mouse', icon: Mouse },
-  { id: 'trackpad', label: 'settings.input.trackpad', icon: Touchpad },
-];
 
 interface CanvasInputModeSwitchProps {
   mode: 'mouse' | 'trackpad';
@@ -433,6 +398,15 @@ interface CanvasInputModeSwitchProps {
 
 const CanvasInputModeSwitch = ({ mode, onModeChange }: CanvasInputModeSwitchProps) => {
   const { t } = useTranslation();
+
+  const canvasInputModes = useMemo(
+    () => [
+      { id: 'mouse', label: t('settings.controls.modes.mouse'), icon: Mouse },
+      { id: 'trackpad', label: t('settings.controls.modes.trackpad'), icon: Touchpad },
+    ],
+    [t],
+  );
+
   return (
     <div className="relative flex w-full p-1 bg-bg-primary rounded-md border border-border-color">
       {canvasInputModes.map((item) => (
@@ -458,18 +432,13 @@ const CanvasInputModeSwitch = ({ mode, onModeChange }: CanvasInputModeSwitchProp
           )}
           <span className="relative z-10 flex items-center">
             <item.icon size={16} className="mr-2" />
-            {t(item.label)}
+            {item.label}
           </span>
         </button>
       ))}
     </div>
   );
 };
-
-const previewModes = [
-  { id: 'static', label: 'settings.preview.fixedResolution', icon: ImageIcon },
-  { id: 'dynamic', label: 'settings.preview.dynamic', icon: Scaling },
-];
 
 interface PreviewModeSwitchProps {
   mode: 'static' | 'dynamic';
@@ -478,6 +447,15 @@ interface PreviewModeSwitchProps {
 
 const PreviewModeSwitch = ({ mode, onModeChange }: PreviewModeSwitchProps) => {
   const { t } = useTranslation();
+
+  const previewModes = useMemo(
+    () => [
+      { id: 'static', label: t('settings.processing.modes.static'), icon: ImageIcon },
+      { id: 'dynamic', label: t('settings.processing.modes.dynamic'), icon: Scaling },
+    ],
+    [t],
+  );
+
   return (
     <div className="relative flex w-full p-1 bg-bg-primary rounded-md border border-border-color">
       {previewModes.map((item) => (
@@ -503,7 +481,7 @@ const PreviewModeSwitch = ({ mode, onModeChange }: PreviewModeSwitchProps) => {
           )}
           <span className="relative z-10 flex items-center">
             <item.icon size={16} className="mr-2" />
-            {t(item.label)}
+            {item.label}
           </span>
         </button>
       ))}
@@ -518,8 +496,8 @@ export default function SettingsPanel({
   onSettingsChange,
   rootPaths,
 }: SettingsPanelProps) {
-  const { t } = useTranslation();
   const { user: _user } = useUser();
+  const { t } = useTranslation();
   const [isClearing, setIsClearing] = useState(false);
   const [clearMessage, setClearMessage] = useState('');
   const [isClearingCache, setIsClearingCache] = useState(false);
@@ -529,7 +507,7 @@ export default function SettingsPanel({
   const [isClearingTags, setIsClearingTags] = useState(false);
   const [tagsClearMessage, setTagsClearMessage] = useState('');
   const [confirmModalState, setConfirmModalState] = useState<ConfirmModalState>({
-    confirmText: t('common.confirm'),
+    confirmText: t('settings.data.modals.confirmClear'),
     confirmVariant: 'primary',
     isOpen: false,
     message: '',
@@ -572,11 +550,64 @@ export default function SettingsPanel({
   const [logPath, setLogPath] = useState('');
   const [dpr, setDpr] = useState(() => (typeof window !== 'undefined' ? window.devicePixelRatio : 1));
 
-  const filteredBackendOptions = backendOptions.filter((opt) => {
-    if (opt.value === 'metal' && osPlatform !== 'macos') return false;
-    if (opt.value === 'dx12' && osPlatform === 'macos') return false;
-    return true;
-  });
+  const settingCategories = useMemo(
+    () => [
+      { id: 'general', label: t('settings.categories.general'), icon: SlidersHorizontal },
+      { id: 'processing', label: t('settings.categories.processing'), icon: Cpu },
+      { id: 'shortcuts', label: t('settings.categories.shortcuts'), icon: Keyboard },
+    ],
+    [t],
+  );
+
+  const livePreviewQualityOptions = useMemo<OptionItem<string>[]>(
+    () => [
+      { value: 'full', label: t('settings.processing.qualities.full') },
+      { value: 'high', label: t('settings.processing.qualities.high') },
+      { value: 'performance', label: t('settings.processing.qualities.performance') },
+    ],
+    [t],
+  );
+
+  const filteredBackendOptions = useMemo<OptionItem<string>[]>(() => {
+    const rawOptions = [
+      { value: 'auto', label: t('settings.processing.backends.auto') },
+      { value: 'vulkan', label: t('settings.processing.backends.vulkan') },
+      { value: 'dx12', label: t('settings.processing.backends.dx12') },
+      { value: 'metal', label: t('settings.processing.backends.metal') },
+      { value: 'gl', label: t('settings.processing.backends.gl') },
+    ];
+    return rawOptions.filter((opt) => {
+      if (opt.value === 'metal' && osPlatform !== 'macos') return false;
+      if (opt.value === 'dx12' && osPlatform === 'macos') return false;
+      return true;
+    });
+  }, [t, osPlatform]);
+
+  const linearRawOptions = useMemo<OptionItem<string>[]>(
+    () => [
+      { value: 'auto', label: t('settings.processing.preprocessing.linearOptions.auto') },
+      { value: 'gamma', label: t('settings.processing.preprocessing.linearOptions.gamma') },
+      { value: 'skip_calib', label: t('settings.processing.preprocessing.linearOptions.skip_calib') },
+      { value: 'gamma_skip_calib', label: t('settings.processing.preprocessing.linearOptions.gamma_skip_calib') },
+    ],
+    [t],
+  );
+
+  const tonemapperOptions = useMemo<OptionItem<string>[]>(
+    () => [
+      { value: 'agx', label: t('settings.processing.preprocessing.tonemapperOptions.agx') },
+      { value: 'basic', label: t('settings.processing.preprocessing.tonemapperOptions.basic') },
+    ],
+    [t],
+  );
+
+  const fontOptions = useMemo<OptionItem<string>[]>(
+    () => [
+      { value: 'poppins', label: t('settings.general.poppins') },
+      { value: 'system', label: t('settings.general.system') },
+    ],
+    [t],
+  );
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -629,7 +660,7 @@ export default function SettingsPanel({
         setLogPath(path);
       } catch (error) {
         console.error('Failed to get log file path:', error);
-        setLogPath('Could not retrieve log file path.');
+        setLogPath(t('settings.data.loading'));
       }
     };
     fetchLogPath();
@@ -637,7 +668,7 @@ export default function SettingsPanel({
     invoke('get_lensfun_makers')
       .then((m: any) => setLensMakers(m))
       .catch(console.error);
-  }, []);
+  }, [t]);
 
   const handleProcessingSettingChange = async (key: string, value: any) => {
     setProcessingSettings((prev) => ({ ...prev, [key]: value }));
@@ -725,14 +756,14 @@ export default function SettingsPanel({
 
   const executeClearSidecars = async () => {
     setIsClearing(true);
-    setClearMessage(t('settings.deletingSidecarFiles'));
+    setClearMessage(t('settings.data.statuses.deleting'));
     try {
       let totalCount = 0;
       for (const root of effectiveRootPaths) {
         const count: number = await invoke(Invokes.ClearAllSidecars, { rootPath: root });
         totalCount += count;
       }
-      setClearMessage(t('settings.sidecarFilesDeleted', { count: totalCount }));
+      setClearMessage(t('settings.data.statuses.sidecarSuccess', { count: totalCount }));
       onLibraryRefresh();
     } catch (err: any) {
       console.error('Failed to clear sidecars:', err);
@@ -747,25 +778,25 @@ export default function SettingsPanel({
 
   const handleClearSidecars = () => {
     setConfirmModalState({
-      confirmText: t('settings.deleteAllEdits'),
+      confirmText: t('settings.data.modals.confirmDeleteAllEdits'),
       confirmVariant: 'destructive',
       isOpen: true,
-      message: t('settings.confirmDeleteSidecarsDesc'),
+      message: t('settings.data.modals.sidecarMessage'),
       onConfirm: executeClearSidecars,
-      title: t('settings.confirmDeletion'),
+      title: t('settings.data.modals.confirmTitle'),
     });
   };
 
   const executeClearAiTags = async () => {
     setIsClearingAiTags(true);
-    setAiTagsClearMessage(t('settings.clearingAiTags'));
+    setAiTagsClearMessage(t('settings.data.statuses.clearingAi'));
     try {
       let totalCount = 0;
       for (const root of effectiveRootPaths) {
         const count: number = await invoke(Invokes.ClearAiTags, { rootPath: root });
         totalCount += count;
       }
-      setAiTagsClearMessage(t('settings.aiTagsCleared', { count: totalCount }));
+      setAiTagsClearMessage(t('settings.data.statuses.aiSuccess', { count: totalCount }));
       onLibraryRefresh();
     } catch (err: any) {
       console.error('Failed to clear AI tags:', err);
@@ -780,25 +811,25 @@ export default function SettingsPanel({
 
   const handleClearAiTags = () => {
     setConfirmModalState({
-      confirmText: t('settings.clearAiTags'),
+      confirmText: t('settings.data.modals.confirmClearAi'),
       confirmVariant: 'destructive',
       isOpen: true,
-      message: t('settings.confirmClearAiTagsDesc'),
+      message: t('settings.data.modals.aiMessage'),
       onConfirm: executeClearAiTags,
-      title: t('settings.confirmAiTagDeletion'),
+      title: t('settings.data.modals.confirmAiTitle'),
     });
   };
 
   const executeClearTags = async () => {
     setIsClearingTags(true);
-    setTagsClearMessage(t('settings.clearingAllTags'));
+    setTagsClearMessage(t('settings.data.statuses.clearingAll'));
     try {
       let totalCount = 0;
       for (const root of effectiveRootPaths) {
         const count: number = await invoke(Invokes.ClearAllTags, { rootPath: root });
         totalCount += count;
       }
-      setTagsClearMessage(t('settings.allTagsCleared', { count: totalCount }));
+      setTagsClearMessage(t('settings.data.statuses.allSuccess', { count: totalCount }));
       onLibraryRefresh();
     } catch (err: any) {
       console.error('Failed to clear tags:', err);
@@ -813,12 +844,12 @@ export default function SettingsPanel({
 
   const handleClearTags = () => {
     setConfirmModalState({
-      confirmText: t('settings.clearAllTags'),
+      confirmText: t('settings.data.modals.confirmClearAll'),
       confirmVariant: 'destructive',
       isOpen: true,
-      message: t('settings.confirmClearAllTagsDesc'),
+      message: t('settings.data.modals.allMessage'),
       onConfirm: executeClearTags,
-      title: t('settings.confirmAllTagDeletion'),
+      title: t('settings.data.modals.confirmAllTitle'),
     });
   };
 
@@ -829,10 +860,10 @@ export default function SettingsPanel({
 
   const executeClearCache = async () => {
     setIsClearingCache(true);
-    setCacheClearMessage(t('settings.clearingThumbnailCache'));
+    setCacheClearMessage(t('settings.data.statuses.clearingCache'));
     try {
       await invoke(Invokes.ClearThumbnailCache);
-      setCacheClearMessage(t('settings.thumbnailCacheCleared'));
+      setCacheClearMessage(t('settings.data.statuses.cacheSuccess'));
       onLibraryRefresh();
     } catch (err: any) {
       console.error('Failed to clear thumbnail cache:', err);
@@ -847,12 +878,12 @@ export default function SettingsPanel({
 
   const handleClearCache = () => {
     setConfirmModalState({
-      confirmText: t('settings.clearCache'),
+      confirmText: t('settings.data.modals.confirmClearCache'),
       confirmVariant: 'destructive',
       isOpen: true,
-      message: t('settings.confirmClearCacheDesc'),
+      message: t('settings.data.modals.cacheMessage'),
       onConfirm: executeClearCache,
-      title: t('settings.confirmCacheDeletion'),
+      title: t('settings.data.modals.confirmCacheTitle'),
     });
   };
 
@@ -860,12 +891,12 @@ export default function SettingsPanel({
     if (!aiConnectorAddress) {
       return;
     }
-    setTestStatus({ testing: true, message: t('settings.testingConnection'), success: null });
+    setTestStatus({ testing: true, message: t('settings.processing.ai.connector.testing'), success: null });
     try {
       await invoke(Invokes.TestAIConnectorConnection, { address: aiConnectorAddress });
-      setTestStatus({ testing: false, message: t('settings.connectionSuccessful'), success: true });
+      setTestStatus({ testing: false, message: t('settings.processing.ai.connector.success'), success: true });
     } catch (err) {
-      setTestStatus({ testing: false, message: t('settings.connectionFailed'), success: false });
+      setTestStatus({ testing: false, message: t('settings.processing.ai.connector.failed'), success: false });
       console.error('AI Connector connection test failed:', err);
     } finally {
       setTimeout(() => setTestStatus({ testing: false, message: '', success: null }), EXECUTE_TIMEOUT);
@@ -960,7 +991,7 @@ export default function SettingsPanel({
               onClick={onBack}
               size="icon"
               variant="ghost"
-              data-tooltip={t('settings.goToHome')}
+              data-tooltip={t('settings.tooltips.goHome')}
             >
               <ArrowLeft />
             </Button>
@@ -993,7 +1024,7 @@ export default function SettingsPanel({
                 )}
                 <span className="relative z-10 flex items-center">
                   <category.icon size={16} className="mr-2 shrink-0" />
-                  <span className="truncate">{t(category.i18nKey)}</span>
+                  <span className="truncate">{category.label}</span>
                 </span>
               </button>
             ))}
@@ -1013,25 +1044,28 @@ export default function SettingsPanel({
               >
                 <div className="p-6 bg-surface rounded-xl shadow-md">
                   <Text variant={TextVariants.title} color={TextColors.accent} className="mb-8">
-                    {t('settings.general.section')}
+                    {t('settings.general.title')}
                   </Text>
                   <div className="space-y-8">
-                    <SettingItem label={t('settings.general.language')} description={t('settings.general.languageDesc')}>
-                      <Dropdown
-                        onChange={(value: any) => onSettingsChange({ ...appSettings, language: value as Language })}
-                        options={languageOptions}
-                        value={appSettings?.language || 'en'}
-                        triggerClassName="bg-bg-primary"
-                      />
-                    </SettingItem>
-
                     <SettingItem label={t('settings.general.theme')} description={t('settings.general.themeDesc')}>
                       <Dropdown
                         onChange={(value: any) => onSettingsChange({ ...appSettings, theme: value })}
                         options={THEMES.map((theme: ThemeProps) => ({ value: theme.id, label: theme.name }))}
                         value={appSettings?.theme || DEFAULT_THEME_ID}
                         triggerClassName="bg-bg-primary"
-                        translate={t}
+                      />
+                    </SettingItem>
+
+                    <SettingItem label={t('settings.language')} description={t('settings.languageDesc')}>
+                      <Dropdown
+                        onChange={(value: any) => onSettingsChange({ ...appSettings, language: value })}
+                        options={[
+                          { value: 'en', label: 'English' },
+                          { value: 'de', label: 'Deutsch' },
+                          { value: 'zh', label: '中文' },
+                        ]}
+                        value={appSettings?.language || 'en'}
+                        triggerClassName="bg-bg-primary"
                       />
                     </SettingItem>
 
@@ -1065,13 +1099,13 @@ export default function SettingsPanel({
                           >
                             <div className="pl-4 border-l-2 border-border-color ml-1">
                               <SettingItem
-                                label={t('settings.general.createXmpFiles')}
-                                description={t('settings.general.createXmpFilesDesc')}
+                                label={t('settings.general.createXmp')}
+                                description={t('settings.general.createXmpDesc')}
                               >
                                 <Switch
                                   checked={appSettings?.createXmpIfMissing ?? false}
                                   id="create-xmp-missing-toggle"
-                                  label={t('settings.general.createXmpIfMissing')}
+                                  label={t('settings.general.createXmpMissing')}
                                   onChange={(checked) =>
                                     onSettingsChange({ ...appSettings, createXmpIfMissing: checked })
                                   }
@@ -1110,10 +1144,7 @@ export default function SettingsPanel({
                     <SettingItem label={t('settings.general.font')} description={t('settings.general.fontDesc')}>
                       <Dropdown
                         onChange={(value: any) => onSettingsChange({ ...appSettings, fontFamily: value })}
-                        options={[
-                          { value: 'poppins', label: t('settings.general.poppins') },
-                          { value: 'system', label: t('settings.general.systemDefault') },
-                        ]}
+                        options={fontOptions}
                         value={appSettings?.fontFamily || 'poppins'}
                         triggerClassName="bg-bg-primary"
                       />
@@ -1140,14 +1171,12 @@ export default function SettingsPanel({
 
                 <div className="p-6 bg-surface rounded-xl shadow-md">
                   <Text variant={TextVariants.title} color={TextColors.accent} className="mb-8">
-                    {t('settings.adjustmentsVisibility')}
+                    {t('settings.adjustments.title')}
                   </Text>
-                  <Text className="mb-4">
-                    {t('settings.adjustmentsVisibilityDesc')}
-                  </Text>
+                  <Text className="mb-4">{t('settings.adjustments.description')}</Text>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
                     <Switch
-                      label={t('adjustments.chromaticAberration')}
+                      label={t('settings.adjustments.chromaticAberration')}
                       checked={appSettings?.adjustmentVisibility?.chromaticAberration ?? false}
                       onChange={(checked) =>
                         onSettingsChange({
@@ -1160,7 +1189,7 @@ export default function SettingsPanel({
                       }
                     />
                     <Switch
-                      label={t('adjustments.effects.grain')}
+                      label={t('settings.adjustments.grain')}
                       checked={appSettings?.adjustmentVisibility?.grain ?? true}
                       onChange={(checked) =>
                         onSettingsChange({
@@ -1173,7 +1202,7 @@ export default function SettingsPanel({
                       }
                     />
                     <Switch
-                      label={t('adjustments.colorCalibrationT')}
+                      label={t('settings.adjustments.colorCalibration')}
                       checked={appSettings?.adjustmentVisibility?.colorCalibration ?? true}
                       onChange={(checked) =>
                         onSettingsChange({
@@ -1186,7 +1215,7 @@ export default function SettingsPanel({
                       }
                     />
                     <Switch
-                      label={t('adjustments.details.noiseReduction')}
+                      label={t('settings.adjustments.noiseReduction')}
                       checked={appSettings?.adjustmentVisibility?.noiseReduction ?? true}
                       onChange={(checked) =>
                         onSettingsChange({
@@ -1203,44 +1232,42 @@ export default function SettingsPanel({
 
                 <div className="p-6 bg-surface rounded-xl shadow-md">
                   <Text variant={TextVariants.title} color={TextColors.accent} className="mb-8">
-                    {t('settings.myLenses')}
+                    {t('settings.lenses.title')}
                   </Text>
-                  <Text className="mb-6">
-                    {t('settings.myLensesDesc')}
-                  </Text>
+                  <Text className="mb-6">{t('settings.lenses.description')}</Text>
 
                   <div className="space-y-8">
                     <div className="bg-bg-primary rounded-lg p-4 border border-border-color">
                       <Text variant={TextVariants.heading} className="mb-3">
-                        {t('settings.addNewLens')}
+                        {t('settings.lenses.addNew')}
                       </Text>
                       <div className="space-y-4">
                         <Dropdown
                           options={lensMakers.map((m) => ({ label: m, value: m }))}
                           value={tempLensMaker}
                           onChange={handleTempMakerChange}
-                          placeholder={t('settings.selectManufacturer')}
+                          placeholder={t('settings.lenses.manufacturerPlaceholder')}
                         />
                         <Dropdown
                           options={lensModels.map((m) => ({ label: m, value: m }))}
                           value={tempLensModel}
                           onChange={setTempLensModel}
-                          placeholder={t('settings.selectLensModel')}
+                          placeholder={t('settings.lenses.modelPlaceholder')}
                           disabled={!tempLensMaker}
                         />
                         <Button onClick={handleAddLens} disabled={!tempLensMaker || !tempLensModel} className="w-full">
                           <Plus size={16} className="mr-1" />
-                          {t('settings.addToMyLenses')}
+                          {t('settings.lenses.addButton')}
                         </Button>
                       </div>
                     </div>
 
                     <div>
                       <Text variant={TextVariants.heading} className="mb-2">
-                        {t('settings.savedLenses')}
+                        {t('settings.lenses.saved')}
                       </Text>
                       {(!appSettings?.myLenses || appSettings.myLenses.length === 0) && (
-                        <Text className="italic">{t('settings.noLensesAdded')}</Text>
+                        <Text className="italic">{t('settings.lenses.noLenses')}</Text>
                       )}
                       <div className="divide-y divide-border-color">
                         {(appSettings?.myLenses || []).map((lens: MyLens, index: number) => (
@@ -1262,7 +1289,7 @@ export default function SettingsPanel({
                             <button
                               onClick={() => handleRemoveLens(index)}
                               className="p-2 text-text-secondary hover:text-red-400 hover:bg-bg-primary rounded-md transition-colors"
-                              data-tooltip={t('settings.removeLens')}
+                              data-tooltip={t('settings.lenses.removeTooltip')}
                             >
                               <Trash2 size={16} />
                             </button>
@@ -1275,18 +1302,18 @@ export default function SettingsPanel({
 
                 <div className="p-6 bg-surface rounded-xl shadow-md">
                   <Text variant={TextVariants.title} color={TextColors.accent} className="mb-8">
-                    {t('settings.tagging')}
+                    {t('settings.tagging.title')}
                   </Text>
                   <div className="space-y-8">
                     <div className="space-y-4">
                       <SettingItem
-                        description={t('settings.aiTaggingDesc')}
-                        label={t('settings.aiTagging')}
+                        description={t('settings.tagging.aiTaggingDesc')}
+                        label={t('settings.tagging.aiTagging')}
                       >
                         <Switch
                           checked={appSettings?.enableAiTagging ?? false}
                           id="ai-tagging-toggle"
-                          label={t('settings.automaticAiTagging')}
+                          label={t('settings.tagging.automaticAiTagging')}
                           onChange={(checked) => onSettingsChange({ ...appSettings, enableAiTagging: checked })}
                         />
                       </SettingItem>
@@ -1302,11 +1329,11 @@ export default function SettingsPanel({
                           >
                             <div className="pl-4 border-l-2 border-border-color ml-1 space-y-8">
                               <SettingItem
-                                label={t('settings.maxAiTags')}
-                                description={t('settings.maxAiTagsDesc')}
+                                label={t('settings.tagging.maxAiTags')}
+                                description={t('settings.tagging.maxAiTagsDesc')}
                               >
                                 <Slider
-                                  label={t('settings.amount')}
+                                  label={t('settings.tagging.amount')}
                                   min={1}
                                   max={20}
                                   step={1}
@@ -1319,8 +1346,8 @@ export default function SettingsPanel({
                               </SettingItem>
 
                               <SettingItem
-                                label={t('settings.customAiTagList')}
-                                description={t('settings.customAiTagListDesc')}
+                                label={t('settings.tagging.customList')}
+                                description={t('settings.tagging.customListDesc')}
                               >
                                 <div>
                                   <div className="flex flex-wrap gap-2 p-2 bg-bg-primary rounded-md min-h-10 border border-border-color mb-2 items-center">
@@ -1335,7 +1362,7 @@ export default function SettingsPanel({
                                             animate="visible"
                                             exit="exit"
                                             onClick={() => handleRemoveAiTag(tag)}
-                                            data-tooltip={`Remove tag "${tag}"`}
+                                            data-tooltip={t('settings.tagging.removeCustomTooltip', { tag })}
                                             className="flex items-center gap-1 bg-surface px-2 py-1 rounded-sm group cursor-pointer"
                                           >
                                             <Text variant={TextVariants.label} color={TextColors.primary}>
@@ -1355,7 +1382,7 @@ export default function SettingsPanel({
                                           transition={{ duration: 0.2 }}
                                         >
                                           <Text className="px-1 select-none italic">
-                                            {t('settings.noCustomAiTags')}
+                                            {t('settings.tagging.noCustomTags')}
                                           </Text>
                                         </motion.span>
                                       )}
@@ -1368,14 +1395,14 @@ export default function SettingsPanel({
                                         value={newAiTag}
                                         onChange={(e) => setNewAiTag(e.target.value)}
                                         onKeyDown={handleAiTagInputKeyDown}
-                                        placeholder={t('settings.addCustomAiTagsPlaceholder')}
+                                        placeholder={t('settings.tagging.addCustomPlaceholder')}
                                         className="pr-10"
                                         bgClassName="bg-bg-primary"
                                       />
                                       <button
                                         onClick={handleAddAiTag}
                                         className="absolute right-1 top-1/2 -translate-y-1/2 p-1.5 rounded-full text-text-secondary hover:text-text-primary hover:bg-surface"
-                                        data-tooltip={t('settings.addAiTag')}
+                                        data-tooltip={t('settings.tagging.addCustomTooltip')}
                                       >
                                         <Plus size={18} />
                                       </button>
@@ -1384,7 +1411,7 @@ export default function SettingsPanel({
                                       onClick={() => onSettingsChange({ ...appSettings, customAiTags: [] })}
                                       disabled={customAiTags.length === 0}
                                       className="p-2 text-text-secondary hover:text-red-400 hover:bg-surface rounded-md transition-colors disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:text-text-secondary disabled:hover:bg-transparent"
-                                      data-tooltip={t('settings.clearAiTagList')}
+                                      data-tooltip={t('settings.tagging.clearCustomTooltip')}
                                     >
                                       <Trash2 size={18} />
                                     </button>
@@ -1398,8 +1425,8 @@ export default function SettingsPanel({
                     </div>
 
                     <SettingItem
-                      label={t('settings.taggingShortcuts')}
-                      description={t('settings.taggingShortcutsDesc')}
+                      label={t('settings.tagging.shortcuts')}
+                      description={t('settings.tagging.shortcutsDesc')}
                     >
                       <div>
                         <div className="flex flex-wrap gap-2 p-2 bg-bg-primary rounded-md min-h-10 border border-border-color mb-2 items-center">
@@ -1414,7 +1441,7 @@ export default function SettingsPanel({
                                   animate="visible"
                                   exit="exit"
                                   onClick={() => handleRemoveShortcut(shortcut)}
-                                  data-tooltip={`Remove shortcut "${shortcut}"`}
+                                  data-tooltip={t('settings.tagging.removeShortcutTooltip', { shortcut })}
                                   className="flex items-center gap-1 bg-surface px-2 py-1 rounded-sm group cursor-pointer"
                                 >
                                   <Text variant={TextVariants.label} color={TextColors.primary}>
@@ -1434,7 +1461,7 @@ export default function SettingsPanel({
                                 transition={{ duration: 0.2 }}
                                 className="text-sm text-text-secondary italic px-1 select-none"
                               >
-                                {t('settings.noShortcutsAdded')}
+                                {t('settings.tagging.noShortcuts')}
                               </motion.span>
                             )}
                           </AnimatePresence>
@@ -1446,14 +1473,14 @@ export default function SettingsPanel({
                               value={newShortcut}
                               onChange={(e) => setNewShortcut(e.target.value)}
                               onKeyDown={handleInputKeyDown}
-                              placeholder={t('settings.addShortcutsPlaceholder')}
+                              placeholder={t('settings.tagging.addShortcutsPlaceholder')}
                               className="pr-10"
                               bgClassName="bg-bg-primary"
                             />
                             <button
                               onClick={handleAddShortcut}
                               className="absolute right-1 top-1/2 -translate-y-1/2 p-1.5 rounded-full text-text-secondary hover:text-text-primary hover:bg-surface"
-                              data-tooltip={t('settings.addShortcut')}
+                              data-tooltip={t('settings.tagging.addShortcutTooltip')}
                             >
                               <Plus size={18} />
                             </button>
@@ -1462,7 +1489,7 @@ export default function SettingsPanel({
                             onClick={() => onSettingsChange({ ...appSettings, taggingShortcuts: [] })}
                             disabled={taggingShortcuts.length === 0}
                             className="p-2 text-text-secondary hover:text-red-400 hover:bg-surface rounded-md transition-colors disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:text-text-secondary disabled:hover:bg-transparent"
-                            data-tooltip={t('settings.clearShortcutsTagList')}
+                            data-tooltip={t('settings.tagging.clearShortcutsTooltip')}
                           >
                             <Trash2 size={18} />
                           </button>
@@ -1474,23 +1501,23 @@ export default function SettingsPanel({
                       <div className="space-y-8">
                         <DataActionItem
                           buttonAction={handleClearAiTags}
-                          buttonText={t('common.clear')}
-                          description={t('settings.clearAiTagsDesc')}
+                          buttonText={t('settings.tagging.clearAiTagsButton')}
+                          description={t('settings.tagging.clearAiTagsDesc')}
                           disabled={effectiveRootPaths.length === 0}
                           icon={<Trash2 size={16} className="mr-2" />}
                           isProcessing={isClearingAiTags}
                           message={aiTagsClearMessage}
-                          title={t('settings.clearAiTags')}
+                          title={t('settings.tagging.clearAiTagsTitle')}
                         />
                         <DataActionItem
                           buttonAction={handleClearTags}
-                          buttonText={t('common.clear')}
-                          description={t('settings.clearAllTagsDesc')}
+                          buttonText={t('settings.tagging.clearAiTagsButton')}
+                          description={t('settings.tagging.clearAllTagsDesc')}
                           disabled={effectiveRootPaths.length === 0}
                           icon={<Trash2 size={16} className="mr-2" />}
                           isProcessing={isClearingTags}
                           message={tagsClearMessage}
-                          title={t('settings.clearAllTags')}
+                          title={t('settings.tagging.clearAllTagsTitle')}
                         />
                       </div>
                     </div>
@@ -1499,11 +1526,9 @@ export default function SettingsPanel({
 
                 <div className="p-6 bg-surface rounded-xl shadow-md">
                   <Text variant={TextVariants.title} color={TextColors.accent} className="mb-6">
-                    {t('settings.specialThanks')}
+                    {t('settings.thanks.title')}
                   </Text>
-                  <Text className="mb-4">
-                    {t('settings.specialThanksDesc')}
-                  </Text>
+                  <Text className="mb-4">{t('settings.thanks.description')}</Text>
                   <Text as="ul" className="space-y-3 list-disc ml-5 pl-1">
                     <li>
                       <a
@@ -1514,8 +1539,7 @@ export default function SettingsPanel({
                       >
                         rawler
                       </a>
-                      : For the excellent Rust crate that provides the foundation for RAW file processing in this
-                      project.
+                      : {t('settings.thanks.list.rawler')}
                     </li>
                     <li>
                       <a
@@ -1526,7 +1550,7 @@ export default function SettingsPanel({
                       >
                         lensfun
                       </a>
-                      : For its invaluable open-source library and comprehensive database for automatic lens correction.
+                      : {t('settings.thanks.list.lensfun')}
                     </li>
                     <li>
                       <a
@@ -1537,7 +1561,7 @@ export default function SettingsPanel({
                       >
                         NegPy
                       </a>
-                      : For the inspiration behind the negative conversion logic.
+                      : {t('settings.thanks.list.negpy')}
                     </li>
                     <li>
                       <a
@@ -1548,8 +1572,7 @@ export default function SettingsPanel({
                       >
                         LaMa
                       </a>
-                      : For the powerful & simple image inpainting model, which enables content-aware fill and object
-                      removal.
+                      : {t('settings.thanks.list.lama')}
                     </li>
                     <li>
                       <a
@@ -1560,7 +1583,7 @@ export default function SettingsPanel({
                       >
                         SAM 2
                       </a>
-                      : For providing the foundation model used for the AI subject detection capabilities.
+                      : {t('settings.thanks.list.sam2')}
                     </li>
                     <li>
                       <a
@@ -1571,7 +1594,7 @@ export default function SettingsPanel({
                       >
                         U-2-Net
                       </a>
-                      : For providing the robust architecture used for the AI sky and foreground detection capabilities.
+                      : {t('settings.thanks.list.u2net')}
                     </li>
                     <li>
                       <a
@@ -1582,8 +1605,7 @@ export default function SettingsPanel({
                       >
                         Depth Anything V2
                       </a>
-                      : For the powerful monocular depth estimation model that enables the AI depth masking
-                      capabilities.
+                      : {t('settings.thanks.list.depth')}
                     </li>
                     <li>
                       <a
@@ -1594,7 +1616,7 @@ export default function SettingsPanel({
                       >
                         nind-denoise
                       </a>
-                      : For providing AI models that power the AI noise reduction capabilities in RapidRAW.
+                      : {t('settings.thanks.list.nind')}
                     </li>
                     <li>
                       <a
@@ -1605,11 +1627,11 @@ export default function SettingsPanel({
                       >
                         darktable & co.
                       </a>
-                      : For some reference implementations that guided parts of this work.
+                      : {t('settings.thanks.list.darktable')}
                     </li>
                     <li>
-                      <span className="font-semibold text-accent">You</span>: For using and supporting RapidRAW. Your
-                      interest keeps this project alive and evolving.
+                      <span className="font-semibold text-accent">{t('settings.thanks.list.youLabel')}</span>:{' '}
+                      {t('settings.thanks.list.you')}
                     </li>
                   </Text>
                 </div>
@@ -1626,12 +1648,12 @@ export default function SettingsPanel({
               >
                 <div className="p-6 bg-surface rounded-xl shadow-md">
                   <Text variant={TextVariants.title} color={TextColors.accent} className="mb-8">
-                    {t('settings.processing.engine')}
+                    {t('settings.processing.title')}
                   </Text>
                   <div className="space-y-8">
                     <div>
                       <Text variant={TextVariants.heading} className="mb-2">
-                        {t('settings.processing.previewRenderingStrategy')}
+                        {t('settings.processing.previewStrategy')}
                       </Text>
                       <PreviewModeSwitch
                         mode={appSettings?.enableZoomHifi ? 'dynamic' : 'static'}
@@ -1649,12 +1671,12 @@ export default function SettingsPanel({
                               transition={{ duration: 0.2 }}
                             >
                               <Text variant={TextVariants.small} className="mb-4">
-                                {t('settings.processing.staticPreviewDesc')}
+                                {t('settings.processing.staticDesc')}
                               </Text>
                               <div className="pl-4 border-l-2 border-border-color ml-1">
                                 <SettingItem
-                                  description={t('settings.processing.previewResolutionDesc')}
-                                  label={t('settings.processing.previewResolution')}
+                                  description={t('settings.processing.previewResDesc')}
+                                  label={t('settings.processing.previewRes')}
                                 >
                                   <Dropdown
                                     onChange={(value: any) =>
@@ -1676,12 +1698,12 @@ export default function SettingsPanel({
                               transition={{ duration: 0.2 }}
                             >
                               <Text variant={TextVariants.small} className="mb-4">
-                                {t('settings.processing.dynamicPreviewDesc')}
+                                {t('settings.processing.dynamicDesc')}
                               </Text>
                               <div className="pl-4 border-l-2 border-border-color ml-1 space-y-3">
                                 <SettingItem
-                                  description={t('settings.processing.staticPreviewResolutionDesc')}
-                                  label={t('settings.processing.staticPreviewResolution')}
+                                  description={t('settings.processing.staticPreviewResDesc')}
+                                  label={t('settings.processing.staticPreviewRes')}
                                 >
                                   <Dropdown
                                     onChange={(value: any) =>
@@ -1694,8 +1716,8 @@ export default function SettingsPanel({
                                 </SettingItem>
 
                                 <SettingItem
-                                  label={t('settings.processing.renderResolutionScale')}
-                                  description={t('settings.processing.renderResolutionScaleDesc')}
+                                  label={t('settings.processing.renderScale')}
+                                  description={t('settings.processing.renderScaleDesc')}
                                 >
                                   <Dropdown
                                     onChange={(value: any) =>
@@ -1704,23 +1726,22 @@ export default function SettingsPanel({
                                     options={zoomMultiplierOptions}
                                     value={processingSettings.highResZoomMultiplier}
                                     triggerClassName="bg-bg-primary"
-                                    translate={t}
                                   />
                                 </SettingItem>
 
                                 <SettingItem
-                                  label={t('settings.processing.highDpiRendering')}
+                                  label={t('settings.processing.highDpi')}
                                   description={
                                     dpr > 1
                                       ? t('settings.processing.highDpiDesc', { dpr })
-                                      : t('settings.processing.standardDpiDesc')
+                                      : t('settings.processing.highDpiDescStandard')
                                   }
                                 >
                                   <Switch
                                     checked={processingSettings.useFullDpiRendering}
                                     disabled={dpr <= 1}
                                     id="full-dpi-rendering-toggle"
-                                    label={t('settings.processing.renderAtNativeDpi')}
+                                    label={t('settings.processing.nativeDpi')}
                                     onChange={(checked) =>
                                       handleProcessingSettingChange('useFullDpiRendering', checked)
                                     }
@@ -1735,8 +1756,8 @@ export default function SettingsPanel({
 
                     <div className="space-y-4">
                       <SettingItem
-                        label={t('settings.processing.liveInteractivePreviews')}
-                        description={t('settings.processing.liveInteractivePreviewsDesc')}
+                        label={t('settings.processing.livePreviews')}
+                        description={t('settings.processing.livePreviewsDesc')}
                       >
                         <Switch
                           checked={appSettings?.enableLivePreviews ?? true}
@@ -1766,10 +1787,7 @@ export default function SettingsPanel({
                                   onChange={(value: any) =>
                                     onSettingsChange({ ...appSettings, livePreviewQuality: value })
                                   }
-                                  options={livePreviewQualityOptions.map(opt => ({
-                                    ...opt,
-                                    label: t(_livePreviewQualityOptionKeys[opt.value] || opt.label)
-                                  }))}
+                                  options={livePreviewQualityOptions}
                                   value={appSettings?.livePreviewQuality || 'high'}
                                   triggerClassName="bg-bg-primary"
                                 />
@@ -1781,8 +1799,8 @@ export default function SettingsPanel({
                     </div>
 
                     <SettingItem
-                      description={t('settings.processing.thumbnailResolutionDesc2')}
-                      label={t('settings.processing.thumbnailResolution')}
+                      description={t('settings.processing.thumbnailResDesc')}
+                      label={t('settings.processing.thumbnailRes')}
                     >
                       <Dropdown
                         onChange={(value: any) => handleProcessingSettingChange('thumbnailResolution', value)}
@@ -1793,8 +1811,8 @@ export default function SettingsPanel({
                     </SettingItem>
 
                     <SettingItem
-                      label={t('settings.processing.thumbnailWorkerThreads')}
-                      description={t('settings.processing.thumbnailWorkerThreadsDesc')}
+                      label={t('settings.processing.workerThreads')}
+                      description={t('settings.processing.workerThreadsDesc')}
                     >
                       <Slider
                         label={t('settings.processing.threads')}
@@ -1811,8 +1829,8 @@ export default function SettingsPanel({
                     </SettingItem>
 
                     <SettingItem
-                      label={t('settings.processing.decodedImageCache')}
-                      description={t('settings.processing.decodedImageCacheDesc')}
+                      label={t('settings.processing.imageCache')}
+                      description={t('settings.processing.imageCacheDesc')}
                     >
                       <Slider
                         label={t('settings.processing.images')}
@@ -1827,27 +1845,27 @@ export default function SettingsPanel({
                     </SettingItem>
 
                     <SettingItem
-                      label={t('settings.processing.wgpuDirectRendering')}
+                      label={t('settings.processing.wgpu')}
                       description={
                         osPlatform === 'linux'
-                          ? t('settings.processing.wgpuLinuxDesc')
+                          ? t('settings.processing.wgpuDescLinux')
                           : osPlatform === 'android'
-                            ? t('settings.processing.wgpuAndroidDesc')
-                            : t('settings.processing.wgpuRecommendedDesc')
+                            ? t('settings.processing.wgpuDescAndroid')
+                            : t('settings.processing.wgpuDescRecommended')
                       }
                     >
                       <Switch
                         checked={processingSettings.useWgpuRenderer}
                         disabled={osPlatform === 'linux' || osPlatform === 'android'}
                         id="wgpu-renderer-toggle"
-                        label={t('settings.processing.enableDirectWgpuRender')}
+                        label={t('settings.processing.wgpuLabel')}
                         onChange={(checked) => handleProcessingSettingChange('useWgpuRenderer', checked)}
                       />
                     </SettingItem>
 
                     <SettingItem
-                      label={t('settings.processing.processingBackend')}
-                      description={t('settings.processing.processingBackendDesc')}
+                      label={t('settings.processing.backend')}
+                      description={t('settings.processing.backendDesc')}
                     >
                       <Dropdown
                         onChange={(value: any) => handleProcessingSettingChange('processingBackend', value)}
@@ -1858,19 +1876,18 @@ export default function SettingsPanel({
                             : 'auto'
                         }
                         triggerClassName="bg-bg-primary"
-                        translate={t}
                       />
                     </SettingItem>
 
                     {osPlatform !== 'macos' && osPlatform !== 'windows' && (
                       <SettingItem
-                        label={t('settings.processing.linuxCompatibilityMode')}
-                        description={t('settings.processing.linuxCompatibilityModeDesc')}
+                        label={t('settings.processing.linuxCompat')}
+                        description={t('settings.processing.linuxCompatDesc')}
                       >
                         <Switch
                           checked={processingSettings.linuxGpuOptimization}
                           id="gpu-compat-toggle"
-                          label={t('settings.processing.enableCompatibilityMode')}
+                          label={t('settings.processing.linuxCompatLabel')}
                           onChange={(checked) => handleProcessingSettingChange('linuxGpuOptimization', checked)}
                         />
                       </SettingItem>
@@ -1884,10 +1901,10 @@ export default function SettingsPanel({
                           className="p-3 bg-blue-900/10 border border-blue-500/50 rounded-lg flex items-center gap-3"
                         >
                           <Info size={18} />
-                          <p>{t('settings.processing.restartRequiredDesc')}</p>
+                          <p>{t('settings.processing.restartRequired')}</p>
                         </Text>
                         <div className="flex justify-end">
-                          <Button onClick={handleSaveAndRelaunch}>{t('settings.processing.saveAndRelaunch')}</Button>
+                          <Button onClick={handleSaveAndRelaunch}>{t('settings.processing.saveRelaunch')}</Button>
                         </div>
                       </>
                     )}
@@ -1896,15 +1913,15 @@ export default function SettingsPanel({
 
                 <div className="p-6 bg-surface rounded-xl shadow-md">
                   <Text variant={TextVariants.title} color={TextColors.accent} className="mb-8">
-                    {t('settings.processing.imagePreprocessing')}
+                    {t('settings.processing.preprocessing.title')}
                   </Text>
                   <div className="space-y-8">
                     <SettingItem
-                      label={t('settings.processing.rawHighlightRecovery')}
-                      description={t('settings.processing.rawHighlightRecoveryDesc')}
+                      label={t('settings.processing.preprocessing.highlightRecovery')}
+                      description={t('settings.processing.preprocessing.highlightRecoveryDesc')}
                     >
                       <Slider
-                        label={t('settings.amount')}
+                        label={t('settings.tagging.amount')}
                         min={1}
                         max={10}
                         step={0.1}
@@ -1918,11 +1935,11 @@ export default function SettingsPanel({
                     </SettingItem>
 
                     <SettingItem
-                      label={t('settings.processing.baseColorNoiseReduction')}
-                      description={t('settings.processing.baseColorNoiseReductionDesc')}
+                      label={t('settings.processing.preprocessing.colorNr')}
+                      description={t('settings.processing.preprocessing.colorNrDesc')}
                     >
                       <Slider
-                        label={t('settings.amount')}
+                        label={t('settings.tagging.amount')}
                         min={0}
                         max={1.0}
                         step={0.05}
@@ -1936,15 +1953,17 @@ export default function SettingsPanel({
                     </SettingItem>
 
                     <SettingItem
-                      label={t('settings.processing.preSharpening')}
-                      description={t('settings.processing.preSharpeningDesc')}
+                      label={t('settings.processing.preprocessing.sharpening')}
+                      description={t('settings.processing.preprocessing.sharpeningDesc')}
                     >
                       <Slider
-                        label={t('settings.amount')}
+                        label={t('settings.tagging.amount')}
                         min={0}
                         max={1.0}
                         step={0.05}
-                        value={processingSettings.rawPreprocessingSharpening}
+                        value={
+                          processingSettings.rawPreprocessingTextSharp ?? processingSettings.rawPreprocessingSharpening
+                        }
                         defaultValue={0.35}
                         onChange={(e: any) =>
                           handleProcessingSettingChange('rawPreprocessingSharpening', parseFloat(e.target.value))
@@ -1954,39 +1973,38 @@ export default function SettingsPanel({
                     </SettingItem>
 
                     <SettingItem
-                      label={t('settings.processing.applyPreprocessingToNonRaws')}
-                      description={t('settings.processing.applyPreprocessingToNonRawsDesc')}
+                      label={t('settings.processing.preprocessing.applyPreprocessing')}
+                      description={t('settings.processing.preprocessing.applyPreprocessingDesc')}
                     >
                       <Switch
                         checked={processingSettings.applyPreprocessingToNonRaws}
                         id="preprocessing-non-raws-toggle"
-                        label={t('settings.processing.enableForNonRaws')}
+                        label={t('settings.processing.preprocessing.enablePreprocessingNonRaws')}
                         onChange={(checked) => handleProcessingSettingChange('applyPreprocessingToNonRaws', checked)}
                       />
                     </SettingItem>
 
                     <SettingItem
-                      label={t('settings.processing.linearRawProcessing')}
-                      description={t('settings.processing.linearRawProcessingDesc')}
+                      label={t('settings.processing.preprocessing.linearRaw')}
+                      description={t('settings.processing.preprocessing.linearRawDesc')}
                     >
                       <Dropdown
                         onChange={(value: any) => onSettingsChange({ ...appSettings, linearRawMode: value })}
                         options={linearRawOptions}
                         value={appSettings?.linearRawMode || 'auto'}
                         triggerClassName="bg-bg-primary"
-                        translate={t}
                       />
                     </SettingItem>
 
                     <div className="space-y-4">
                       <SettingItem
-                        label={t('settings.processing.globalTonemapperOverride')}
-                        description={t('settings.processing.globalTonemapperOverrideDesc')}
+                        label={t('settings.processing.preprocessing.tonemapperOverride')}
+                        description={t('settings.processing.preprocessing.tonemapperOverrideDesc')}
                       >
                         <Switch
                           checked={appSettings?.tonemapperOverrideEnabled ?? false}
                           id="tonemapper-override-toggle"
-                          label={t('settings.processing.enableTonemapperOverride')}
+                          label={t('settings.processing.preprocessing.enableTonemapperOverride')}
                           onChange={(checked) =>
                             onSettingsChange({ ...appSettings, tonemapperOverrideEnabled: checked })
                           }
@@ -2003,8 +2021,8 @@ export default function SettingsPanel({
                           >
                             <div className="pl-4 border-l-2 border-border-color ml-1 space-y-3">
                               <SettingItem
-                                label={t('settings.processing.defaultRawTonemapper')}
-                                description={t('settings.processing.defaultRawTonemapperDesc')}
+                                label={t('settings.processing.preprocessing.defaultRawTonemapper')}
+                                description={t('settings.processing.preprocessing.defaultRawTonemapperDesc')}
                               >
                                 <Dropdown
                                   onChange={(value: any) =>
@@ -2013,13 +2031,12 @@ export default function SettingsPanel({
                                   options={tonemapperOptions}
                                   value={appSettings?.defaultRawTonemapper || 'agx'}
                                   triggerClassName="bg-bg-primary"
-                                  translate={t}
                                 />
                               </SettingItem>
 
                               <SettingItem
-                                label={t('settings.processing.defaultNonRawTonemapper')}
-                                description={t('settings.processing.defaultNonRawTonemapperDesc')}
+                                label={t('settings.processing.preprocessing.defaultNonRawTonemapper')}
+                                description={t('settings.processing.preprocessing.defaultNonRawTonemapperDesc')}
                               >
                                 <Dropdown
                                   onChange={(value: any) =>
@@ -2028,7 +2045,6 @@ export default function SettingsPanel({
                                   options={tonemapperOptions}
                                   value={appSettings?.defaultNonRawTonemapper || 'basic'}
                                   triggerClassName="bg-bg-primary"
-                                  translate={t}
                                 />
                               </SettingItem>
                             </div>
@@ -2041,11 +2057,9 @@ export default function SettingsPanel({
 
                 <div className="p-6 bg-surface rounded-xl shadow-md">
                   <Text variant={TextVariants.title} color={TextColors.accent} className="mb-8">
-                    {t('settings.generativeAi')}
+                    {t('settings.processing.ai.title')}
                   </Text>
-                  <Text className="mb-4">
-                    {t('settings.generativeAiDesc')}
-                  </Text>
+                  <Text className="mb-4">{t('settings.processing.ai.description')}</Text>
 
                   <AiProviderSwitch selectedProvider={aiProvider} onProviderChange={handleProviderChange} />
 
@@ -2059,14 +2073,12 @@ export default function SettingsPanel({
                           exit={{ opacity: 0, x: -10 }}
                           transition={{ duration: 0.2 }}
                         >
-                          <Text variant={TextVariants.heading}>{t('settings.builtinAiCpu')}</Text>
-                          <Text className="mt-1">
-                            {t('settings.builtinAiCpuDesc')}
-                          </Text>
+                          <Text variant={TextVariants.heading}>{t('settings.processing.ai.cpu.title')}</Text>
+                          <Text className="mt-1">{t('settings.processing.ai.cpu.description')}</Text>
                           <Text as="ul" className="mt-3 space-y-1 list-disc list-inside">
-                            <li>{t('aiMasking')}</li>
-                            <li>{t('automaticImageTagging')}</li>
-                            <li>{t('simpleCpuGenerativeReplace')}</li>
+                            <li>{t('settings.processing.ai.cpu.feature1')}</li>
+                            <li>{t('settings.processing.ai.cpu.feature2')}</li>
+                            <li>{t('settings.processing.ai.cpu.feature3')}</li>
                           </Text>
                         </motion.div>
                       )}
@@ -2081,19 +2093,17 @@ export default function SettingsPanel({
                         >
                           <div className="space-y-8">
                             <div>
-                              <Text variant={TextVariants.heading}>{t('settings.selfHostedConnector')}</Text>
-                              <Text className="mt-1">
-                                {t('settings.selfHostedConnectorDesc')}
-                              </Text>
+                              <Text variant={TextVariants.heading}>{t('settings.processing.ai.connector.title')}</Text>
+                              <Text className="mt-1">{t('settings.processing.ai.connector.description')}</Text>
                               <Text as="ul" className="mt-3 space-y-1 list-disc list-inside">
-                                <li>{t('selfHostedConnectorFeatures.useOwnComfyUi')}</li>
-                                <li>{t('selfHostedConnectorFeatures.costFreeEdits')}</li>
-                                <li>{t('selfHostedConnectorFeatures.customWorkflow')}</li>
+                                <li>{t('settings.processing.ai.connector.feature1')}</li>
+                                <li>{t('settings.processing.ai.connector.feature2')}</li>
+                                <li>{t('settings.processing.ai.connector.feature3')}</li>
                               </Text>
                             </div>
                             <SettingItem
-                              label={t('settings.aiConnectorAddress')}
-                              description={t('settings.aiConnectorAddressDesc')}
+                              label={t('settings.processing.ai.connector.address')}
+                              description={t('settings.processing.ai.connector.addressDesc')}
                             >
                               <div className="flex items-center gap-2">
                                 <Input
@@ -2104,7 +2114,7 @@ export default function SettingsPanel({
                                   }
                                   onChange={(e: any) => setAiConnectorAddress(e.target.value)}
                                   onKeyDown={(e: any) => e.stopPropagation()}
-                                  placeholder={t('settings.aiConnectorAddressPlaceholder')}
+                                  placeholder="127.0.0.1:8188"
                                   type="text"
                                   value={aiConnectorAddress}
                                   bgClassName="bg-bg-primary"
@@ -2114,7 +2124,9 @@ export default function SettingsPanel({
                                   disabled={testStatus.testing || !aiConnectorAddress}
                                   onClick={handleTestConnection}
                                 >
-                                  {testStatus.testing ? t('common.processing') : t('settings.test')}
+                                  {testStatus.testing
+                                    ? t('settings.processing.ai.connector.testing')
+                                    : t('settings.processing.ai.connector.test')}
                                 </Button>
                               </div>
                               {testStatus.message && (
@@ -2140,14 +2152,12 @@ export default function SettingsPanel({
                           exit={{ opacity: 0, x: -10 }}
                           transition={{ duration: 0.2 }}
                         >
-                          <Text variant={TextVariants.heading}>{t('settings.cloudService')}</Text>
-                          <Text className="mt-1">
-                            {t('settings.cloudServiceDesc')}
-                          </Text>
+                          <Text variant={TextVariants.heading}>{t('settings.processing.ai.cloud.title')}</Text>
+                          <Text className="mt-1">{t('settings.processing.ai.cloud.description')}</Text>
                           <Text as="ul" className="mt-3 space-y-1 list-disc list-inside">
-                            <li>Maximum convenience, no setup</li>
-                            <li>Same results as self-hosting</li>
-                            <li>No powerful hardware required</li>
+                            <li>{t('settings.processing.ai.cloud.feature1')}</li>
+                            <li>{t('settings.processing.ai.cloud.feature2')}</li>
+                            <li>{t('settings.processing.ai.cloud.feature3')}</li>
                           </Text>
 
                           <div className="mt-8">
@@ -2207,12 +2217,12 @@ export default function SettingsPanel({
                                 />
                                 <div className="mt-6">
                                   <Text variant={TextVariants.small}>
-                                    Don't have an account?{' '}
+                                    {t('settings.processing.ai.cloud.signedOut.noAccount')}{' '}
                                     <button
                                       onClick={() => open('https://www.getrapidraw.com/dashboard')}
                                       className="text-accent hover:underline focus:outline-none"
                                     >
-                                      {t('settings.signUpWebsite')}
+                                      {t('settings.processing.ai.cloud.signedOut.signup')}
                                     </button>
                                   </Text>
                                 </div>
@@ -2227,19 +2237,21 @@ export default function SettingsPanel({
 
                 <div className="p-6 bg-surface rounded-xl shadow-md">
                   <Text variant={TextVariants.title} color={TextColors.accent} className="mb-8">
-                    {t('settings.dataManagement')}
+                    {t('settings.data.title')}
                   </Text>
                   <div className="space-y-8">
                     <DataActionItem
                       buttonAction={handleClearSidecars}
-                      buttonText={t('common.clear')}
+                      buttonText={t('settings.data.clearSidecarsButton')}
                       description={
                         <Text as="span" variant={TextVariants.small}>
-                          {t('settings.clearAllSidecarFilesDescPart1')}{' '}
-                          <code className="bg-bg-primary px-1 rounded-sm text-text-primary">.rrdata</code>{' '}
-                          {t('settings.clearAllSidecarFilesDescPart2')}
+                          {t('settings.data.clearSidecarsDesc')}{' '}
+                          <code className="bg-bg-primary px-1 rounded-sm text-text-primary">.rrdata</code> files
+                          (containing your edits) within your root folders:
                           <span className="block font-mono bg-bg-primary p-2 rounded-sm mt-2 break-all border border-border-color whitespace-pre-wrap">
-                            {effectiveRootPaths.length > 0 ? effectiveRootPaths.join('\n') : t('settings.noFoldersSelected')}
+                            {effectiveRootPaths.length > 0
+                              ? effectiveRootPaths.join('\n')
+                              : t('settings.data.noFolders')}
                           </span>
                         </Text>
                       }
@@ -2247,39 +2259,39 @@ export default function SettingsPanel({
                       icon={<Trash2 size={16} className="mr-2" />}
                       isProcessing={isClearing}
                       message={clearMessage}
-                      title={t('settings.clearAllSidecarFiles')}
+                      title={t('settings.data.clearSidecars')}
                     />
 
                     <DataActionItem
                       buttonAction={handleClearCache}
-                      buttonText={t('common.clear')}
-                      description={t('settings.clearThumbnailCacheDesc')}
+                      buttonText={t('settings.data.clearThumbnailButton')}
+                      description={t('settings.data.clearThumbnailDesc')}
                       icon={<Trash2 size={16} className="mr-2" />}
                       isProcessing={isClearingCache}
                       message={cacheClearMessage}
-                      title={t('settings.clearThumbnailCache')}
+                      title={t('settings.data.clearThumbnail')}
                     />
 
                     <DataActionItem
                       buttonAction={async () => {
-                        if (logPath && !logPath.startsWith('Could not')) {
+                        if (logPath && logPath !== t('settings.data.loading')) {
                           await invoke(Invokes.ShowInFinder, { path: logPath });
                         }
                       }}
-                      buttonText={t('common.open')}
+                      buttonText={t('settings.data.logsButton')}
                       description={
                         <Text as="span" variant={TextVariants.small}>
-                          {t('settings.viewApplicationLogsDesc')}
+                          {t('settings.data.logsDesc')}
                           <span className="block font-mono bg-bg-primary p-2 rounded-sm mt-2 break-all border border-border-color">
-                            {logPath || t('common.loading')}
+                            {logPath || t('settings.data.loading')}
                           </span>
                         </Text>
                       }
-                      disabled={!logPath || logPath.startsWith('Could not')}
+                      disabled={!logPath || logPath === t('settings.data.loading')}
                       icon={<ExternalLinkIcon size={16} className="mr-2" />}
                       isProcessing={false}
                       message=""
-                      title={t('settings.viewApplicationLogs')}
+                      title={t('settings.data.logs')}
                     />
                   </div>
                 </div>
@@ -2297,15 +2309,15 @@ export default function SettingsPanel({
               >
                 <div className="p-6 bg-surface rounded-xl shadow-md">
                   <Text variant={TextVariants.title} color={TextColors.accent} className="mb-8">
-                    {t('settings.mouseControls')}
+                    {t('settings.controls.title')}
                   </Text>
                   <div className="space-y-8">
                     <div>
                       <Text variant={TextVariants.heading} className="mb-2">
-                        {t('settings.inputDeviceOptimization')}
+                        {t('settings.controls.optimization')}
                       </Text>
                       <Text variant={TextVariants.small} className="mb-4">
-                        {t('settings.inputDeviceOptimizationDesc')}
+                        {t('settings.controls.optimizationDesc')}
                       </Text>
                       <CanvasInputModeSwitch
                         mode={(appSettings?.canvasInputMode as 'mouse' | 'trackpad') || 'mouse'}
@@ -2313,12 +2325,9 @@ export default function SettingsPanel({
                       />
                     </div>
 
-                    <SettingItem
-                      label={t('settings.zoomSpeedMultiplier')}
-                      description={t('settings.zoomSpeedMultiplierDesc')}
-                    >
+                    <SettingItem label={t('settings.controls.zoom')} description={t('settings.controls.zoomDesc')}>
                       <Slider
-                        label={t('settings.speed')}
+                        label={t('settings.controls.speed')}
                         min={0.1}
                         max={3.0}
                         step={0.1}
@@ -2335,7 +2344,7 @@ export default function SettingsPanel({
 
                 <div className="p-6 bg-surface rounded-xl shadow-md">
                   <Text variant={TextVariants.title} color={TextColors.accent} className="mb-8">
-                    {t('settings.keyboardControls')}
+                    {t('settings.controls.keyboardTitle')}
                   </Text>
                   <div className="space-y-8">
                     {' '}
@@ -2344,7 +2353,7 @@ export default function SettingsPanel({
                       const userKb = appSettings?.keybinds || {};
                       return (
                         <div key={section.id}>
-                          <Text variant={TextVariants.heading}>{t(section.label)}</Text>
+                          <Text variant={TextVariants.heading}>{section.label}</Text>
                           <div className="divide-y divide-border-color">
                             {sectionDefs.map((def) => (
                               <KeybindRow
@@ -2364,7 +2373,7 @@ export default function SettingsPanel({
                     })}
                     <div className="flex justify-end mt-6">
                       <Button variant="ghost" onClick={() => onSettingsChange({ ...appSettings, keybinds: {} })}>
-                        {t('settings.resetAllToDefaults')}
+                        {t('settings.controls.resetDefaults')}
                       </Button>
                     </div>
                   </div>

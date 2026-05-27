@@ -1,7 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
 import { getVersion } from '@tauri-apps/api/app';
-import { invoke } from '@tauri-apps/api/core';
 import { open } from '@tauri-apps/plugin-shell';
 import {
   AlertTriangle,
@@ -17,20 +15,18 @@ import {
   SlidersHorizontal,
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 import Button from '../ui/Button';
 import SettingsPanel from './SettingsPanel';
 import { ThemeProps, THEMES, DEFAULT_THEME_ID } from '../../utils/themes';
 import {
   AppSettings,
   ImageFile,
-  Invokes,
   LibraryViewMode,
   Progress,
-  SupportedTypes,
   ThumbnailSize,
   ThumbnailAspectRatio,
   RawStatus,
-  SortDirection,
 } from '../ui/AppProperties';
 import { ImportState, Status } from '../ui/ExportImportProperties';
 import Text from '../ui/Text';
@@ -78,35 +74,6 @@ interface MainLibraryProps {
   onNavigateToCommunity(): void;
 }
 
-const ratingFilterOptions = [
-  { value: 0, label: 'library.ratingFilter.showAll' },
-  { value: -1, label: 'library.ratingFilter.unratedOnly' },
-  { value: 1, label: 'library.ratingFilter.oneUp' },
-  { value: 2, label: 'library.ratingFilter.twoUp' },
-  { value: 3, label: 'library.ratingFilter.threeUp' },
-  { value: 4, label: 'library.ratingFilter.fourUp' },
-  { value: 5, label: 'library.ratingFilter.fiveOnly' },
-];
-
-const rawStatusOptions = [
-  { key: RawStatus.All, label: 'library.fileTypeFilter.allTypes' },
-  { key: RawStatus.RawOnly, label: 'library.fileTypeFilter.rawOnly' },
-  { key: RawStatus.NonRawOnly, label: 'library.fileTypeFilter.nonRawOnly' },
-  { key: RawStatus.RawOverNonRaw, label: 'library.fileTypeFilter.preferRaw' },
-];
-
-const thumbnailSizeOptions = [
-  { id: ThumbnailSize.Small, label: 'library.thumbnailSize.small', size: 160 },
-  { id: ThumbnailSize.Medium, label: 'library.thumbnailSize.medium', size: 240 },
-  { id: ThumbnailSize.Large, label: 'library.thumbnailSize.large', size: 320 },
-  { id: ThumbnailSize.List, label: 'library.thumbnailSize.list', size: 48 },
-];
-
-const thumbnailAspectRatioOptions = [
-  { id: ThumbnailAspectRatio.Cover, label: 'library.thumbnailAspectRatio.fillSquare' },
-  { id: ThumbnailAspectRatio.Contain, label: 'library.thumbnailAspectRatio.originalRatio' },
-];
-
 export interface ColumnWidths {
   thumbnail: number;
   name: number;
@@ -130,16 +97,60 @@ export default function MainLibrary(props: MainLibraryProps) {
 
   const searchCriteria = useLibraryStore((state) => state.searchCriteria);
 
-  const sortOptions = [
-    { key: 'name', label: 'File Name' },
-    { key: 'date', label: 'Date Modified' },
-    { key: 'rating', label: 'Rating' },
-    { key: 'date_taken', label: 'Date Taken' },
-    { key: 'focal_length', label: 'Focal Length' },
-    { key: 'iso', label: 'ISO' },
-    { key: 'shutter_speed', label: 'Shutter Speed' },
-    { key: 'aperture', label: 'Aperture' },
-  ];
+  const translatedRatingFilterOptions = useMemo(
+    () => [
+      { value: 0, label: t('library.filters.rating.all') },
+      { value: -1, label: t('library.filters.rating.unrated') },
+      { value: 1, label: t('library.filters.rating.oneAndUp') },
+      { value: 2, label: t('library.filters.rating.twoAndUp') },
+      { value: 3, label: t('library.filters.rating.threeAndUp') },
+      { value: 4, label: t('library.filters.rating.fourAndUp') },
+      { value: 5, label: t('library.filters.rating.fiveOnly') },
+    ],
+    [t],
+  );
+
+  const translatedRawStatusOptions = useMemo(
+    () => [
+      { key: RawStatus.All, label: t('library.filters.raw.all') },
+      { key: RawStatus.RawOnly, label: t('library.filters.raw.rawOnly') },
+      { key: RawStatus.NonRawOnly, label: t('library.filters.raw.nonRawOnly') },
+      { key: RawStatus.RawOverNonRaw, label: t('library.filters.raw.preferRaw') },
+    ],
+    [t],
+  );
+
+  const translatedThumbnailSizeOptions = useMemo(
+    () => [
+      { id: ThumbnailSize.Small, label: t('library.thumbnailSize.small'), size: 160 },
+      { id: ThumbnailSize.Medium, label: t('library.thumbnailSize.medium'), size: 240 },
+      { id: ThumbnailSize.Large, label: t('library.thumbnailSize.large'), size: 320 },
+      { id: ThumbnailSize.List, label: t('library.thumbnailSize.list'), size: 48 },
+    ],
+    [t],
+  );
+
+  const translatedThumbnailAspectRatioOptions = useMemo(
+    () => [
+      { id: ThumbnailAspectRatio.Cover, label: t('library.thumbnailFit.fillSquare') },
+      { id: ThumbnailAspectRatio.Contain, label: t('library.thumbnailFit.originalRatio') },
+    ],
+    [t],
+  );
+
+  const translatedSortOptions = useMemo(
+    () => [
+      { key: 'name', label: t('library.sort.fileName') },
+      { key: 'date', label: t('library.sort.dateModified') },
+      { key: 'rating', label: t('library.sort.rating') },
+      { key: 'date_taken', label: t('library.sort.dateTaken') },
+      { key: 'focal_length', label: t('library.sort.focalLength') },
+      { key: 'iso', label: t('library.sort.iso') },
+      { key: 'shutter_speed', label: t('library.sort.shutterSpeed') },
+      { key: 'aperture', label: t('library.sort.aperture') },
+    ],
+    [t],
+  );
 
   const isBusy =
     props.isLoading ||
@@ -252,7 +263,7 @@ export default function MainLibrary(props: MainLibraryProps) {
               ) : (
                 <>
                   <div className="my-auto text-left relative z-10">
-                    <Text variant={TextVariants.displayLarge}>RapidRAW</Text>
+                    <Text variant={TextVariants.displayLarge}>{t('library.splash.brand')}</Text>
                     <Text
                       variant={TextVariants.heading}
                       color={TextColors.secondary}
@@ -261,14 +272,14 @@ export default function MainLibrary(props: MainLibraryProps) {
                     >
                       {hasLastPath ? (
                         <>
-                          {t('mainLibrary.welcomeBack')}
+                          {t('library.splash.welcomeBack')}
                           <br />
-                          {t('mainLibrary.continueSessionPrompt')}
+                          {t('library.splash.welcomeBackDesc')}
                         </>
+                      ) : props.isAndroid ? (
+                        t('library.splash.descriptionAndroid')
                       ) : (
-                        t('mainLibrary.welcomeMessage', {
-                          openText: props.isAndroid ? t('mainLibrary.openLibrary') : t('mainLibrary.openFolder') + ' to begin.',
-                        })
+                        t('library.splash.descriptionDesktop')
                       )}
                     </Text>
                     <div className="flex flex-col w-full max-w-xs gap-4 relative z-10">
@@ -278,7 +289,7 @@ export default function MainLibrary(props: MainLibraryProps) {
                           onClick={props.onContinueSession}
                           size="lg"
                         >
-                          <RefreshCw size={20} className="mr-2" /> {t('mainLibrary.continueSession')}
+                          <RefreshCw size={20} className="mr-2" /> {t('library.splash.continueSession')}
                         </Button>
                       )}
                       <div className="flex items-center gap-2">
@@ -290,13 +301,17 @@ export default function MainLibrary(props: MainLibraryProps) {
                           size="lg"
                         >
                           <Folder size={20} className="mr-2" />
-                          {props.isAndroid ? t('mainLibrary.openLibrary') : hasLastPath ? t('mainLibrary.addFolder') : t('mainLibrary.openFolder')}
+                          {props.isAndroid
+                            ? t('library.splash.openLibrary')
+                            : hasLastPath
+                              ? t('library.splash.addFolder')
+                              : t('library.splash.openFolder')}
                         </Button>
                         <Button
                           className="px-3 bg-surface text-text-primary shadow-md h-11"
                           onClick={() => setShowSettings(true)}
                           size="lg"
-                          data-tooltip={t('mainLibrary.goToSettings')}
+                          data-tooltip={t('settings.general.title')}
                           variant="ghost"
                         >
                           <Settings size={20} />
@@ -311,7 +326,7 @@ export default function MainLibrary(props: MainLibraryProps) {
                     className="absolute bottom-8 left-8 lg:left-16 space-y-1 z-10 drop-shadow-sm"
                   >
                     <p>
-                      Images by{' '}
+                      {t('library.splash.imagesBy')}{' '}
                       <a
                         href="https://instagram.com/timonkaech.photography"
                         className="hover:underline"
@@ -337,13 +352,17 @@ export default function MainLibrary(props: MainLibraryProps) {
                             }}
                             data-tooltip={
                               isUpdateAvailable
-                                ? t('mainLibrary.downloadVersion', { version: latestVersion })
-                                : t('mainLibrary.latestVersion')
+                                ? t('library.splash.downloadVersion', { version: latestVersion })
+                                : t('library.splash.latestVersion')
                             }
                           >
-                            <span className={isUpdateAvailable ? 'group-hover:hidden' : ''}>{t('mainLibrary.version')} {appVersion}</span>
+                            <span className={isUpdateAvailable ? 'group-hover:hidden' : ''}>
+                              {t('library.splash.version', { version: appVersion })}
+                            </span>
                             {isUpdateAvailable && (
-                              <span className="hidden group-hover:inline text-yellow-400">{t('mainLibrary.newVersionAvailable')}</span>
+                              <span className="hidden group-hover:inline text-yellow-400">
+                                {t('library.splash.newVersionAvailable')}
+                              </span>
                             )}
                           </span>
                         </p>
@@ -355,16 +374,16 @@ export default function MainLibrary(props: MainLibraryProps) {
                             target="_blank"
                             rel="noopener noreferrer"
                           >
-                            {t('mainLibrary.donateKoFi')}
+                            {t('library.splash.donate')}
                           </a>
-                          <span className="mx-1">{t('mainLibrary.or')}</span>
+                          <span className="mx-1">{t('library.splash.or')}</span>
                           <a
                             href="https://github.com/CyberTimon/RapidRAW"
                             className="hover:underline"
                             target="_blank"
                             rel="noopener noreferrer"
                           >
-                            {t('mainLibrary.contributeGitHub')}
+                            {t('library.splash.contribute')}
                           </a>
                         </p>
                       </div>
@@ -387,7 +406,7 @@ export default function MainLibrary(props: MainLibraryProps) {
         onMouseLeave={() => setIsProgressHovered(false)}
       >
         <div className="min-w-0">
-          <Text variant={TextVariants.headline}>{t('library.title')}</Text>
+          <Text variant={TextVariants.headline}>{t('library.header.title')}</Text>
           {!props.isAndroid && (
             <div className="flex items-center gap-2">
               {props.currentFolderPath ? (
@@ -421,7 +440,7 @@ export default function MainLibrary(props: MainLibraryProps) {
             <Text as="div" color={TextColors.accent} className="flex items-center gap-2 animate-pulse">
               <FolderInput size={16} />
               <span>
-                {t('mainLibrary.importing', {
+                {t('library.import.progress', {
                   current: props.importState.progress?.current,
                   total: props.importState.progress?.total,
                 })}
@@ -431,13 +450,13 @@ export default function MainLibrary(props: MainLibraryProps) {
           {props.importState.status === Status.Success && (
             <Text as="div" color={TextColors.success} className="flex items-center gap-2">
               <Check size={16} />
-              <span>{t('mainLibrary.importComplete')}</span>
+              <span>{t('library.import.complete')}</span>
             </Text>
           )}
           {props.importState.status === Status.Error && (
             <Text as="div" color={TextColors.error} className="flex items-center gap-2">
               <AlertTriangle size={16} />
-              <span>{t('mainLibrary.importFailed')}</span>
+              <span>{t('library.import.failed')}</span>
             </Text>
           )}
           <SearchInput indexingProgress={props.indexingProgress} isIndexing={props.isIndexing} />
@@ -448,27 +467,27 @@ export default function MainLibrary(props: MainLibraryProps) {
             setLibraryViewMode={props.setLibraryViewMode}
             thumbnailSize={props.thumbnailSize}
             thumbnailAspectRatio={props.thumbnailAspectRatio}
-            thumbnailSizeOptions={thumbnailSizeOptions}
-            thumbnailAspectRatioOptions={thumbnailAspectRatioOptions}
-            ratingFilterOptions={ratingFilterOptions}
-            rawStatusOptions={rawStatusOptions}
-            sortOptions={sortOptions}
+            thumbnailSizeOptions={translatedThumbnailSizeOptions}
+            thumbnailAspectRatioOptions={translatedThumbnailAspectRatioOptions}
+            ratingFilterOptions={translatedRatingFilterOptions}
+            rawStatusOptions={translatedRawStatusOptions}
+            sortOptions={translatedSortOptions}
           />
           {!props.isAndroid && (
             <>
               <Button
-            className="h-12 w-12 bg-surface text-text-primary shadow-none p-0 flex items-center justify-center"
-            onClick={props.onNavigateToCommunity}
-            data-tooltip={t('mainLibrary.communityPresets')}
-          >
-            <Users className="w-8 h-8" />
-          </Button>
+                className="h-12 w-12 bg-surface text-text-primary shadow-none p-0 flex items-center justify-center"
+                onClick={props.onNavigateToCommunity}
+                data-tooltip={t('library.tooltips.communityPresets')}
+              >
+                <Users className="w-8 h-8" />
+              </Button>
             </>
           )}
           <Button
             className="h-12 w-12 bg-surface text-text-primary shadow-none p-0 flex items-center justify-center"
             onClick={props.onGoHome}
-            data-tooltip="Go to Home"
+            data-tooltip={t('library.tooltips.goHome')}
           >
             <Home className="w-8 h-8" />
           </Button>
@@ -476,28 +495,28 @@ export default function MainLibrary(props: MainLibraryProps) {
       </header>
 
       {props.imageList.length > 0 ? (
-        <LibraryGrid {...props} thumbnailSizeOptions={thumbnailSizeOptions} />
+        <LibraryGrid {...props} thumbnailSizeOptions={translatedThumbnailSizeOptions} />
       ) : props.isIndexing || props.aiModelDownloadStatus || props.importState.status === Status.Importing ? (
         <div className="flex-1 flex flex-col items-center justify-center" onContextMenu={props.onEmptyAreaContextMenu}>
           <Loader2 className="h-12 w-12 text-secondary animate-spin mb-4" />
           <Text variant={TextVariants.heading} color={TextColors.secondary}>
             {props.aiModelDownloadStatus
-              ? t('mainLibrary.downloading', { model: props.aiModelDownloadStatus })
+              ? t('library.status.downloading', { status: props.aiModelDownloadStatus })
               : props.isIndexing && props.indexingProgress.total > 0
-                ? t('mainLibrary.indexing', {
+                ? t('library.status.indexing', {
                     current: props.indexingProgress.current,
                     total: props.indexingProgress.total,
                   })
                 : props.importState.status === Status.Importing &&
                     props.importState?.progress?.total &&
                     props.importState.progress.total > 0
-                  ? t('mainLibrary.importing', {
+                  ? t('library.status.importing', {
                       current: props.importState.progress?.current,
                       total: props.importState.progress?.total,
                     })
-                  : t('mainLibrary.processingImages')}
+                  : t('library.status.processing')}
           </Text>
-          <Text className="mt-2">{t('mainLibrary.mayTakeMoment')}</Text>
+          <Text className="mt-2">{t('library.status.moment')}</Text>
         </div>
       ) : searchCriteria.tags.length > 0 || searchCriteria.text ? (
         <div
@@ -506,17 +525,17 @@ export default function MainLibrary(props: MainLibraryProps) {
         >
           <Search className="h-12 w-12 text-secondary mb-4" />
           <Text variant={TextVariants.heading} color={TextColors.secondary}>
-            {t('mainLibrary.noResultsFound')}
+            {t('library.search.noResults')}
           </Text>
           <Text className="mt-2 max-w-sm">
-            {t('mainLibrary.noResultsDescription')}
-            {!props.appSettings?.enableAiTagging && ' ' + t('mainLibrary.enableTaggingHint')}
+            {t('library.search.noResultsDesc')}
+            {!props.appSettings?.enableAiTagging && t('library.search.noResultsAiHint')}
           </Text>
         </div>
       ) : (
         <div className="flex-1 flex flex-col items-center justify-center" onContextMenu={props.onEmptyAreaContextMenu}>
           <SlidersHorizontal className="h-12 w-12 mb-4 text-text-secondary" />
-          <Text>{t('mainLibrary.noImagesMatchFilter')}</Text>
+          <Text>{t('library.filters.noMatch')}</Text>
         </div>
       )}
       {props.isAndroid && (
@@ -526,7 +545,7 @@ export default function MainLibrary(props: MainLibraryProps) {
             e.stopPropagation();
             props.onImportClick();
           }}
-          data-tooltip="Import Images"
+          data-tooltip={t('library.tooltips.importImages')}
         >
           <FolderInput className="w-6 h-6" />
         </Button>
