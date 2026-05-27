@@ -62,7 +62,7 @@ import {
   MASK_ICON_MAP,
   SubMaskMode,
   ToolType,
-  formatMaskTypeName,
+  getMaskTypeTranslationKey,
   getSubMaskName,
 } from './Masks';
 import {
@@ -96,45 +96,45 @@ interface DragData {
 
 const SUB_MASK_CONFIG: Record<Mask, any> = {
   [Mask.Radial]: {
-    parameters: [{ key: 'feather', label: 'Feather', min: 0, max: 100, step: 1, multiplier: 100, defaultValue: 50 }],
+    parameters: [{ key: 'feather', label: 'masks.feather', min: 0, max: 100, step: 1, multiplier: 100, defaultValue: 50 }],
   },
   [Mask.Brush]: { showBrushTools: true },
   [Mask.Flow]: { showBrushTools: true, showFlowControl: true },
   [Mask.Linear]: { parameters: [] },
   [Mask.Color]: {
     parameters: [
-      { key: 'tolerance', label: 'Tolerance', min: 1, max: 100, step: 1, defaultValue: 20 },
-      { key: 'grow', label: 'Grow', min: -100, max: 100, step: 1, defaultValue: 0 },
-      { key: 'feather', label: 'Feather', min: 0, max: 100, step: 1, defaultValue: 35 },
+      { key: 'tolerance', label: 'masks.tolerance', min: 1, max: 100, step: 1, defaultValue: 20 },
+      { key: 'grow', label: 'masks.grow', min: -100, max: 100, step: 1, defaultValue: 0 },
+      { key: 'feather', label: 'masks.feather', min: 0, max: 100, step: 1, defaultValue: 35 },
     ],
   },
   [Mask.Luminance]: {
     parameters: [
-      { key: 'tolerance', label: 'Tolerance', min: 1, max: 100, step: 1, defaultValue: 20 },
-      { key: 'grow', label: 'Grow', min: -100, max: 100, step: 1, defaultValue: 0 },
-      { key: 'feather', label: 'Feather', min: 0, max: 100, step: 1, defaultValue: 35 },
+      { key: 'tolerance', label: 'masks.tolerance', min: 1, max: 100, step: 1, defaultValue: 20 },
+      { key: 'grow', label: 'masks.grow', min: -100, max: 100, step: 1, defaultValue: 0 },
+      { key: 'feather', label: 'masks.feather', min: 0, max: 100, step: 1, defaultValue: 35 },
     ],
   },
   [Mask.All]: { parameters: [] },
   [Mask.AiDepth]: {
-    parameters: [{ key: 'feather', label: 'Global Feather', min: 0, max: 100, step: 1, defaultValue: 15 }],
+    parameters: [{ key: 'feather', label: 'masks.globalFeather', min: 0, max: 100, step: 1, defaultValue: 15 }],
   },
   [Mask.AiSubject]: {
     parameters: [
-      { key: 'grow', label: 'Grow', min: -100, max: 100, step: 1, defaultValue: 0 },
-      { key: 'feather', label: 'Feather', min: 0, max: 100, step: 1, defaultValue: 0 },
+      { key: 'grow', label: 'masks.grow', min: -100, max: 100, step: 1, defaultValue: 0 },
+      { key: 'feather', label: 'masks.feather', min: 0, max: 100, step: 1, defaultValue: 0 },
     ],
   },
   [Mask.AiForeground]: {
     parameters: [
-      { key: 'grow', label: 'Grow', min: -100, max: 100, step: 1, defaultValue: 0 },
-      { key: 'feather', label: 'Feather', min: 0, max: 100, step: 1, defaultValue: 0 },
+      { key: 'grow', label: 'masks.grow', min: -100, max: 100, step: 1, defaultValue: 0 },
+      { key: 'feather', label: 'masks.feather', min: 0, max: 100, step: 1, defaultValue: 0 },
     ],
   },
   [Mask.AiSky]: {
     parameters: [
-      { key: 'grow', label: 'Grow', min: -100, max: 100, step: 1, defaultValue: 0 },
-      { key: 'feather', label: 'Feather', min: 0, max: 100, step: 1, defaultValue: 0 },
+      { key: 'grow', label: 'masks.grow', min: -100, max: 100, step: 1, defaultValue: 0 },
+      { key: 'feather', label: 'masks.feather', min: 0, max: 100, step: 1, defaultValue: 0 },
     ],
   },
   [Mask.QuickEraser]: { parameters: [] },
@@ -983,7 +983,7 @@ export default function MasksPanel() {
 
     clonedSubMask.id = uuidv4();
     clonedSubMask.invert = options.invert ? !clonedSubMask.invert : clonedSubMask.invert;
-    clonedSubMask.name = options.rename === false ? clonedSubMask.name : `${getSubMaskName(subMask)} Copy`;
+    clonedSubMask.name = options.rename === false ? clonedSubMask.name : `${t(getSubMaskName(subMask))} Copy`;
 
     return clonedSubMask;
   };
@@ -1074,7 +1074,7 @@ export default function MasksPanel() {
     const duplicatedSubMask = cloneSubMaskData(subMask, { invert: true, rename: false });
     const newContainer = cloneMaskContainerData(parentContainer, { rename: false });
 
-    newContainer.name = `${getSubMaskName(subMask)} Inverted`;
+    newContainer.name = `${t(getSubMaskName(subMask))} Inverted`;
     newContainer.subMasks = [duplicatedSubMask];
     newContainer.invert = false;
 
@@ -1515,7 +1515,7 @@ export default function MasksPanel() {
                     <>
                       <Icon size={24} />
                       <span className="text-center">
-                        {activeDragItem.maskType ? t(formatMaskTypeName(activeDragItem.maskType)) : t('masks.title')}
+                        {activeDragItem.maskType ? t(getMaskTypeTranslationKey(activeDragItem.maskType)) : t('masks.title')}
                       </span>
                     </>
                   );
@@ -1968,7 +1968,7 @@ function SubMaskRow({
         icon: FileEdit,
         onClick: () => {
           setRenamingId(subMask.id);
-          setTempName(getSubMaskName(subMask));
+          setTempName(t(getSubMaskName(subMask)));
         },
       },
       { label: 'Duplicate Component', icon: PlusSquare, onClick: handleDuplicate },

@@ -48,7 +48,7 @@ import {
   MASK_ICON_MAP,
   AI_PANEL_CREATION_TYPES,
   AI_SUB_MASK_COMPONENT_TYPES,
-  formatMaskTypeName,
+  getMaskTypeTranslationKey,
   getSubMaskName,
 } from './Masks';
 import { Adjustments, AiPatch } from '../../../utils/adjustments';
@@ -85,32 +85,32 @@ const PLACEHOLDER_PATCH: AiPatch = {
 
 const SUB_MASK_CONFIG: any = {
   [Mask.Radial]: {
-    parameters: [{ key: 'feather', label: 'Feather', min: 0, max: 100, step: 1, multiplier: 100, defaultValue: 50 }],
+    parameters: [{ key: 'feather', label: 'masks.feather', min: 0, max: 100, step: 1, multiplier: 100, defaultValue: 50 }],
   },
   [Mask.Brush]: { showBrushTools: true },
   [Mask.Linear]: { parameters: [] },
   [Mask.AiSubject]: {
     parameters: [
-      { key: 'grow', label: 'Grow', min: -100, max: 100, step: 1, defaultValue: 50 },
-      { key: 'feather', label: 'Feather', min: 0, max: 100, step: 1, defaultValue: 25 },
+      { key: 'grow', label: 'masks.grow', min: -100, max: 100, step: 1, defaultValue: 50 },
+      { key: 'feather', label: 'masks.feather', min: 0, max: 100, step: 1, defaultValue: 25 },
     ],
   },
   [Mask.AiForeground]: {
     parameters: [
-      { key: 'grow', label: 'Grow', min: -100, max: 100, step: 1, defaultValue: 50 },
-      { key: 'feather', label: 'Feather', min: 0, max: 100, step: 1, defaultValue: 25 },
+      { key: 'grow', label: 'masks.grow', min: -100, max: 100, step: 1, defaultValue: 50 },
+      { key: 'feather', label: 'masks.feather', min: 0, max: 100, step: 1, defaultValue: 25 },
     ],
   },
   [Mask.AiSky]: {
     parameters: [
-      { key: 'grow', label: 'Grow', min: -100, max: 100, step: 1, defaultValue: 0 },
-      { key: 'feather', label: 'Feather', min: 0, max: 100, step: 1, defaultValue: 0 },
+      { key: 'grow', label: 'masks.grow', min: -100, max: 100, step: 1, defaultValue: 0 },
+      { key: 'feather', label: 'masks.feather', min: 0, max: 100, step: 1, defaultValue: 0 },
     ],
   },
   [Mask.QuickEraser]: {
     parameters: [
-      { key: 'grow', label: 'Grow', min: -100, max: 100, step: 1, defaultValue: 75 },
-      { key: 'feather', label: 'Feather', min: 0, max: 100, step: 1, defaultValue: 75 },
+      { key: 'grow', label: 'masks.grow', min: -100, max: 100, step: 1, defaultValue: 75 },
+      { key: 'feather', label: 'masks.feather', min: 0, max: 100, step: 1, defaultValue: 75 },
     ],
   },
 };
@@ -663,7 +663,7 @@ export default function AIPanel() {
 
     clonedSubMask.id = uuidv4();
     clonedSubMask.invert = options.invert ? !clonedSubMask.invert : clonedSubMask.invert;
-    clonedSubMask.name = options.rename === false ? clonedSubMask.name : `${getSubMaskName(subMask)} Copy`;
+    clonedSubMask.name = options.rename === false ? clonedSubMask.name : `${t(getSubMaskName(subMask))} Copy`;
 
     return clonedSubMask;
   };
@@ -751,7 +751,7 @@ export default function AIPanel() {
     const duplicatedSubMask = cloneSubMaskData(subMask, { invert: true, rename: false });
     const newContainer = clonePatchData(parentContainer, { rename: false });
 
-    newContainer.name = `${getSubMaskName(subMask)} Inverted`;
+    newContainer.name = `${t(getSubMaskName(subMask))} Inverted`;
     newContainer.subMasks = [duplicatedSubMask];
     newContainer.invert = false;
 
@@ -1147,7 +1147,7 @@ export default function AIPanel() {
                     <>
                       <Icon size={24} />
                       <span className="text-center">
-                        {activeDragItem.maskType ? t(formatMaskTypeName(activeDragItem.maskType)) : t('masks.title')}
+                        {activeDragItem.maskType ? t(getMaskTypeTranslationKey(activeDragItem.maskType)) : t('masks.title')}
                       </span>
                     </>
                   );
@@ -1196,7 +1196,7 @@ function DraggableGridItem({ maskType, isGenerating, onClick }: any) {
                 : 'hover:bg-card-active active:bg-accent/20'
             }
             ${isDragging ? 'opacity-50' : ''}`}
-      data-tooltip={maskType.disabled ? t('ai.comingSoon') : t('ai.createNewEdit', { name: maskType.name })}
+      data-tooltip={maskType.disabled ? t('ai.comingSoon') : t('ai.createNewEdit', { name: t(maskType.name) })}
       whileTap={{ scale: 0.98 }}
       transition={{ type: 'spring', stiffness: 400, damping: 17 }}
     >
@@ -1540,7 +1540,7 @@ function SubMaskRow({
         icon: FileEdit,
         onClick: () => {
           setRenamingId(subMask.id);
-          setTempName(getSubMaskName(subMask));
+          setTempName(t(getSubMaskName(subMask)));
         },
       },
       { label: t('ai.duplicateComponent'), icon: PlusSquare, onClick: handleDuplicate },

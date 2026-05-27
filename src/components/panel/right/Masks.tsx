@@ -62,7 +62,7 @@ export interface SubMask {
   visible: boolean;
 }
 
-export function formatMaskTypeName(type: string) {
+export function getMaskTypeTranslationKey(type: string) {
   if (type === Mask.AiDepth) return 'masks.types.depth';
   if (type === Mask.AiSubject) return 'masks.types.subject';
   if (type === Mask.AiForeground) return 'masks.types.foreground';
@@ -72,8 +72,18 @@ export function formatMaskTypeName(type: string) {
   return type.charAt(0).toUpperCase() + type.slice(1);
 }
 
+export function formatMaskTypeName(type: string) {
+  if (type === Mask.AiDepth) return 'Depth';
+  if (type === Mask.AiSubject) return 'Subject';
+  if (type === Mask.AiForeground) return 'Foreground';
+  if (type === Mask.AiSky) return 'Sky';
+  if (type === Mask.All) return 'Whole Image';
+  if (type === Mask.QuickEraser) return 'Quick Erase';
+  return type.charAt(0).toUpperCase() + type.slice(1);
+}
+
 export function getSubMaskName(subMask: Pick<SubMask, 'name' | 'type'>) {
-  return subMask.name?.trim() || formatMaskTypeName(subMask.type);
+  return subMask.name?.trim() || getMaskTypeTranslationKey(subMask.type);
 }
 
 export const MASK_ICON_MAP: Record<Mask, any> = {
