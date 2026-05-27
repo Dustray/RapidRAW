@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { invoke } from '@tauri-apps/api/core';
+import { useTranslation } from 'react-i18next';
 import {
   RotateCcw,
   Search,
@@ -130,6 +131,7 @@ export default function LensCorrectionModal({
   currentAdjustments,
   selectedImage,
 }: LensCorrectionModalProps) {
+  const { t } = useTranslation();
   const [params, setParams] = useState<LensParams>(DEFAULT_PARAMS);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [isApplying, setIsApplying] = useState(false);
@@ -540,7 +542,7 @@ export default function LensCorrectionModal({
   const lensOptions = lenses.map((m) => ({ label: m, value: m }));
   const myLensOptions = useMemo(() => {
     if (myLenses.length === 0) {
-      return [{ label: 'Manage your lenses in Settings', value: 'none' }];
+      return [{ label: t('modal.lensCorrection.manageLensesInSettings'), value: 'none' }];
     }
     return myLenses.map((l, i) => ({
       label: `${l.maker} - ${l.model}`,
@@ -553,21 +555,21 @@ export default function LensCorrectionModal({
       case 'detecting':
         return (
           <>
-            <Loader size={16} className="animate-spin" /> Detecting...
+            <Loader size={16} className="animate-spin" /> {t('lensCorrectionModal.detecting')}
           </>
         );
       case 'not_found':
-        return 'Not Found';
+        return t('lensCorrectionModal.notFound');
       case 'success':
         return (
           <>
-            <Check size={16} /> Lens Found
+            <Check size={16} /> {t('lensCorrectionModal.lensFound')}
           </>
         );
       default:
         return (
           <>
-            <Search size={16} /> Auto-detect Lens
+            <Search size={16} /> {t('lensCorrectionModal.autoDetectLens')}
           </>
         );
     }
@@ -587,41 +589,82 @@ export default function LensCorrectionModal({
   const renderControls = () => (
     <div className="modal-adjustments-pane w-80 shrink-0 bg-bg-secondary flex flex-col border-l border-surface h-full z-10">
       <div className="p-4 flex justify-between items-center shrink-0 border-b border-surface">
-        <Text variant={TextVariants.title}>Lens Correction</Text>
+        <Text variant={TextVariants.title}>{t('lensCorrectionModal.title')}</Text>
         <button
           onClick={handleReset}
-          data-tooltip="Reset Lens Correction"
+          data-tooltip={t('modal.lensCorrection.resetLensCorrection')}
           className="p-2 rounded-full hover:bg-surface transition-colors"
         >
           <RotateCcw size={18} />
         </button>
       </div>
-      <div className="grow overflow-y-auto p-4 flex flex-col gap-6 text-text-secondary">
-        <div className="bg-bg-primary rounded-md p-1">
-          <div className="relative flex w-full">
-            <motion.div
-              className="absolute top-0 bottom-0 z-0 bg-surface rounded-md shadow-sm"
-              animate={modeBubbleStyle}
-              transition={{ type: 'spring', bounce: 0.2, duration: 0.6 }}
+      <div className="grow overflow-y-auto p-4 flex flex-col gap-8 text-text-secondary">
+        <div>
+          <Text variant={TextVariants.heading} className="mb-2">
+            Auto Detection
+          </Text>
+          <div className="space-y-3">
+            <button
+              onClick={handleAutoDetect}
+              className={clsx(
+                'w-full flex items-center justify-center gap-2 px-3 py-2 text-sm font-semibold rounded-md transition-colors',
+                detectionStatus === 'not_found'
+                  ? 'bg-red-500/20 text-red-400'
+                  : detectionStatus === 'success'
+                    ? 'bg-green-500/20 text-green-400'
+                    : 'bg-surface hover:bg-card-active',
+              )}
+              disabled={detectionStatus === 'detecting'}
+            >
+              {autoDetectButtonContent()}
+            </button>
+
+            <AnimatePresence>
+              {detectionStatus === 'not_found' && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  className="p-3 bg-red-900/10 border border-red-500/20 rounded-md"
+                >
+                  <Text
+                    as="div"
+                    variant={TextVariants.small}
+                    color={TextColors.error}
+                    className="flex items-center gap-3"
+                  >
+                    <Info size={16} className="shrink-0" />
+                    <p className="leading-relaxed">
+                      Lens correction may not be available for all lenses. Auto-detection relies on EXIF data.
+                    </p>
+                  </Text>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+        </div>
+
+        <div>
+          <Text variant={TextVariants.heading} className="mb-2">
+            Manual Selection
+          </Text>
+
+          <div className="space-y-4">
+            <Dropdown options={myLensOptions} value="" onChange={handleMyLensSelect} placeholder={t('modal.lensCorrection.chooseSavedLens')} />
+            <Dropdown
+              options={makerOptions}
+              value={params.lensMaker}
+              onChange={handleMakerChange}
+              placeholder={t('settings.selectManufacturer')}
             />
-            <button
-              onClick={() => handleModeChange('auto')}
-              className={clsx(
-                'relative z-10 flex-1 py-1.5 text-sm font-medium rounded-md transition-colors',
-                params.lensCorrectionMode === 'auto' ? 'text-white' : 'text-text-secondary hover:text-white',
-              )}
-            >
-              Auto
-            </button>
-            <button
-              onClick={() => handleModeChange('manual')}
-              className={clsx(
-                'relative z-10 flex-1 py-1.5 text-sm font-medium rounded-md transition-colors',
-                params.lensCorrectionMode === 'manual' ? 'text-white' : 'text-text-secondary hover:text-white',
-              )}
-            >
-              Manual
-            </button>
+            {params.lensMaker && (
+              <Dropdown
+                options={lensOptions}
+                value={params.lensModel}
+                onChange={handleModelChange}
+                placeholder={t('settings.selectLensModel')}
+              />
+            )}
           </div>
         </div>
 
@@ -705,7 +748,7 @@ export default function LensCorrectionModal({
                 </Text>
                 <Switch
                   className="grow"
-                  label="Distortion"
+                  label={t('modal.lensCorrection.distortion')}
                   checked={params.lensDistortionEnabled && availability.distortion}
                   onChange={(val) => handleToggleChange('lensDistortionEnabled', val)}
                   disabled={!availability.distortion}
@@ -721,7 +764,7 @@ export default function LensCorrectionModal({
                     className="overflow-hidden px-2"
                   >
                     <Slider
-                      label="Amount"
+                      label={t('modal.lensCorrection.amount')}
                       value={params.lensDistortionAmount}
                       min={0}
                       max={200}
@@ -746,7 +789,7 @@ export default function LensCorrectionModal({
                 </Text>
                 <Switch
                   className="grow"
-                  label="Chromatic Aberration"
+                  label={t('modal.lensCorrection.chromaticAberration')}
                   checked={params.lensTcaEnabled && availability.tca}
                   onChange={(val) => handleToggleChange('lensTcaEnabled', val)}
                   disabled={!availability.tca}
@@ -762,7 +805,7 @@ export default function LensCorrectionModal({
                     className="overflow-hidden px-2"
                   >
                     <Slider
-                      label="Amount"
+                      label={t('modal.lensCorrection.amount')}
                       value={params.lensTcaAmount}
                       min={0}
                       max={200}
@@ -787,7 +830,7 @@ export default function LensCorrectionModal({
                 </Text>
                 <Switch
                   className="grow"
-                  label="Vignetting"
+                  label={t('modal.lensCorrection.vignetting')}
                   checked={params.lensVignetteEnabled && availability.vignetting}
                   onChange={(val) => handleToggleChange('lensVignetteEnabled', val)}
                   disabled={!availability.vignetting}
@@ -803,7 +846,7 @@ export default function LensCorrectionModal({
                     className="overflow-hidden px-2"
                   >
                     <Slider
-                      label="Amount"
+                      label={t('modal.lensCorrection.amount')}
                       value={params.lensVignetteAmount}
                       min={0}
                       max={200}
@@ -898,7 +941,7 @@ export default function LensCorrectionModal({
                       color={TextColors.button}
                       className="absolute top-4 left-4 bg-accent px-2 py-1 rounded-sm shadow-lg z-20"
                     >
-                      Original
+                      {t('modal.lensCorrection.original')}
                     </Text>
                   )}
                 </div>
@@ -982,10 +1025,10 @@ export default function LensCorrectionModal({
                 onClick={onClose}
                 className="px-4 py-2 rounded-md text-text-secondary hover:bg-surface transition-colors"
               >
-                Cancel
+                {t('lensCorrectionModal.cancel')}
               </button>
               <Button onClick={handleApply} disabled={isApplying || !previewUrl}>
-                <Check className="mr-2" size={16} /> Apply
+                <Check className="mr-2" size={16} /> {t('lensCorrectionModal.apply')}
               </Button>
             </div>
           </motion.div>

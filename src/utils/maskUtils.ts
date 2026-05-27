@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
-import { Mask, SubMaskMode, formatMaskTypeName } from '../components/panel/right/Masks';
+import { Mask, SubMaskMode, getMaskTypeTranslationKey } from '../components/panel/right/Masks';
 import { ImageDimensions } from '../hooks/useImageRenderSize';
 
 export const createSubMask = (
@@ -14,7 +14,7 @@ export const createSubMask = (
     invert: false,
     opacity: 100,
     mode,
-    name: formatMaskTypeName(type),
+    name: getMaskTypeTranslationKey(type),
     type,
   };
 

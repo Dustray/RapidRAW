@@ -62,7 +62,7 @@ import {
   MASK_ICON_MAP,
   SubMaskMode,
   ToolType,
-  formatMaskTypeName,
+  getMaskTypeTranslationKey,
   getSubMaskName,
 } from './Masks';
 import {
@@ -85,6 +85,7 @@ import { useAiMasking } from '../../../hooks/useAiMasking';
 import { useEditorActions } from '../../../hooks/useEditorActions';
 import { useUIStore } from '../../../store/useUIStore';
 import { useWaveformControls } from '../../../hooks/useWaveformControls';
+import { useTranslation } from 'react-i18next';
 
 interface DragData {
   type: 'Container' | 'SubMask' | 'Creation';
@@ -95,45 +96,45 @@ interface DragData {
 
 const SUB_MASK_CONFIG: Record<Mask, any> = {
   [Mask.Radial]: {
-    parameters: [{ key: 'feather', label: 'Feather', min: 0, max: 100, step: 1, multiplier: 100, defaultValue: 50 }],
+    parameters: [{ key: 'feather', label: 'masks.feather', min: 0, max: 100, step: 1, multiplier: 100, defaultValue: 50 }],
   },
   [Mask.Brush]: { showBrushTools: true },
   [Mask.Flow]: { showBrushTools: true, showFlowControl: true },
   [Mask.Linear]: { parameters: [] },
   [Mask.Color]: {
     parameters: [
-      { key: 'tolerance', label: 'Tolerance', min: 1, max: 100, step: 1, defaultValue: 20 },
-      { key: 'grow', label: 'Grow', min: -100, max: 100, step: 1, defaultValue: 0 },
-      { key: 'feather', label: 'Feather', min: 0, max: 100, step: 1, defaultValue: 35 },
+      { key: 'tolerance', label: 'masks.tolerance', min: 1, max: 100, step: 1, defaultValue: 20 },
+      { key: 'grow', label: 'masks.grow', min: -100, max: 100, step: 1, defaultValue: 0 },
+      { key: 'feather', label: 'masks.feather', min: 0, max: 100, step: 1, defaultValue: 35 },
     ],
   },
   [Mask.Luminance]: {
     parameters: [
-      { key: 'tolerance', label: 'Tolerance', min: 1, max: 100, step: 1, defaultValue: 20 },
-      { key: 'grow', label: 'Grow', min: -100, max: 100, step: 1, defaultValue: 0 },
-      { key: 'feather', label: 'Feather', min: 0, max: 100, step: 1, defaultValue: 35 },
+      { key: 'tolerance', label: 'masks.tolerance', min: 1, max: 100, step: 1, defaultValue: 20 },
+      { key: 'grow', label: 'masks.grow', min: -100, max: 100, step: 1, defaultValue: 0 },
+      { key: 'feather', label: 'masks.feather', min: 0, max: 100, step: 1, defaultValue: 35 },
     ],
   },
   [Mask.All]: { parameters: [] },
   [Mask.AiDepth]: {
-    parameters: [{ key: 'feather', label: 'Global Feather', min: 0, max: 100, step: 1, defaultValue: 15 }],
+    parameters: [{ key: 'feather', label: 'masks.globalFeather', min: 0, max: 100, step: 1, defaultValue: 15 }],
   },
   [Mask.AiSubject]: {
     parameters: [
-      { key: 'grow', label: 'Grow', min: -100, max: 100, step: 1, defaultValue: 0 },
-      { key: 'feather', label: 'Feather', min: 0, max: 100, step: 1, defaultValue: 0 },
+      { key: 'grow', label: 'masks.grow', min: -100, max: 100, step: 1, defaultValue: 0 },
+      { key: 'feather', label: 'masks.feather', min: 0, max: 100, step: 1, defaultValue: 0 },
     ],
   },
   [Mask.AiForeground]: {
     parameters: [
-      { key: 'grow', label: 'Grow', min: -100, max: 100, step: 1, defaultValue: 0 },
-      { key: 'feather', label: 'Feather', min: 0, max: 100, step: 1, defaultValue: 0 },
+      { key: 'grow', label: 'masks.grow', min: -100, max: 100, step: 1, defaultValue: 0 },
+      { key: 'feather', label: 'masks.feather', min: 0, max: 100, step: 1, defaultValue: 0 },
     ],
   },
   [Mask.AiSky]: {
     parameters: [
-      { key: 'grow', label: 'Grow', min: -100, max: 100, step: 1, defaultValue: 0 },
-      { key: 'feather', label: 'Feather', min: 0, max: 100, step: 1, defaultValue: 0 },
+      { key: 'grow', label: 'masks.grow', min: -100, max: 100, step: 1, defaultValue: 0 },
+      { key: 'feather', label: 'masks.feather', min: 0, max: 100, step: 1, defaultValue: 0 },
     ],
   },
   [Mask.QuickEraser]: { parameters: [] },
@@ -147,46 +148,51 @@ const BrushTools = ({
   settings: any;
   onSettingsChange: any;
   onDragStateChange?: (isDragging: boolean) => void;
-}) => (
-  <div>
-    <Slider
-      defaultValue={100}
-      label="Brush Size"
-      max={200}
-      min={1}
-      onChange={(e: any) => onSettingsChange((s: any) => ({ ...s, size: Number(e.target.value) }))}
-      step={1}
-      value={settings.size}
-      fillOrigin="min"
-      onDragStateChange={onDragStateChange}
-    />
-    <Slider
-      defaultValue={50}
-      label="Brush Feather"
-      max={100}
-      min={0}
-      onChange={(e: any) => onSettingsChange((s: any) => ({ ...s, feather: Number(e.target.value) }))}
-      step={1}
-      value={settings.feather}
-      fillOrigin="min"
-      onDragStateChange={onDragStateChange}
-    />
+}) => {
+  const { t } = useTranslation();
+  return (
+    <>
+    <div>
+      <Slider
+        defaultValue={100}
+        label={t('masks.brushSize')}
+        max={200}
+        min={1}
+        onChange={(e: any) => onSettingsChange((s: any) => ({ ...s, size: Number(e.target.value) }))}
+        step={1}
+        value={settings.size}
+        fillOrigin="min"
+        onDragStateChange={onDragStateChange}
+      />
+      <Slider
+        defaultValue={50}
+        label={t('masks.brushFeather')}
+        max={100}
+        min={0}
+        onChange={(e: any) => onSettingsChange((s: any) => ({ ...s, feather: Number(e.target.value) }))}
+        step={1}
+        value={settings.feather}
+        fillOrigin="min"
+        onDragStateChange={onDragStateChange}
+      />
+    </div>
     <div className="grid grid-cols-2 gap-2 pt-2">
       <button
         className={`p-2 rounded-md text-sm font-medium transition-colors flex items-center justify-center gap-2 ${settings.tool === ToolType.Brush ? 'text-primary bg-surface' : 'bg-surface text-text-secondary hover:bg-card-active'}`}
         onClick={() => onSettingsChange((s: any) => ({ ...s, tool: ToolType.Brush }))}
       >
-        Brush
+        {t('masks.brush')}
       </button>
       <button
         className={`p-2 rounded-md text-sm font-medium transition-colors flex items-center justify-center gap-2 ${settings.tool === ToolType.Eraser ? 'text-primary bg-surface' : 'bg-surface text-text-secondary hover:bg-card-active'}`}
         onClick={() => onSettingsChange((s: any) => ({ ...s, tool: ToolType.Eraser }))}
       >
-        Eraser
+        {t('masks.eraser')}
       </button>
     </div>
-  </div>
-);
+  </>
+  );
+};
 
 const FlowBrushTool = ({
   flow,
@@ -200,22 +206,25 @@ const FlowBrushTool = ({
   settings: any;
   onSettingsChange: any;
   onDragStateChange?: (isDragging: boolean) => void;
-}) => (
-  <div className="space-y-4 border-t border-surface">
-    <Slider
-      defaultValue={10}
-      label="Flow"
-      max={100}
-      min={0}
-      onChange={(e: ChangeEvent<HTMLInputElement>) => onFlowChange(Number(e.target.value))}
-      step={1}
-      value={flow}
-      fillOrigin="min"
-      onDragStateChange={onDragStateChange}
-    />
-    <BrushTools settings={settings} onSettingsChange={onSettingsChange} onDragStateChange={onDragStateChange} />
-  </div>
-);
+}) => {
+  const { t } = useTranslation();
+  return (
+    <div className="space-y-4 border-t border-surface">
+      <Slider
+        defaultValue={10}
+        label={t('masks.flow')}
+        max={100}
+        min={0}
+        onChange={(e: ChangeEvent<HTMLInputElement>) => onFlowChange(Number(e.target.value))}
+        step={1}
+        value={flow}
+        fillOrigin="min"
+        onDragStateChange={onDragStateChange}
+      />
+      <BrushTools settings={settings} onSettingsChange={onSettingsChange} onDragStateChange={onDragStateChange} />
+    </div>
+  );
+};
 
 function DepthRangePicker({
   minDepth,
@@ -232,6 +241,7 @@ function DepthRangePicker({
   onChange: (values: { minDepth: number; maxDepth: number; minFade: number; maxFade: number }) => void;
   onDragStateChange?: (isDragging: boolean) => void;
 }) {
+  const { t } = useTranslation();
   const trackRef = useRef<HTMLDivElement>(null);
   const [activeHandle, setActiveHandle] = useState<string | null>(null);
   const [dragValues, setDragValues] = useState<{
@@ -406,7 +416,7 @@ function DepthRangePicker({
             isLabelHovered ? 'opacity-0' : 'opacity-100'
           }`}
         >
-          Depth Range
+          {t('masks.depthRange')}
         </Text>
         <Text
           variant={TextVariants.label}
@@ -415,7 +425,7 @@ function DepthRangePicker({
             isLabelHovered ? 'opacity-100' : 'opacity-0'
           }`}
         >
-          Reset
+          {t('common.reset')}
         </Text>
       </div>
       <div ref={trackRef} className="relative rounded-md overflow-hidden mt-2 select-none" style={{ height: 44 }}>
@@ -538,14 +548,15 @@ function DepthRangePicker({
         ))}
       </div>
       <Text as="div" variant={TextVariants.small} className="flex justify-between select-none px-1">
-        <span>Near</span>
-        <span>Far</span>
+        <span>{t('masks.near')}</span>
+        <span>{t('masks.far')}</span>
       </Text>
     </div>
   );
 }
 
 export default function MasksPanel() {
+  const { t } = useTranslation();
   const { setAdjustments } = useEditorActions();
   const { handleGenerateAiDepthMask, handleGenerateAiForegroundMask, handleGenerateAiSkyMask } = useAiMasking();
   const setCustomEscapeHandler = useUIStore((s) => s.setCustomEscapeHandler);
@@ -847,7 +858,7 @@ export default function MasksPanel() {
     event.stopPropagation();
     const rect = (event.currentTarget as HTMLElement).getBoundingClientRect();
     const options = OTHERS_MASK_TYPES.map((maskType) => ({
-      label: maskType.name,
+      label: t(maskType.name),
       icon: maskType.icon,
       onClick: () => handleGridClick(maskType.type),
       onRightClick: () => handleGridClick(maskType.type, true),
@@ -862,7 +873,7 @@ export default function MasksPanel() {
 
     const buildMenu = (types: MaskType[], mode: SubMaskMode = SubMaskMode.Additive) =>
       types.map((maskType: MaskType) => ({
-        label: maskType.name,
+        label: t(maskType.name),
         icon: maskType.icon,
         disabled: maskType.disabled,
         onClick: () => {
@@ -883,13 +894,13 @@ export default function MasksPanel() {
       submenu: MASK_PANEL_CREATION_TYPES.map((maskType) => {
         if (maskType.id === 'others') {
           return {
-            label: maskType.name,
+            label: t(maskType.name),
             icon: maskType.icon,
             submenu: buildMenu(OTHERS_MASK_TYPES, mode),
           };
         }
         return {
-          label: maskType.name,
+          label: t(maskType.name),
           icon: maskType.icon,
           disabled: maskType.disabled,
           onClick: () => handleAddSubMask(targetContainerId!, maskType.type, mode),
@@ -904,7 +915,7 @@ export default function MasksPanel() {
     const others = MASK_PANEL_CREATION_TYPES.find((m) => m.id === 'others');
     if (others) {
       options.push({
-        label: others.name,
+        label: t(others.name),
         icon: others.icon,
         submenu: buildMenu(OTHERS_MASK_TYPES, SubMaskMode.Additive),
       });
@@ -913,8 +924,8 @@ export default function MasksPanel() {
     if (targetContainerId && hasComponents) {
       options.push(
         { type: OPTION_SEPARATOR },
-        buildModeSubmenu('Subtract from Mask', Minus, SubMaskMode.Subtractive),
-        buildModeSubmenu('Intersect Mask with', SquaresIntersect, SubMaskMode.Intersect),
+        buildModeSubmenu(t('masks.subtractFromMask'), Minus, SubMaskMode.Subtractive),
+        buildModeSubmenu(t('masks.intersectMaskWith'), SquaresIntersect, SubMaskMode.Intersect),
       );
     }
 
@@ -972,7 +983,7 @@ export default function MasksPanel() {
 
     clonedSubMask.id = uuidv4();
     clonedSubMask.invert = options.invert ? !clonedSubMask.invert : clonedSubMask.invert;
-    clonedSubMask.name = options.rename === false ? clonedSubMask.name : `${getSubMaskName(subMask)} Copy`;
+    clonedSubMask.name = options.rename === false ? clonedSubMask.name : `${t(getSubMaskName(subMask))} Copy`;
 
     return clonedSubMask;
   };
@@ -1063,7 +1074,7 @@ export default function MasksPanel() {
     const duplicatedSubMask = cloneSubMaskData(subMask, { invert: true, rename: false });
     const newContainer = cloneMaskContainerData(parentContainer, { rename: false });
 
-    newContainer.name = `${getSubMaskName(subMask)} Inverted`;
+    newContainer.name = `${t(getSubMaskName(subMask))} Inverted`;
     newContainer.subMasks = [duplicatedSubMask];
     newContainer.invert = false;
 
@@ -1230,8 +1241,8 @@ export default function MasksPanel() {
       onClick: () => handleAddMaskContainer(m.type),
     }));
     showContextMenu(e.clientX, e.clientY, [
-      { label: 'Paste Mask', icon: ClipboardPaste, disabled: !copiedMask, onClick: () => handlePasteMask() },
-      { label: 'Add New Mask', icon: Plus, submenu: newMaskSubMenu },
+      { label: t('masks.pasteMask'), icon: ClipboardPaste, disabled: !copiedMask, onClick: () => handlePasteMask() },
+      { label: t('masks.addNewMask'), icon: Plus, submenu: newMaskSubMenu },
     ]);
   };
 
@@ -1244,7 +1255,7 @@ export default function MasksPanel() {
     >
       <div className="flex flex-col h-full select-none overflow-hidden" onContextMenu={handlePanelContextMenu}>
         <div className="p-4 flex justify-between items-center shrink-0 border-b border-surface">
-          <Text variant={TextVariants.title}>Masking</Text>
+          <Text variant={TextVariants.title}>{t('masks.masking')}</Text>
           <div className="flex items-center gap-1">
             <button
               className={clsx(
@@ -1252,14 +1263,14 @@ export default function MasksPanel() {
                 isWaveformVisible ? 'bg-surface hover:bg-card-active' : 'hover:bg-surface',
               )}
               onClick={onToggleWaveform}
-              data-tooltip="Toggle Analytics Display"
+              data-tooltip={t('controls.toggleAnalytics')}
             >
               <ChartArea size={18} />
             </button>
             <button
               className="p-2 rounded-full hover:bg-surface transition-colors"
               onClick={handleResetAllMasks}
-              data-tooltip="Reset Masking"
+              data-tooltip={t('masks.resetMasking')}
             >
               <RotateCcw size={18} />
             </button>
@@ -1308,7 +1319,7 @@ export default function MasksPanel() {
                 onClick={handleDeselect}
               >
                 <Text variant={TextVariants.heading} className="mb-2">
-                  Create New Mask
+                  {t('masks.createNewMask')}
                 </Text>
                 <div className="grid grid-cols-3 gap-2" onClick={(e) => e.stopPropagation()}>
                   {MASK_PANEL_CREATION_TYPES.map((maskType: MaskType) => (
@@ -1337,7 +1348,7 @@ export default function MasksPanel() {
                 onClick={handleDeselect}
               >
                 <Text variant={TextVariants.heading} className="mb-2">
-                  Masks
+                  {t('masks.masks')}
                 </Text>
 
                 <AnimatePresence
@@ -1408,7 +1419,7 @@ export default function MasksPanel() {
                   <div className="p-0.5">
                     <Plus size={18} />
                   </div>
-                  <span>Add New Mask</span>
+                  <span>{t('masks.addNewMask')}</span>
                 </Text>
               </motion.div>
             )}
@@ -1427,7 +1438,7 @@ export default function MasksPanel() {
                 className="flex-1 min-h-0"
               >
                 <Text variant={TextVariants.heading} className="mb-2">
-                  Mask Adjustments
+                  {t('masks.maskAdjustments')}
                 </Text>
                 <SettingsPanel
                   container={activeContainer}
@@ -1484,7 +1495,7 @@ export default function MasksPanel() {
                   const Icon = MASK_ICON_MAP[sm.type] || Circle;
                   return <Icon size={16} className={`shrink-0 ml-1 ${TEXT_COLOR_KEYS[TextColors.secondary]}`} />;
                 })()}
-                <span className="flex-1 truncate">{getSubMaskName(activeDragItem.item as SubMask)}</span>
+                <span className="flex-1 truncate">{t(getSubMaskName(activeDragItem.item as SubMask))}</span>
               </Text>
             )}
 
@@ -1504,7 +1515,7 @@ export default function MasksPanel() {
                     <>
                       <Icon size={24} />
                       <span className="text-center">
-                        {activeDragItem.maskType ? formatMaskTypeName(activeDragItem.maskType) : 'Mask'}
+                        {activeDragItem.maskType ? t(getMaskTypeTranslationKey(activeDragItem.maskType)) : t('masks.title')}
                       </span>
                     </>
                   );
@@ -1519,6 +1530,7 @@ export default function MasksPanel() {
 }
 
 function NewMaskDropZone({ isOver }: { isOver: boolean }) {
+  const { t } = useTranslation();
   return (
     <motion.div
       layout
@@ -1528,12 +1540,13 @@ function NewMaskDropZone({ isOver }: { isOver: boolean }) {
       transition={{ duration: 0.2, ease: 'easeOut' }}
       className={`p-4 rounded-lg text-center ${isOver ? 'border border-accent/80 bg-bg-tertiary/50' : ''}`}
     >
-      <Text weight={TextWeights.medium}>Drop here to create a new mask</Text>
+      <Text weight={TextWeights.medium}>{t('masks.dropToCreate')}</Text>
     </motion.div>
   );
 }
 
 function DraggableGridItem({ maskType, onClick, onRightClick, isDraggable, activeMaskContainerId }: any) {
+  const { t } = useTranslation();
   const { attributes, listeners, setNodeRef, isDragging } = useDraggable({
     id: `create-${maskType.id || maskType.type}`,
     data: { type: 'Creation', maskType: maskType.type },
@@ -1543,10 +1556,10 @@ function DraggableGridItem({ maskType, onClick, onRightClick, isDraggable, activ
   const tooltip = maskType.disabled
     ? 'Coming Soon'
     : maskType.id === 'others'
-      ? 'Show More Mask Types'
+      ? t('masks.showMoreMaskTypes')
       : activeMaskContainerId
-        ? `Add ${maskType.name} to Current Mask or Create New (Right-click)`
-        : `Create New ${maskType.name} Mask`;
+        ? t('masks.addToCurrentMaskOrCreateNewRightClick', { type: t(maskType.name) })
+        : t('masks.createNew', { type: t(maskType.name) });
 
   return (
     <motion.div
@@ -1570,7 +1583,7 @@ function DraggableGridItem({ maskType, onClick, onRightClick, isDraggable, activ
     >
       <maskType.icon size={24} />{' '}
       <Text as="span" variant={TextVariants.small} color={TextColors.primary}>
-        {maskType.name}
+        {t(maskType.name)}
       </Text>
     </motion.div>
   );
@@ -1611,6 +1624,7 @@ function ContainerRow({
   setIsMaskControlHovered,
   onAddComponent,
 }: any) {
+  const { t } = useTranslation();
   const { setNodeRef: setDroppableRef, isOver } = useDroppable({
     id: container.id,
     data: { type: 'Container', item: container },
@@ -1661,24 +1675,24 @@ function ContainerRow({
         .filter(Boolean);
     showContextMenu(e.clientX, e.clientY, [
       {
-        label: 'Rename',
+        label: t('masks.rename'),
         icon: FileEdit,
         onClick: () => {
           setRenamingId(container.id);
           setTempName(container.name);
         },
       },
-      { label: 'Duplicate Mask', icon: PlusSquare, onClick: () => handleDuplicate(container) },
-      { label: 'Duplicate and Invert Mask', icon: RotateCcw, onClick: () => handleDuplicateAndInvert(container) },
-      { label: 'Copy Mask', icon: Copy, onClick: () => copyMaskToClipboard(container) },
+      { label: t('masks.duplicateMask'), icon: PlusSquare, onClick: () => handleDuplicate(container) },
+      { label: t('masks.duplicateAndInvertMask'), icon: RotateCcw, onClick: () => handleDuplicateAndInvert(container) },
+      { label: t('masks.copyMask'), icon: Copy, onClick: () => copyMaskToClipboard(container) },
       {
-        label: 'Paste Mask',
+        label: t('masks.pasteMask'),
         icon: ClipboardPaste,
         disabled: !copiedMask,
         onClick: () => handlePasteMask(container.id),
       },
       {
-        label: 'Paste Mask Adjustments',
+        label: t('masks.pasteMaskAdjustments'),
         icon: ClipboardPaste,
         disabled: !copiedMask,
         onClick: () => {
@@ -1688,20 +1702,20 @@ function ContainerRow({
         },
       },
       {
-        label: 'Apply Preset',
+        label: t('masks.applyPreset'),
         icon: SwatchBook,
         submenu: generatePresetSubmenu(presets).length
           ? generatePresetSubmenu(presets)
-          : [{ label: 'No presets', disabled: true }],
+          : [{ label: t('masks.noPresets'), disabled: true }],
       },
       { type: OPTION_SEPARATOR },
       {
-        label: 'Reset Mask Adjustments',
+        label: t('masks.resetMaskAdjustments'),
         icon: RotateCcw,
         onClick: () =>
           updateContainer(container.id, { adjustments: JSON.parse(JSON.stringify(INITIAL_MASK_ADJUSTMENTS)) }),
       },
-      { label: 'Delete Mask', icon: Trash2, isDestructive: true, onClick: () => handleDelete(container.id) },
+      { label: t('masks.deleteMask'), icon: Trash2, isDestructive: true, onClick: () => handleDelete(container.id) },
     ]);
   };
 
@@ -1861,7 +1875,7 @@ function ContainerRow({
                     <div className="relative w-4 h-4 ml-1 shrink-0 flex items-center justify-center">
                       <Plus size={16} />
                     </div>
-                    <span className="select-none">Add New Component</span>
+                    <span className="select-none">{t('masks.addNewComponent')}</span>
                   </Text>
                 </motion.div>
               )}
@@ -1896,6 +1910,7 @@ function SubMaskRow({
   setTempName,
   setIsMaskControlHovered,
 }: any) {
+  const { t } = useTranslation();
   const { attributes, listeners, setNodeRef, isDragging } = useDraggable({
     id: subMask.id,
     data: { type: 'SubMask', item: subMask, parentId: containerId },
@@ -1953,7 +1968,7 @@ function SubMaskRow({
         icon: FileEdit,
         onClick: () => {
           setRenamingId(subMask.id);
-          setTempName(getSubMaskName(subMask));
+          setTempName(t(getSubMaskName(subMask)));
         },
       },
       { label: 'Duplicate Component', icon: PlusSquare, onClick: handleDuplicate },
@@ -2046,7 +2061,7 @@ function SubMaskRow({
         />
       ) : (
         <Text color={TextColors.primary} className="flex-1 truncate select-none">
-          {getSubMaskName(subMask)}
+          {t(getSubMaskName(subMask))}
         </Text>
       )}
       <div className="flex opacity-0 group-hover:opacity-100 transition-opacity">
@@ -2055,10 +2070,10 @@ function SubMaskRow({
             className="p-1 hover:text-text-primary text-text-secondary"
             data-tooltip={
               subMask.mode === SubMaskMode.Additive
-                ? 'Switch to Subtract'
+                ? t('masks.switchToSubtract')
                 : subMask.mode === SubMaskMode.Subtractive
-                  ? 'Switch to Intersect'
-                  : 'Switch to Add'
+                  ? t('masks.switchToIntersect')
+                  : t('masks.switchToAdd')
             }
             onClick={(e) => {
               e.stopPropagation();
@@ -2083,7 +2098,7 @@ function SubMaskRow({
         )}
         <button
           className="p-1 hover:text-text-primary text-text-secondary"
-          data-tooltip={subMask.visible ? 'Hide Component' : 'Show Component'}
+          data-tooltip={subMask.visible ? t('masks.hideComponent') : t('masks.showComponent')}
           onMouseEnter={() => setIsMaskControlHovered(true)}
           onMouseLeave={() => setIsMaskControlHovered(false)}
           onClick={(e) => {
@@ -2095,7 +2110,7 @@ function SubMaskRow({
         </button>
         <button
           className="p-1 hover:text-red-500 text-text-secondary"
-          data-tooltip="Delete Component"
+          data-tooltip={t('masks.deleteComponent')}
           onClick={(e) => {
             e.stopPropagation();
             handleDelete();
@@ -2130,6 +2145,7 @@ function SettingsPanel({
   presets,
   handleGenerateAiDepthMask,
 }: any) {
+  const { t } = useTranslation();
   const { showContextMenu } = useContextMenu();
   const isActive = !!container;
   const presetButtonRef = useRef<HTMLButtonElement>(null);
@@ -2324,7 +2340,7 @@ function SettingsPanel({
       onClick={(e) => e.stopPropagation()}
     >
       <CollapsibleSection
-        title={isComponentMode ? `${getSubMaskName(activeSubMask)} Properties` : 'Mask Properties'}
+        title={isComponentMode ? `${t(getSubMaskName(activeSubMask))} ${t('ai.properties')}` : t('masks.maskAdjustments')}
         isOpen={isSettingsSectionOpen}
         onToggle={() => {
           const isOpening = !isSettingsSectionOpen;
@@ -2345,7 +2361,7 @@ function SettingsPanel({
         <div className="space-y-4 pt-2">
           <Switch
             checked={!!(isComponentMode ? activeSubMask.invert : displayContainer.invert)}
-            label={isComponentMode ? 'Invert Component' : 'Invert Mask'}
+            label={isComponentMode ? t('masks.invertComponent') : t('masks.invertMask')}
             onChange={(v) =>
               isComponentMode ? updateSubMask(activeSubMask.id, { invert: v }) : handleMaskPropertyChange('invert', v)
             }
@@ -2354,22 +2370,22 @@ function SettingsPanel({
           {!isComponentMode && (
             <div className="flex justify-between items-center">
               <Text variant={TextVariants.label} className="select-none">
-                Apply Preset
+                {t('masks.applyPreset')}
               </Text>
               <button
                 ref={presetButtonRef}
                 onClick={handlePresetSelectClick}
                 className="text-sm text-text-primary text-right select-none cursor-pointer hover:text-accent transition-colors"
-                data-tooltip="Select a preset to apply"
+                data-tooltip={t('masks.selectPresetToApply')}
               >
-                Select
+                {t('masks.select')}
               </button>
             </div>
           )}
 
           <Slider
             defaultValue={100}
-            label="Opacity"
+            label={t('masks.opacity')}
             max={100}
             min={0}
             value={(isComponentMode ? activeSubMask.opacity : displayContainer.opacity) ?? 100}
@@ -2395,7 +2411,7 @@ function SettingsPanel({
                 >
                   <Loader2 size={16} className="animate-spin shrink-0" />
                   <div className="leading-relaxed">
-                    <Text variant={TextVariants.small}>AI Model Downloading: </Text>
+                    <Text variant={TextVariants.small}>{t('ai.aiModelDownloading')} </Text>
                     <span>{aiModelDownloadStatus}</span>
                   </div>
                 </Text>
@@ -2464,7 +2480,7 @@ function SettingsPanel({
             details: DetailsPanel,
             effects: EffectsPanel,
           }[sectionName];
-          const title = sectionName.charAt(0).toUpperCase() + sectionName.slice(1);
+          const title = t(`masks.adjustmentsSection.${sectionName}`);
           return (
             <CollapsibleSection
               key={sectionName}

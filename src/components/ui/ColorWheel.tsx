@@ -7,6 +7,7 @@ import { HueSatLum } from '../../utils/adjustments';
 import { motion, AnimatePresence } from 'framer-motion';
 import Text from './Text';
 import { TextColors, TextVariants } from '../../types/typography';
+import { useTranslation } from 'react-i18next';
 
 interface ColorWheelProps {
   defaultValue: HueSatLum;
@@ -25,6 +26,7 @@ const ColorWheel = ({
   onDragStateChange,
   isExpanded = false,
 }: ColorWheelProps) => {
+  const { t } = useTranslation();
   const effectiveValue = { ...defaultValue, ...value };
   const { hue, saturation, luminance } = effectiveValue;
   const sizerRef = useRef<HTMLDivElement>(null);
@@ -267,7 +269,7 @@ const ColorWheel = ({
             <div className="w-full">
               <Slider
                 defaultValue={defaultValue.hue}
-                label="Hue"
+                label={t('adjustments.colorWheel.hue')}
                 max={360}
                 min={0}
                 onChange={handleHueChange}
@@ -281,7 +283,7 @@ const ColorWheel = ({
             <div className="w-full" style={satWrapperStyle}>
               <Slider
                 defaultValue={defaultValue.saturation}
-                label="Saturation"
+                label={t('adjustments.colorWheel.saturation')}
                 max={100}
                 min={0}
                 onChange={handleSaturationChange}
@@ -298,7 +300,7 @@ const ColorWheel = ({
       <div className="w-full" style={lumWrapperStyle}>
         <Slider
           defaultValue={defaultValue.luminance}
-          label={isExpanded ? 'Luminance' : <Sun size={16} className="text-text-secondary" />}
+          label={isExpanded ? t('color.luminance') : <Sun size={16} className="text-text-secondary" />}
           max={100}
           min={-100}
           onChange={handleLumChange}

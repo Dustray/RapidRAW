@@ -4,6 +4,7 @@ import Slider from './Slider';
 import { useOsPlatform } from '../../hooks/useOsPlatform';
 import { toast } from 'react-toastify';
 import { invoke } from '@tauri-apps/api/core';
+import { useTranslation } from 'react-i18next';
 
 interface LUTControlProps {
   lutName: string | null;
@@ -22,6 +23,7 @@ export default function LUTControl({
   onClear,
   onDragStateChange,
 }: LUTControlProps) {
+  const { t } = useTranslation();
   const osPlatform = useOsPlatform(); 
   const isAndroid = osPlatform === 'android';
 
@@ -36,7 +38,7 @@ export default function LUTControl({
         ? [ ] 
         : [
             {
-              name: 'LUT Files',
+              name: t('adjustments.lut.lutFiles'),
               extensions: allLutExtensions,
             },
           ];
@@ -72,14 +74,14 @@ export default function LUTControl({
   return (
     <div className="mb-2">
       <div className="flex justify-between items-center mb-1">
-        <span className="text-sm font-medium text-text-secondary select-none">LUT</span>
+        <span className="text-sm font-medium text-text-secondary select-none">{t('adjustments.lut.lut')}</span>
         <div className="group flex items-center">
           <button
             onClick={handleSelectFile}
             className="text-sm text-text-primary text-right select-none cursor-pointer truncate max-w-[150px] hover:text-accent transition-colors"
-            data-tooltip={lutName || 'Select a LUT file'}
+            data-tooltip={lutName || t('adjustments.lut.selectLutFile')}
           >
-            {lutName || 'Select'}
+            {lutName || t('adjustments.lut.select')}
           </button>
 
           {lutName && (
@@ -89,7 +91,7 @@ export default function LUTControl({
                          w-0 ml-0 opacity-0 group-hover:w-6 group-hover:ml-0 group-hover:opacity-100
                          overflow-hidden pointer-events-none group-hover:pointer-events-auto
                          transition-all duration-200 ease-in-out"
-              data-tooltip="Clear LUT"
+              data-tooltip={t('adjustments.lut.clearLut')}
             >
               <X size={14} />
             </button>
@@ -98,7 +100,7 @@ export default function LUTControl({
       </div>
       {lutName && (
         <Slider
-          label="Intensity"
+          label={t('adjustments.lut.intensity')}
           min={0}
           max={100}
           step={1}

@@ -10,8 +10,10 @@ import { TextColors, TextVariants, TextWeights, TEXT_COLOR_KEYS } from '../../..
 import { useProcessStore } from '../../../store/useProcessStore';
 import { ExifOverlay } from '../../ui/AppProperties';
 import { useSettingsStore } from '../../../store/useSettingsStore';
+import { useTranslation } from 'react-i18next';
 
 function ListHeader({ widths, setWidths, containerRef, sortCriteria, onSortChange }: any) {
+  const { t } = useTranslation();
   const exifOverlay = useSettingsStore((s) => s.appSettings?.exifOverlay || ExifOverlay.Off);
   const showExifCols = exifOverlay !== ExifOverlay.Off;
   const totalRawWidth =
@@ -103,19 +105,19 @@ function ListHeader({ widths, setWidths, containerRef, sortCriteria, onSortChang
   return (
     <div className="flex items-center w-full h-9 bg-bg-secondary/80 backdrop-blur-sm border-b border-border-color/50 shrink-0">
       <Column title="" widthKey="thumbnail" nextKey="name" />
-      <Column title="Name" widthKey="name" nextKey="date" sortKey="name" />
-      <Column title="Modified" widthKey="date" nextKey="rating" sortKey="date" />
-      <Column title="Rating" widthKey="rating" nextKey="color" sortKey="rating" />
+      <Column title={t('library.grid.name')} widthKey="name" nextKey="date" sortKey="name" />
+      <Column title={t('library.grid.modified')} widthKey="date" nextKey="rating" sortKey="date" />
+      <Column title={t('library.grid.rating')} widthKey="rating" nextKey="color" sortKey="rating" />
       {showExifCols ? (
         <>
-          <Column title="Label" widthKey="color" nextKey="shutter" />
-          <Column title="Shutter" widthKey="shutter" nextKey="aperture" sortKey="shutter_speed" />
-          <Column title="Aperture" widthKey="aperture" nextKey="iso" sortKey="aperture" />
-          <Column title="ISO" widthKey="iso" nextKey="focal" sortKey="iso" />
-          <Column title="Focal" widthKey="focal" sortKey="focal_length" />
+          <Column title={t('library.grid.label')} widthKey="color" nextKey="shutter" />
+          <Column title={t('library.grid.shutter')} widthKey="shutter" nextKey="aperture" sortKey="shutter_speed" />
+          <Column title={t('library.grid.aperture')} widthKey="aperture" nextKey="iso" sortKey="aperture" />
+          <Column title={t('library.grid.iso')} widthKey="iso" nextKey="focal" sortKey="iso" />
+          <Column title={t('library.grid.focal')} widthKey="focal" sortKey="focal_length" />
         </>
       ) : (
-        <Column title="Label" widthKey="color" />
+        <Column title={t('library.grid.label')} widthKey="color" />
       )}
     </div>
   );

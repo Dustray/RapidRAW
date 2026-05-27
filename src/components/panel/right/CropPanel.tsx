@@ -23,6 +23,7 @@ import Slider from '../../ui/Slider';
 import { TEXT_COLOR_KEYS, TextColors, TextVariants, TextWeights } from '../../../types/typography';
 import { useEditorStore } from '../../../store/useEditorStore';
 import { useEditorActions } from '../../../hooks/useEditorActions';
+import { useTranslation } from 'react-i18next';
 
 const BASE_RATIO = 1.618;
 const ORIGINAL_RATIO = 0;
@@ -43,28 +44,29 @@ interface OverlayOption {
 }
 
 const PRESETS: Array<CropPreset> = [
-  { name: 'Free', value: null, tooltip: 'Freeform crop' },
-  { name: 'Original', value: ORIGINAL_RATIO, tooltip: 'Original image aspect ratio' },
-  { name: '1:1', value: 1, tooltip: 'Square - Instagram, profile pictures' },
-  { name: '5:4', value: 5 / 4, tooltip: '5:4 - Instagram landscape, 8x10 prints' },
-  { name: '4:3', value: 4 / 3, tooltip: '4:3 - Traditional monitors, tablets' },
-  { name: '3:2', value: 3 / 2, tooltip: '3:2 - 35mm film, DSLR cameras' },
-  { name: '16:9', value: 16 / 9, tooltip: '16:9 - Widescreen, desktop wallpapers, YouTube' },
-  { name: '21:9', value: 21 / 9, tooltip: '21:9 - Ultrawide monitors, cinematic' },
-  { name: '65:24', value: 65 / 24, tooltip: '65:24 - Panoramic 35mm wide format' },
+  { name: 'crop.presets.free', value: null, tooltip: 'crop.presets.freeTooltip' },
+  { name: 'crop.original', value: ORIGINAL_RATIO, tooltip: 'crop.presets.originalTooltip' },
+  { name: 'crop.presets.square', value: 1, tooltip: 'crop.presets.squareTooltip' },
+  { name: 'crop.presets.fiveFour', value: 5 / 4, tooltip: 'crop.presets.fiveFourTooltip' },
+  { name: 'crop.presets.fourThree', value: 4 / 3, tooltip: 'crop.presets.fourThreeTooltip' },
+  { name: 'crop.presets.threeTwo', value: 3 / 2, tooltip: 'crop.presets.threeTwoTooltip' },
+  { name: 'crop.presets.sixteenNine', value: 16 / 9, tooltip: 'crop.presets.sixteenNineTooltip' },
+  { name: 'crop.presets.twentyOneNine', value: 21 / 9, tooltip: 'crop.presets.twentyOneNineTooltip' },
+  { name: 'crop.presets.sixtyFiveTwentyFour', value: 65 / 24, tooltip: 'crop.presets.sixtyFiveTwentyFourTooltip' },
 ];
 
 const OVERLAYS: Array<OverlayOption> = [
-  { id: 'none', name: 'None', tooltip: 'No overlay' },
-  { id: 'thirds', name: 'Thirds', tooltip: 'Rule of Thirds' },
-  { id: 'diagonal', name: 'Diagonal Lines', tooltip: 'Diagonal Lines' },
-  { id: 'goldenTriangle', name: 'Triangle', tooltip: 'Golden Triangle' },
-  { id: 'goldenSpiral', name: 'Spiral', tooltip: 'Golden Spiral (Fibonacci)' },
-  { id: 'phiGrid', name: 'Phi Grid', tooltip: 'Phi Grid (Golden Ratio)' },
-  { id: 'armature', name: 'Armature', tooltip: 'Armature' },
+  { id: 'none', name: 'crop.overlays.none', tooltip: 'crop.overlays.noneTooltip' },
+  { id: 'thirds', name: 'crop.overlays.thirds', tooltip: 'crop.overlays.thirdsTooltip' },
+  { id: 'diagonal', name: 'crop.overlays.diagonal', tooltip: 'crop.overlays.diagonalTooltip' },
+  { id: 'goldenTriangle', name: 'crop.overlays.goldenTriangle', tooltip: 'crop.overlays.goldenTriangleTooltip' },
+  { id: 'goldenSpiral', name: 'crop.overlays.goldenSpiral', tooltip: 'crop.overlays.goldenSpiralTooltip' },
+  { id: 'phiGrid', name: 'crop.overlays.phiGrid', tooltip: 'crop.overlays.phiGridTooltip' },
+  { id: 'armature', name: 'crop.overlays.armature', tooltip: 'crop.overlays.armatureTooltip' },
 ];
 
 export default function CropPanel() {
+  const { t } = useTranslation();
   const selectedImage = useEditorStore((s) => s.selectedImage);
   const adjustments = useEditorStore((s) => s.adjustments);
   const isStraightenActive = useEditorStore((s) => s.isStraightenActive);
@@ -391,9 +393,9 @@ export default function CropPanel() {
 
   const getOverlayTooltip = () => {
     const current = OVERLAYS.find((o) => o.id === activeOverlay);
-    if (!current) return 'Composition Overlay';
+    if (!current) return t('crop.overlay.composition');
     const isRotatable = ['goldenSpiral', 'goldenTriangle'].includes(activeOverlay);
-    return `Overlay: ${current.name}${isRotatable ? ' (Shift+O to rotate)' : ''}`;
+    return `${t('crop.overlay.overlay')}: ${t(current.name)}${isRotatable ? t('crop.overlay.rotateHint') : ''}`;
   };
 
   const getOrientationTooltip = () => {
@@ -424,11 +426,11 @@ export default function CropPanel() {
   return (
     <div className="flex flex-col h-full">
       <div className="p-4 flex justify-between items-center shrink-0 border-b border-surface">
-        <Text variant={TextVariants.title}>Crop & Transform</Text>
+        <Text variant={TextVariants.title}>{t('crop.title')}</Text>
         <button
           className="p-2 rounded-full hover:bg-surface transition-colors"
           onClick={handleReset}
-          data-tooltip="Reset Crop & Transform"
+          data-tooltip={t('crop.resetCrop')}
         >
           <RotateCcw size={18} />
         </button>
@@ -439,7 +441,7 @@ export default function CropPanel() {
           <>
             <div className="space-y-4">
               <Text variant={TextVariants.heading} className="mb-2 flex items-center justify-between">
-                Aspect Ratio
+                {t('crop.aspectRatio')}
                 <div className="flex items-center gap-2">
                   <button
                     className="p-1.5 rounded-md hover:bg-surface transition-colors"
@@ -471,11 +473,11 @@ export default function CropPanel() {
                     )}
                     key={preset.name}
                     onClick={() => handlePresetClick(preset)}
-                    data-tooltip={preset.tooltip}
+                    data-tooltip={t(preset.tooltip)}
                     whileTap={{ scale: 0.98 }}
                     transition={{ type: 'spring', stiffness: 400, damping: 17 }}
                   >
-                    <Text color={isPresetActive(preset) ? TextColors.button : TextColors.secondary}>{preset.name}</Text>
+                    <Text color={isPresetActive(preset) ? TextColors.button : TextColors.secondary}>{t(preset.name)}</Text>
                   </motion.div>
                 ))}
               </div>
@@ -496,11 +498,11 @@ export default function CropPanel() {
                       aspectRatio: newAspectRatio,
                     }));
                   }}
-                  data-tooltip="Enter custom aspect ratio"
+                  data-tooltip={t('crop.customAspectRatio')}
                   whileTap={{ scale: 0.98 }}
                   transition={{ type: 'spring', stiffness: 400, damping: 17 }}
                 >
-                  <Text color={isCustomActive ? TextColors.button : TextColors.secondary}>Custom</Text>
+                  <Text color={isCustomActive ? TextColors.button : TextColors.secondary}>{t('crop.custom')}</Text>
                 </motion.div>
                 <div
                   className={clsx(
@@ -518,7 +520,7 @@ export default function CropPanel() {
                       onFocus={handleCustomInputFocus}
                       onKeyDown={handleKeyDown}
                       placeholder="W"
-                      data-tooltip="Width"
+                      data-tooltip={t('crop.xAxis')}
                       type="number"
                       value={customW}
                     />
@@ -532,7 +534,7 @@ export default function CropPanel() {
                       onFocus={handleCustomInputFocus}
                       onKeyDown={handleKeyDown}
                       placeholder="H"
-                      data-tooltip="Height"
+                      data-tooltip={t('crop.yAxis')}
                       type="number"
                       value={customH}
                     />
@@ -543,7 +545,7 @@ export default function CropPanel() {
 
             <div className="space-y-4">
               <Text variant={TextVariants.heading} className="mb-2">
-                Rotation
+                {t('crop.rotation')}
               </Text>
               <div className="bg-surface px-4 pt-3 pb-4 rounded-lg">
                 <Slider
@@ -566,14 +568,14 @@ export default function CropPanel() {
                             ? 'bg-accent text-button-text'
                             : 'text-text-secondary hover:bg-card-active hover:text-text-primary',
                         )}
-                        data-tooltip="Straighten Tool (S)"
+                        data-tooltip={t('crop.straightenTool')}
                       >
                         <Ruler size={14} />
                       </button>
                       <button
                         className="p-1.5 rounded-md text-text-secondary transition-colors cursor-pointer hover:bg-card-active hover:text-text-primary"
                         onClick={resetFineRotation}
-                        data-tooltip="Reset Fine Rotation"
+                        data-tooltip={t('crop.resetFineRotation')}
                         disabled={displayRotation === 0}
                       >
                         <RotateCcw size={14} />
@@ -594,28 +596,28 @@ export default function CropPanel() {
 
             <div className="space-y-4">
               <Text variant={TextVariants.heading} className="mb-2">
-                Orientation
+                {t('crop.orientation')}
               </Text>
               <div className="grid grid-cols-2 gap-2">
                 <motion.div
                   className="flex flex-col items-center justify-center p-3 cursor-pointer rounded-lg transition-colors bg-surface text-text-secondary hover:bg-card-active hover:text-text-primary"
                   onClick={() => handleStepRotate(-90)}
-                  data-tooltip="Rotate 90° counter-clockwise"
+                  data-tooltip={t('crop.rotateCCW')}
                   whileTap={{ scale: 0.98 }}
                   transition={{ type: 'spring', stiffness: 400, damping: 17 }}
                 >
                   <RotateCcw size={20} className="transition-none" />
-                  <span className="text-xs mt-2 transition-none">Rotate Left</span>
+                  <span className="text-xs mt-2 transition-none">{t('crop.rotateLeft')}</span>
                 </motion.div>
                 <motion.div
                   className="flex flex-col items-center justify-center p-3 cursor-pointer rounded-lg transition-colors bg-surface text-text-secondary hover:bg-card-active hover:text-text-primary"
                   onClick={() => handleStepRotate(90)}
-                  data-tooltip="Rotate 90° clockwise"
+                  data-tooltip={t('crop.rotateCW')}
                   whileTap={{ scale: 0.98 }}
                   transition={{ type: 'spring', stiffness: 400, damping: 17 }}
                 >
                   <RotateCw size={20} className="transition-none" />
-                  <span className="text-xs mt-2 transition-none">Rotate Right</span>
+                  <span className="text-xs mt-2 transition-none">{t('crop.rotateRight')}</span>
                 </motion.div>
                 <motion.div
                   className={clsx(
@@ -630,12 +632,12 @@ export default function CropPanel() {
                       flipHorizontal: !prev.flipHorizontal,
                     }))
                   }
-                  data-tooltip="Flip image horizontally"
+                  data-tooltip={t('crop.flipHorizontal')}
                   whileTap={{ scale: 0.98 }}
                   transition={{ type: 'spring', stiffness: 400, damping: 17 }}
                 >
                   <FlipHorizontal size={20} className="transition-none" />
-                  <span className="text-xs mt-2 transition-none">Flip Horiz</span>
+                  <span className="text-xs mt-2 transition-none">{t('crop.flipHoriz')}</span>
                 </motion.div>
                 <motion.div
                   className={clsx(
@@ -645,40 +647,40 @@ export default function CropPanel() {
                       : 'bg-surface text-text-secondary hover:bg-card-active hover:text-text-primary',
                   )}
                   onClick={() => setAdjustments((prev: Adjustments) => ({ ...prev, flipVertical: !prev.flipVertical }))}
-                  data-tooltip="Flip image vertically"
+                  data-tooltip={t('crop.flipVertical')}
                   whileTap={{ scale: 0.98 }}
                   transition={{ type: 'spring', stiffness: 400, damping: 17 }}
                 >
                   <FlipVertical size={20} className="transition-none" />
-                  <span className="text-xs mt-2 transition-none">Flip Vert</span>
+                  <span className="text-xs mt-2 transition-none">{t('crop.flipVert')}</span>
                 </motion.div>
               </div>
             </div>
 
             <div className="space-y-4">
               <Text variant={TextVariants.heading} className="mb-2">
-                Geometry
+                {t('crop.geometry')}
               </Text>
               <div className="grid grid-cols-2 gap-2">
                 <motion.div
                   className="flex flex-col items-center justify-center p-3 cursor-pointer rounded-lg transition-colors bg-surface text-text-secondary hover:bg-card-active hover:text-text-primary group"
                   onClick={() => setIsTransformModalOpen(true)}
-                  data-tooltip="Perspective and keystone correction"
+                  data-tooltip={t('crop.perspective')}
                   whileTap={{ scale: 0.98 }}
                   transition={{ type: 'spring', stiffness: 400, damping: 17 }}
                 >
                   <Scan size={20} className="transition-none" />
-                  <span className="text-xs mt-2 transition-none">Transform</span>
+                  <span className="text-xs mt-2 transition-none">{t('crop.transform')}</span>
                 </motion.div>
                 <motion.div
                   className="flex flex-col items-center justify-center p-3  cursor-pointer rounded-lg transition-colors bg-surface text-text-secondary hover:bg-card-active hover:text-text-primary group"
                   onClick={() => setIsLensModalOpen(true)}
-                  data-tooltip="Lens distortion correction"
+                  data-tooltip={t('crop.lensDistortion')}
                   whileTap={{ scale: 0.98 }}
                   transition={{ type: 'spring', stiffness: 400, damping: 17 }}
                 >
                   <Aperture size={20} className="transition-none" />
-                  <span className="text-xs mt-2 transition-none">Lens</span>
+                  <span className="text-xs mt-2 transition-none">{t('crop.lens')}</span>
                 </motion.div>
               </div>
             </div>

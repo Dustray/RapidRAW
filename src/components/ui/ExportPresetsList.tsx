@@ -6,6 +6,7 @@ import { AppSettings } from './AppProperties';
 import Dropdown from './Dropdown';
 import Text from './Text';
 import { TextVariants } from '../../types/typography';
+import { useTranslation } from 'react-i18next';
 
 interface ExportPresetsListProps {
   appSettings: AppSettings | null;
@@ -20,6 +21,7 @@ export default function ExportPresetsList({
   onApplyPreset,
   onSettingsChange,
 }: ExportPresetsListProps) {
+  const { t } = useTranslation();
   const [isCreating, setIsCreating] = useState(false);
   const [newPresetName, setNewPresetName] = useState('');
   const [selectedPresetId, setSelectedPresetId] = useState<string>('');
@@ -87,17 +89,27 @@ export default function ExportPresetsList({
     setSelectedPresetId('');
   };
 
+  const getPresetLabel = (preset: ExportPreset): string => {
+    if (preset.id === 'default-hq') {
+      return t('export.presetHighQuality');
+    }
+    if (preset.id === 'default-fast') {
+      return t('export.presetFastWeb');
+    }
+    return preset.name;
+  };
+
   const dropdownOptions = presets
     .filter((preset) => preset.id !== '__last_used__')
     .map((preset) => ({
-      label: preset.name,
+      label: getPresetLabel(preset),
       value: preset.id,
     }));
 
   return (
     <div className="mb-8">
       <Text variant={TextVariants.heading} className="mb-2">
-        Export Presets
+        {t('export.presets')}
       </Text>
 
       {!isCreating ? (
@@ -106,14 +118,14 @@ export default function ExportPresetsList({
             value={selectedPresetId}
             onChange={handleSelect}
             options={dropdownOptions}
-            placeholder="Select a preset..."
+            placeholder={t('export.selectPreset')}
             className="w-full"
           />
 
           <button
             onClick={() => setIsCreating(true)}
             className="p-2 bg-surface hover:bg-card-active rounded-md text-text-primary transition-colors"
-            data-tooltip="Save current settings as new preset"
+            data-tooltip={t('export.savePreset')}
           >
             <Plus size={18} />
           </button>
@@ -126,14 +138,14 @@ export default function ExportPresetsList({
                 className={`p-2 bg-surface hover:bg-card-active rounded-md transition-colors ${
                   isSaved ? 'text-green-500' : 'text-text-secondary'
                 }`}
-                data-tooltip={isSaved ? 'Saved!' : 'Overwrite selected preset'}
+                data-tooltip={isSaved ? t('export.saved') : t('export.overwritePreset')}
               >
                 {isSaved ? <Check size={18} /> : <Save size={18} />}
               </button>
               <button
                 onClick={handleDeletePreset}
                 className="p-2 bg-surface hover:bg-red-500/20 hover:text-red-500 rounded-md text-text-secondary transition-colors"
-                data-tooltip="Delete preset"
+                data-tooltip={t('export.deletePreset')}
               >
                 <Trash2 size={18} />
               </button>
@@ -145,7 +157,7 @@ export default function ExportPresetsList({
           <input
             autoFocus
             type="text"
-            placeholder="Preset Name"
+            placeholder={t('export.presetName')}
             value={newPresetName}
             onChange={(e) => setNewPresetName(e.target.value)}
             className="grow bg-bg-primary border border-surface rounded-md p-2 text-sm text-text-primary focus:ring-accent focus:border-accent"

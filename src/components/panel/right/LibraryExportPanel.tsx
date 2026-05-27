@@ -26,6 +26,7 @@ import { useExportSettings } from '../../../hooks/useExportSettings';
 import { useOsPlatform } from '../../../hooks/useOsPlatform';
 import Text from '../../ui/Text';
 import { TextColors, TextVariants, TextWeights } from '../../../types/typography';
+import { useTranslation } from 'react-i18next';
 
 interface LibraryExportPanelProps {
   exportState: ExportState;
@@ -63,6 +64,7 @@ function WatermarkPreview({
   watermarkPath,
   imageAspectRatio,
   watermarkImageAspectRatio,
+  t,
 }: {
   anchor: WatermarkAnchor;
   scale: number;
@@ -71,6 +73,7 @@ function WatermarkPreview({
   watermarkPath: string | null;
   imageAspectRatio: number;
   watermarkImageAspectRatio: number;
+  t: (key: string) => string;
 }) {
   const getPositionStyles = () => {
     const minDimPercent = imageAspectRatio > 1 ? 100 / imageAspectRatio : 100;
@@ -137,7 +140,7 @@ function WatermarkPreview({
       style={{ aspectRatio: imageAspectRatio }}
     >
       <div className="absolute inset-0 flex items-center justify-center">
-        <Text variant={TextVariants.label}>Preview</Text>
+        <Text variant={TextVariants.label}>{t('export.preview')}</Text>
       </div>
       {watermarkPath && (
         <div style={getPositionStyles()}>
@@ -145,7 +148,7 @@ function WatermarkPreview({
             className="w-full bg-accent/50 border-2 border-dashed border-accent rounded-xs flex items-center justify-center"
             style={{ aspectRatio: watermarkImageAspectRatio }}
           >
-            <span className="text-white text-[8px] font-bold">Logo</span>
+            <span className="text-white text-[8px] font-bold">{t('export.logo')}</span>
           </div>
         </div>
       )}
@@ -161,13 +164,6 @@ const formatBytes = (bytes: number, decimals = 2) => {
   const i = Math.floor(Math.log(bytes) / Math.log(k));
   return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`;
 };
-
-const resizeModeOptions = [
-  { label: 'Long Edge', value: 'longEdge' },
-  { label: 'Short Edge', value: 'shortEdge' },
-  { label: 'Width', value: 'width' },
-  { label: 'Height', value: 'height' },
-];
 
 export default function LibraryExportPanel({
   exportState,
@@ -220,6 +216,8 @@ export default function LibraryExportPanel({
     preserveFolders,
     setPreserveFolders,
   } = useExportSettings();
+
+  const { t } = useTranslation();
 
   const [hasLoadedSettings, setHasLoadedSettings] = useState(false);
   const [isAdvancedExpanded, setIsAdvancedExpanded] = useState(false);
@@ -321,15 +319,22 @@ export default function LibraryExportPanel({
   }, [watermarkPath]);
 
   const anchorOptions = [
-    { label: 'Top Left', value: WatermarkAnchor.TopLeft },
-    { label: 'Top Center', value: WatermarkAnchor.TopCenter },
-    { label: 'Top Right', value: WatermarkAnchor.TopRight },
-    { label: 'Center Left', value: WatermarkAnchor.CenterLeft },
-    { label: 'Center', value: WatermarkAnchor.Center },
-    { label: 'Center Right', value: WatermarkAnchor.CenterRight },
-    { label: 'Bottom Left', value: WatermarkAnchor.BottomLeft },
-    { label: 'Bottom Center', value: WatermarkAnchor.BottomCenter },
-    { label: 'Bottom Right', value: WatermarkAnchor.BottomRight },
+    { label: t('export.anchor.topLeft'), value: WatermarkAnchor.TopLeft },
+    { label: t('export.anchor.topCenter'), value: WatermarkAnchor.TopCenter },
+    { label: t('export.anchor.topRight'), value: WatermarkAnchor.TopRight },
+    { label: t('export.anchor.centerLeft'), value: WatermarkAnchor.CenterLeft },
+    { label: t('export.anchor.center'), value: WatermarkAnchor.Center },
+    { label: t('export.anchor.centerRight'), value: WatermarkAnchor.CenterRight },
+    { label: t('export.anchor.bottomLeft'), value: WatermarkAnchor.BottomLeft },
+    { label: t('export.anchor.bottomCenter'), value: WatermarkAnchor.BottomCenter },
+    { label: t('export.anchor.bottomRight'), value: WatermarkAnchor.BottomRight },
+  ];
+
+  const resizeModeOptions = [
+    { label: t('export.resizeMode.longEdge'), value: 'longEdge' },
+    { label: t('export.resizeMode.shortEdge'), value: 'shortEdge' },
+    { label: t('export.resizeMode.width'), value: 'width' },
+    { label: t('export.resizeMode.height'), value: 'height' },
   ];
 
   const debouncedEstimateSize = useMemo(
@@ -469,7 +474,7 @@ export default function LibraryExportPanel({
         ? ''
         : await open({
             directory: true,
-            title: `Select Folder to Export ${numImages} Image(s)`,
+            title: `${t('export.selectFolderToExport')} ${numImages} ${t('export.image')}(s)`,
             defaultPath: lastExportPath ?? undefined,
           });
 
@@ -489,7 +494,7 @@ export default function LibraryExportPanel({
     } catch (error) {
       console.error('Error exporting images:', error);
       setExportState({
-        errorMessage: typeof error === 'string' ? error : 'Failed to start export.',
+        errorMessage: typeof error === 'string' ? error : t('export.failedToStartExport'),
         progress,
         status: Status.Error,
       });
@@ -506,12 +511,12 @@ export default function LibraryExportPanel({
 
   const canExport = numImages > 0;
   const isLut = fileFormat === FileFormats.Cube;
-  const itemLabel = isLut ? 'LUT' : 'Image';
+  const itemLabel = isLut ? t('export.lut') : t('export.image');
 
   return (
     <div className="h-full bg-bg-secondary rounded-lg flex flex-col">
       <div className="p-4 flex justify-between items-center shrink-0 border-b border-surface">
-        <Text variant={TextVariants.title}>Export</Text>
+        <Text variant={TextVariants.title}>{t('export.title')}</Text>
         <button
           onClick={onClose}
           className="p-1 rounded-md text-text-secondary hover:bg-surface hover:text-text-primary"
@@ -528,7 +533,7 @@ export default function LibraryExportPanel({
               currentSettings={currentSettingsObject}
               onApplyPreset={handleApplyPreset}
             />
-            <Section title="File Settings">
+            <Section title={t('export.section.fileSettings')}>
               <div className="grid grid-cols-3 gap-2">
                 {FILE_FORMATS.map((format: FileFormat) => (
                   <button
@@ -549,7 +554,7 @@ export default function LibraryExportPanel({
                 <div className={isExporting ? 'opacity-50 pointer-events-none' : ''}>
                   <Slider
                     defaultValue={90}
-                    label={fileFormat === FileFormats.Jxl && jpegQuality === 100 ? 'Quality (Lossless)' : 'Quality'}
+                    label={fileFormat === FileFormats.Jxl && jpegQuality === 100 ? t('export.qualityLossless') : t('export.quality')}
                     max={100}
                     min={1}
                     onChange={(e) => setJpegQuality(parseInt(e.target.value))}
@@ -561,7 +566,7 @@ export default function LibraryExportPanel({
               )}
             </Section>
 
-            <Section title="File Naming">
+            <Section title={t('export.section.fileNaming')}>
               <input
                 className="w-full bg-surface border border-surface rounded-md p-2 text-sm text-text-primary focus:ring-accent focus:border-accent"
                 disabled={isExporting}
@@ -586,9 +591,9 @@ export default function LibraryExportPanel({
 
             {fileFormat !== FileFormats.Cube && (
               <>
-                <Section title="Image Sizing">
+                <Section title={t('export.section.imageSizing')}>
                   <Switch
-                    label="Resize to Fit"
+                    label={t('export.resizeToFit')}
                     checked={enableResize}
                     onChange={setEnableResize}
                     disabled={isExporting}
@@ -618,7 +623,7 @@ export default function LibraryExportPanel({
                       <Switch
                         checked={dontEnlarge}
                         disabled={isExporting}
-                        label="Don't Enlarge"
+                        label={t('export.dontEnlarge')}
                         onChange={setDontEnlarge}
                       />
                     </div>
@@ -626,17 +631,17 @@ export default function LibraryExportPanel({
                 </Section>
 
                 {fileFormat == FileFormats.Jpeg && (
-                  <Section title="Metadata">
+                  <Section title={t('export.section.metadata')}>
                     <Switch
                       checked={keepMetadata}
                       disabled={isExporting}
-                      label="Save with Metadata"
+                      label={t('export.saveWithMetadata')}
                       onChange={setKeepMetadata}
                     />
                     {keepMetadata && (
                       <div className="pl-2 border-l-2 border-surface">
                         <Switch
-                          label="Remove GPS Data"
+                          label={t('export.removeGpsData')}
                           checked={stripGps}
                           onChange={setStripGps}
                           disabled={isExporting}
@@ -646,9 +651,9 @@ export default function LibraryExportPanel({
                   </Section>
                 )}
 
-                <Section title="Watermark">
+                <Section title={t('export.section.watermark')}>
                   <Switch
-                    label="Add Watermark"
+                    label={t('export.addWatermark')}
                     checked={enableWatermark}
                     onChange={setEnableWatermark}
                     disabled={isExporting}
@@ -656,7 +661,7 @@ export default function LibraryExportPanel({
                   {enableWatermark && (
                     <div className="space-y-4 pl-2 border-l-2 border-surface">
                       <ImagePicker
-                        label="Watermark Image"
+                        label={t('export.watermarkImage')}
                         imageName={watermarkPath ? watermarkPath.split(/[\\/]/).pop() || null : null}
                         onImageSelect={setWatermarkPath}
                         onClear={() => setWatermarkPath(null)}
@@ -672,7 +677,7 @@ export default function LibraryExportPanel({
                           />
                           <div>
                             <Slider
-                              label="Scale"
+                              label={t('export.scale')}
                               min={1}
                               max={50}
                               step={1}
@@ -682,7 +687,7 @@ export default function LibraryExportPanel({
                               defaultValue={10}
                             />
                             <Slider
-                              label="Spacing"
+                              label={t('export.spacing')}
                               min={0}
                               max={25}
                               step={1}
@@ -692,7 +697,7 @@ export default function LibraryExportPanel({
                               defaultValue={5}
                             />
                             <Slider
-                              label="Opacity"
+                              label={t('export.opacity')}
                               min={0}
                               max={100}
                               step={1}
@@ -710,6 +715,7 @@ export default function LibraryExportPanel({
                             scale={watermarkScale}
                             spacing={watermarkSpacing}
                             opacity={watermarkOpacity}
+                            t={t}
                           />
                         </>
                       )}
@@ -721,7 +727,7 @@ export default function LibraryExportPanel({
 
             <div>
               <Text variant={TextVariants.heading} className="mb-2">
-                Advanced
+                {t('export.advanced')}
               </Text>
               <div className="bg-surface rounded-xl overflow-hidden">
                 <button
@@ -734,7 +740,7 @@ export default function LibraryExportPanel({
                     color={TextColors.primary}
                     className="flex items-center gap-2"
                   >
-                    <Settings size={16} /> Export Settings
+                    <Settings size={16} /> {t('export.exportSettings')}
                   </Text>
                   <Text color={TextColors.secondary}>
                     {isAdvancedExpanded ? <ChevronDown size={16} /> : <ChevronRight size={16} />}
@@ -752,7 +758,7 @@ export default function LibraryExportPanel({
                     >
                       <div className="px-4 pb-4 pt-2 border-t border-surface/50 flex flex-col gap-4">
                         <Switch
-                          label="Preserve Folder Structure"
+                          label={t('export.preserveFolderStructure')}
                           checked={preserveFolders}
                           onChange={setPreserveFolders}
                           disabled={isExporting}
@@ -762,11 +768,11 @@ export default function LibraryExportPanel({
                             <Switch
                               checked={preserveTimestamps}
                               disabled={isExporting}
-                              label="Set File Timestamps from EXIF Capture Date"
+                              label={t('export.setTimestampsFromExif')}
                               onChange={setPreserveTimestamps}
                             />
                             <Switch
-                              label="Export masks as separate files"
+                              label={t('export.exportMasksAsSeparateFiles')}
                               checked={exportMasks}
                               onChange={setExportMasks}
                               disabled={isExporting}
@@ -787,7 +793,7 @@ export default function LibraryExportPanel({
             weight={TextWeights.normal}
             className="text-center mt-4"
           >
-            No images selected.
+            {t('export.noImagesSelected')}
           </Text>
         )}
       </div>
@@ -795,11 +801,11 @@ export default function LibraryExportPanel({
       <div className="p-4 border-t border-surface shrink-0 space-y-2">
         <Text as="div" variant={TextVariants.small} color={TextColors.primary} className="text-center">
           {isEstimating ? (
-            <span className="italic">Estimating size...</span>
+            <span className="italic">{t('export.estimatingSize')}</span>
           ) : estimatedSize !== null ? (
             <span>
-              Estimated total size: ~{formatBytes(estimatedSize)}
-              {numImages > 1 && ` (${formatBytes(estimatedSize / numImages)} avg)`}
+              {t('export.estimatedTotalSize', { size: formatBytes(estimatedSize) })}
+              {numImages > 1 && ` (${formatBytes(estimatedSize / numImages)} ${t('export.avg')})`}
             </span>
           ) : null}
         </Text>
@@ -823,28 +829,27 @@ export default function LibraryExportPanel({
             <>
               <span className="flex items-center group-hover:hidden">
                 <Loader size={18} className="animate-spin mr-2" />
-                Exporting…{progress.total > 1 && ` (${progress.current}/${progress.total})`}
+                {t('export.exporting')}{progress.total > 1 && ` (${progress.current}/${progress.total})`}
               </span>
               <span className="hidden items-center group-hover:flex">
-                <Ban size={18} className="mr-2" />
-                Cancel Export
+                <Ban size={18} className="mr-2" /> {t('export.cancelExport')}
               </span>
             </>
           ) : status === Status.Success ? (
             <>
-              <CheckCircle size={18} className="mr-2" /> Export successful!
+              <CheckCircle size={18} className="mr-2" /> {t('export.exportSuccessful')}
             </>
           ) : status === Status.Error ? (
             <>
-              <XCircle size={18} className="mr-2" /> {errorMessage || 'Export failed'}
+              <XCircle size={18} className="mr-2" /> {errorMessage || t('export.exportFailed')}
             </>
           ) : status === Status.Cancelled ? (
             <>
-              <Ban size={18} className="mr-2" /> Export cancelled
+              <Ban size={18} className="mr-2" /> {t('export.exportCancelled')}
             </>
           ) : (
             <>
-              <FileInput size={18} className="mr-2" /> Export {numImages > 1 ? `${numImages} ${itemLabel}s` : itemLabel}
+              <FileInput size={18} className="mr-2" /> {t('export.title')}{numImages > 1 ? ` ${numImages} ${itemLabel}s` : ` ${itemLabel}`}
             </>
           )}
         </Button>

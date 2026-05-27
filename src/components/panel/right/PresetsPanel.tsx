@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { invoke } from '@tauri-apps/api/core';
 import { open as openDialog, save as saveDialog } from '@tauri-apps/plugin-dialog';
 import {
@@ -324,6 +325,7 @@ function DroppableFolderItem({ folder, onContextMenu, children, onToggle, isExpa
 }
 
 export default function PresetsPanel({ onNavigateToCommunity }: PresetsPanelProps) {
+  const { t } = useTranslation();
   const selectedImage = useEditorStore((s) => s.selectedImage);
   const adjustments = useEditorStore((s) => s.adjustments);
   const activePanel = useUIStore((s) => s.activeRightPanel);
@@ -769,12 +771,12 @@ export default function PresetsPanel({ onNavigateToCommunity }: PresetsPanelProp
     try {
       const selectedPath = await openDialog({
         filters: [
-          { name: 'All Preset Files', extensions: ['rrpreset', 'xmp', 'lrtemplate'] },
-          { name: 'RapidRAW Preset', extensions: ['rrpreset'] },
-          { name: 'Legacy Preset', extensions: ['xmp', 'lrtemplate'] },
+          { name: t('presets.allPresetFiles'), extensions: ['rrpreset', 'xmp', 'lrtemplate'] },
+          { name: t('presets.rapidrawPreset'), extensions: ['rrpreset'] },
+          { name: t('presets.legacyPreset'), extensions: ['xmp', 'lrtemplate'] },
         ],
         multiple: false,
-        title: 'Import Presets',
+        title: t('presets.importPresets'),
       });
 
       if (typeof selectedPath === 'string') {
@@ -803,8 +805,8 @@ export default function PresetsPanel({ onNavigateToCommunity }: PresetsPanelProp
     try {
       const filePath = await saveDialog({
         defaultPath: `${name}.rrpreset`.replace(/[<>:"/\\|?*]/g, '_'),
-        filters: [{ name: 'Preset File', extensions: ['rrpreset'] }],
-        title: `Export ${isFolder ? 'Folder' : 'Preset'}`,
+        filters: [{ name: t('presets.presetFile'), extensions: ['rrpreset'] }],
+        title: `${t('presets.export')} ${isFolder ? t('presets.folder') : t('presets.preset')}`,
       });
 
       if (filePath) {
@@ -822,8 +824,8 @@ export default function PresetsPanel({ onNavigateToCommunity }: PresetsPanelProp
     try {
       const filePath = await saveDialog({
         defaultPath: 'all_presets.rrpreset',
-        filters: [{ name: 'Preset File', extensions: ['rrpreset'] }],
-        title: 'Export All Presets',
+        filters: [{ name: t('presets.presetFile'), extensions: ['rrpreset'] }],
+        title: t('presets.exportAllPresets'),
       });
 
       if (filePath) {
@@ -846,19 +848,19 @@ export default function PresetsPanel({ onNavigateToCommunity }: PresetsPanelProp
       options = [
         {
           icon: Edit,
-          label: 'Rename Folder',
+          label: t('presets.renameFolder'),
           onClick: () => setRenameFolderState({ isOpen: true, folder: data }),
         },
         {
           icon: FileDown,
-          label: 'Export Folder',
+          label: t('presets.exportFolder'),
           onClick: () => handleExport(item),
         },
         { type: OPTION_SEPARATOR },
         {
           icon: Trash2,
           isDestructive: true,
-          label: 'Delete Folder',
+          label: t('presets.deleteFolder'),
           onClick: () => handleDeleteItem(data?.id ?? null, true),
         },
       ];
@@ -866,7 +868,7 @@ export default function PresetsPanel({ onNavigateToCommunity }: PresetsPanelProp
       options = [
         {
           icon: Save,
-          label: 'Overwrite',
+          label: t('presets.overwrite'),
           onClick: async () => {
             const updated = overwritePreset(data?.id ?? null);
             if (updated) {
@@ -876,13 +878,13 @@ export default function PresetsPanel({ onNavigateToCommunity }: PresetsPanelProp
         },
         {
           icon: Settings2,
-          label: 'Configure Preset',
+          label: t('presets.configurePreset'),
           onClick: () => setConfigureModalState({ isOpen: true, preset: data as Preset }),
         },
         { type: OPTION_SEPARATOR },
         {
           icon: CopyPlus,
-          label: 'Duplicate Preset',
+          label: t('presets.duplicatePreset'),
           onClick: async () => {
             const duplicated = duplicatePreset(data?.id ?? null);
             if (duplicated) {
@@ -892,14 +894,14 @@ export default function PresetsPanel({ onNavigateToCommunity }: PresetsPanelProp
         },
         {
           icon: FileDown,
-          label: 'Export Preset',
+          label: t('presets.exportPreset'),
           onClick: () => handleExport(item),
         },
         { type: OPTION_SEPARATOR },
         {
           icon: Trash2,
           isDestructive: true,
-          label: 'Delete Preset',
+          label: t('presets.deletePreset'),
           onClick: () => handleDeleteItem(data?.id ?? null, false),
         },
       ];
@@ -916,19 +918,19 @@ export default function PresetsPanel({ onNavigateToCommunity }: PresetsPanelProp
     const options = [
       {
         icon: Plus,
-        label: 'New Preset',
+        label: t('presets.newPreset'),
         onClick: () => setConfigureModalState({ isOpen: true, preset: null }),
       },
       {
         icon: FolderPlus,
-        label: 'New Folder',
+        label: t('presets.newFolder'),
         onClick: () => setIsAddFolderModalOpen(true),
       },
       { type: OPTION_SEPARATOR },
       {
         disabled: presets.length === 0,
         icon: SortAsc,
-        label: 'Sort All Alphabetically',
+        label: t('presets.sortAllAlphabetically'),
         onClick: sortAllPresetsAlphabetically,
       },
     ];
@@ -942,12 +944,12 @@ export default function PresetsPanel({ onNavigateToCommunity }: PresetsPanelProp
     <DndContext sensors={sensors} onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
       <div className="flex flex-col h-full">
         <div className="p-4 flex justify-between items-center shrink-0 border-b border-surface">
-          <Text variant={TextVariants.title}>Presets</Text>
+          <Text variant={TextVariants.title}>{t('presets.title')}</Text>
           <div className="flex items-center gap-1">
             <button
               className="p-2 rounded-full hover:bg-surface transition-colors"
               onClick={onNavigateToCommunity}
-              data-tooltip="Explore Community Presets"
+              data-tooltip={t('presets.exploreCommunityPresets')}
             >
               <Users size={18} />
             </button>
@@ -955,7 +957,7 @@ export default function PresetsPanel({ onNavigateToCommunity }: PresetsPanelProp
               className="p-2 rounded-full hover:bg-surface transition-colors"
               disabled={isLoading}
               onClick={handleImportPresets}
-              data-tooltip="Import presets from .rrpreset file"
+              data-tooltip={t('presets.importPresetsTooltip')}
             >
               <FileUp size={18} />
             </button>
@@ -963,7 +965,7 @@ export default function PresetsPanel({ onNavigateToCommunity }: PresetsPanelProp
               className="p-2 rounded-full hover:bg-surface transition-colors"
               disabled={presets.length === 0 || isLoading}
               onClick={handleExportAllPresets}
-              data-tooltip="Export all presets to .rrpreset file"
+              data-tooltip={t('presets.exportAllPresetsTooltip')}
             >
               <FileDown size={18} />
             </button>
@@ -971,7 +973,7 @@ export default function PresetsPanel({ onNavigateToCommunity }: PresetsPanelProp
               className="p-2 rounded-full hover:bg-surface transition-colors"
               disabled={isLoading}
               onClick={() => setConfigureModalState({ isOpen: true, preset: null })}
-              data-tooltip="Save as new preset"
+              data-tooltip={t('presets.saveAsNewPreset')}
             >
               <Plus size={18} />
             </button>
@@ -993,17 +995,17 @@ export default function PresetsPanel({ onNavigateToCommunity }: PresetsPanelProp
               weight={TextWeights.normal}
               className="text-center mt-4"
             >
-              <Loader2 size={14} className="animate-spin inline-block mr-2" /> Loading Presets...
+              <Loader2 size={14} className="animate-spin inline-block mr-2" /> {t('presets.loadingPresets')}
             </Text>
           )}
           {!isLoading && presets.length === 0 ? (
             <div className="text-center text-text-secondary flex flex-col items-center gap-4 pt-4">
               <Text className="max-w-xs">
-                No presets saved yet. Create your own, import from a file, or explore community presets.
+                {t('presets.noPresetsSaved')}
               </Text>
               <Button variant="secondary" onClick={onNavigateToCommunity}>
                 <Users size={16} className="mr-2" />
-                Get Community Presets
+                {t('presets.getCommunityPresets')}
               </Button>
             </div>
           ) : (

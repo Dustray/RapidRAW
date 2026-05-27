@@ -156,6 +156,8 @@ export enum ThumbnailAspectRatio {
   Contain = 'contain',
 }
 
+export type Language = 'en' | 'zh';
+
 export interface AppSettings {
   aiConnectorAddress?: string;
   aiProvider?: string;
@@ -202,6 +204,7 @@ export interface AppSettings {
   openTreeSections?: string[];
   folderIcons?: Record<string, string>;
   exifOverlay?: ExifOverlay;
+  language?: Language;
 }
 
 export interface BrushSettings {

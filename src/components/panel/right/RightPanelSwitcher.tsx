@@ -1,11 +1,12 @@
 import { motion } from 'framer-motion';
 import { SlidersHorizontal, Info, Crop, Layers, Paintbrush, SwatchBook, FileInput, type LucideIcon } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { Panel } from '../../ui/AppProperties';
 
 interface PanelOptions {
   icon: LucideIcon;
   id: Panel;
-  title: string;
+  titleKey: string;
 }
 
 interface RightPanelSwitcherProps {
@@ -15,27 +16,28 @@ interface RightPanelSwitcherProps {
   layout?: 'horizontal' | 'vertical';
 }
 
-const panelGroups: Array<Array<PanelOptions>> = [
-  [{ id: Panel.Metadata, icon: Info, title: 'Info' }],
-  [
-    { id: Panel.Adjustments, icon: SlidersHorizontal, title: 'Adjust' },
-    { id: Panel.Crop, icon: Crop, title: 'Crop' },
-    { id: Panel.Masks, icon: Layers, title: 'Masks' },
-    { id: Panel.Ai, icon: Paintbrush, title: 'Inpaint' },
-  ],
-  [
-    { id: Panel.Presets, icon: SwatchBook, title: 'Presets' },
-    { id: Panel.Export, icon: FileInput, title: 'Export' },
-  ],
-];
-
 export default function RightPanelSwitcher({
   activePanel,
   onPanelSelect,
   isInstantTransition,
   layout = 'vertical',
 }: RightPanelSwitcherProps) {
+  const { t } = useTranslation();
   const isHorizontal = layout === 'horizontal';
+
+  const panelGroups: Array<Array<PanelOptions>> = [
+    [{ id: Panel.Metadata, icon: Info, titleKey: 'rightPanel.info' }],
+    [
+      { id: Panel.Adjustments, icon: SlidersHorizontal, titleKey: 'rightPanel.adjust' },
+      { id: Panel.Crop, icon: Crop, titleKey: 'rightPanel.crop' },
+      { id: Panel.Masks, icon: Layers, titleKey: 'rightPanel.masks' },
+      { id: Panel.Ai, icon: Paintbrush, titleKey: 'rightPanel.inpaint' },
+    ],
+    [
+      { id: Panel.Presets, icon: SwatchBook, titleKey: 'rightPanel.presets' },
+      { id: Panel.Export, icon: FileInput, titleKey: 'rightPanel.export' },
+    ],
+  ];
 
   return (
     <div className={isHorizontal ? 'flex items-center overflow-x-auto p-1 gap-1' : 'flex flex-col p-1 gap-1 h-full'}>
@@ -44,7 +46,7 @@ export default function RightPanelSwitcher({
           {groupIndex > 0 && (
             <div className={isHorizontal ? 'w-px h-6 bg-surface self-stretch my-auto' : 'w-6 h-px bg-surface self-center'} />
           )}
-          {group.map(({ id, icon: Icon, title }) => (
+          {group.map(({ id, icon: Icon, titleKey }) => (
             <button
               className={`relative rounded-md transition-colors duration-200 ${
                 isHorizontal ? 'p-2 shrink-0' : 'p-2'
@@ -55,7 +57,7 @@ export default function RightPanelSwitcher({
               }`}
               key={id}
               onClick={() => onPanelSelect(id)}
-              data-tooltip={title}
+              data-tooltip={t(titleKey)}
             >
               {activePanel === id && (
                 <motion.div

@@ -30,6 +30,7 @@ import { TEXT_COLOR_KEYS, TextColors, TextVariants, TextWeights } from '../../ty
 import { useLibraryStore } from '../../store/useLibraryStore';
 import { useSettingsStore } from '../../store/useSettingsStore';
 import { AlbumItem, AlbumGroup, Album, Invokes } from '../ui/AppProperties';
+import { useTranslation } from 'react-i18next';
 
 export interface FolderTree {
   children: FolderTree[];
@@ -418,6 +419,7 @@ export default function FolderTree({
   style,
   isInstantTransition,
 }: FolderTreeProps) {
+  const { t } = useTranslation();
   const { appSettings, handleSettingsChange } = useSettingsStore();
   const {
     folderTrees,
@@ -535,7 +537,7 @@ export default function FolderTree({
         <button
           className="absolute top-1/2 -translate-y-1/2 right-1 w-6 h-10 hover:bg-card-active rounded-md flex items-center justify-center z-30"
           onClick={() => setIsVisible(true)}
-          data-tooltip="Expand"
+          data-tooltip={t('library.folderTree.expand')}
         >
           <ChevronRight size={16} />
         </button>
@@ -554,7 +556,7 @@ export default function FolderTree({
                     transition={{ duration: 0.2, ease: 'easeInOut' }}
                     className="bg-surface rounded-md hover:bg-card-active flex items-center justify-center shrink-0 overflow-hidden transition-colors"
                     onClick={() => setIsVisible(false)}
-                    data-tooltip="Collapse"
+                    data-tooltip={t('library.folderTree.collapse')}
                   >
                     <ChevronLeft size={17.5} className="text-text-secondary shrink-0" />
                   </motion.button>
@@ -564,7 +566,7 @@ export default function FolderTree({
                 <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-text-secondary" />
                 <input
                   type="text"
-                  placeholder="Search folders..."
+                  placeholder={t('library.folderTree.searchPlaceholder')}
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="w-full bg-surface border border-transparent rounded-md pl-9 pr-8 py-2 text-sm focus:outline-hidden"
@@ -573,7 +575,7 @@ export default function FolderTree({
                   <button
                     onClick={() => setSearchQuery('')}
                     className="absolute right-2 top-1/2 -translate-y-1/2 p-1 rounded-full hover:bg-card-active"
-                    data-tooltip="Clear search"
+                    data-tooltip={t('library.folderTree.clearSearch')}
                   >
                     <X size={16} className="text-text-secondary" />
                   </button>
@@ -586,7 +588,7 @@ export default function FolderTree({
             {hasVisiblePinnedTrees && (
               <>
                 <div>
-                  <SectionHeader title="Pinned" isOpen={isPinnedOpen} onToggle={() => toggleSection('pinned')} />
+                  <SectionHeader title={t('library.folderTree.pinned')} isOpen={isPinnedOpen} onToggle={() => toggleSection('pinned')} />
                 </div>
                 <AnimatePresence initial={false}>
                   {isPinnedOpen && (
@@ -643,7 +645,7 @@ export default function FolderTree({
             {!isSearching && (
               <>
                 <div>
-                  <SectionHeader title="Albums" isOpen={isAlbumsOpen} onToggle={() => toggleSection('albums')} />
+                  <SectionHeader title={t('library.folderTree.albums')} isOpen={isAlbumsOpen} onToggle={() => toggleSection('albums')} />
                 </div>
                 <AnimatePresence>
                   {isAlbumsOpen && (
@@ -697,7 +699,7 @@ export default function FolderTree({
             {filteredTrees && filteredTrees.length > 0 && (
               <>
                 <div>
-                  <SectionHeader title="Folders" isOpen={isCurrentOpen} onToggle={() => toggleSection('current')} />
+                  <SectionHeader title={t('library.folderTree.folders')} isOpen={isCurrentOpen} onToggle={() => toggleSection('current')} />
                 </div>
                 <AnimatePresence initial={false}>
                   {isCurrentOpen && (

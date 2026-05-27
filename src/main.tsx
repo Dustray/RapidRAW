@@ -2,6 +2,7 @@ import React from 'react';
 import { createRoot } from 'react-dom/client';
 import App from './App';
 import { installFrontendLogBridge } from './utils/frontendLogBridge';
+import './i18n';
 import './styles.css';
 
 installFrontendLogBridge();

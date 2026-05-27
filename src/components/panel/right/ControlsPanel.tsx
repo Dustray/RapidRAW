@@ -21,8 +21,10 @@ import { useSettingsStore } from '../../../store/useSettingsStore';
 import { useUIStore } from '../../../store/useUIStore';
 import { useEditorActions } from '../../../hooks/useEditorActions';
 import { useWaveformControls } from '../../../hooks/useWaveformControls';
+import { useTranslation } from 'react-i18next';
 
 export default function Controls() {
+  const { t } = useTranslation();
   const { showContextMenu } = useContextMenu();
   const { isResizingWaveform, onToggleWaveform, setActiveWaveformChannel, handleWaveformResize } =
     useWaveformControls();
@@ -208,13 +210,13 @@ export default function Controls() {
   return (
     <div className="flex flex-col h-full">
       <div className="p-4 flex justify-between items-center shrink-0 border-b border-surface">
-        <Text variant={TextVariants.title}>Adjustments</Text>
+        <Text variant={TextVariants.title}>{t('adjustments.title')}</Text>
         <div className="flex items-center gap-1">
           <button
             className="p-2 rounded-full hover:bg-surface disabled:cursor-not-allowed transition-colors"
             disabled={!selectedImage?.isReady}
             onClick={handleAutoAdjustments}
-            data-tooltip="Auto Adjust Image"
+            data-tooltip={t('controls.autoAdjust')}
           >
             <Aperture size={18} />
           </button>
@@ -224,7 +226,7 @@ export default function Controls() {
               isWaveformVisible ? 'bg-surface hover:bg-card-active' : 'hover:bg-surface',
             )}
             onClick={onToggleWaveform}
-            data-tooltip="Toggle Analytics Display"
+            data-tooltip={t('controls.toggleAnalytics')}
           >
             <ChartArea size={18} />
           </button>
@@ -232,7 +234,7 @@ export default function Controls() {
             className="p-2 rounded-full hover:bg-surface disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
             disabled={!selectedImage}
             onClick={handleResetAdjustments}
-            data-tooltip="Reset Adjustments"
+            data-tooltip={t('controls.resetAdjustments')}
           >
             <RotateCcw size={18} />
           </button>
@@ -279,7 +281,7 @@ export default function Controls() {
             effects: EffectsPanel,
           }[sectionName];
 
-          const title = sectionName.charAt(0).toUpperCase() + sectionName.slice(1);
+          const title = t(`adjustments.${sectionName}.title`);
           const sectionVisibility = adjustments.sectionVisibility || INITIAL_ADJUSTMENTS.sectionVisibility;
 
           return (
