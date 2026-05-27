@@ -540,7 +540,7 @@ export default function LensCorrectionModal({
   const lensOptions = lenses.map((m) => ({ label: m, value: m }));
   const myLensOptions = useMemo(() => {
     if (myLenses.length === 0) {
-      return [{ label: 'Manage your lenses in Settings', value: 'none' }];
+      return [{ label: t('modal.lensCorrection.manageLensesInSettings'), value: 'none' }];
     }
     return myLenses.map((l, i) => ({
       label: `${l.maker} - ${l.model}`,
@@ -553,21 +553,21 @@ export default function LensCorrectionModal({
       case 'detecting':
         return (
           <>
-            <Loader size={16} className="animate-spin" /> Detecting...
+            <Loader size={16} className="animate-spin" /> {t('lensCorrectionModal.detecting')}
           </>
         );
       case 'not_found':
-        return 'Not Found';
+        return t('lensCorrectionModal.notFound');
       case 'success':
         return (
           <>
-            <Check size={16} /> Lens Found
+            <Check size={16} /> {t('lensCorrectionModal.lensFound')}
           </>
         );
       default:
         return (
           <>
-            <Search size={16} /> Auto-detect Lens
+            <Search size={16} /> {t('lensCorrectionModal.autoDetectLens')}
           </>
         );
     }
@@ -587,10 +587,10 @@ export default function LensCorrectionModal({
   const renderControls = () => (
     <div className="modal-adjustments-pane w-80 shrink-0 bg-bg-secondary flex flex-col border-l border-surface h-full z-10">
       <div className="p-4 flex justify-between items-center shrink-0 border-b border-surface">
-        <Text variant={TextVariants.title}>Lens Correction</Text>
+        <Text variant={TextVariants.title}>{t('lensCorrectionModal.title')}</Text>
         <button
           onClick={handleReset}
-          data-tooltip="Reset Lens Correction"
+          data-tooltip={t('modal.lensCorrection.resetLensCorrection')}
           className="p-2 rounded-full hover:bg-surface transition-colors"
         >
           <RotateCcw size={18} />
@@ -898,7 +898,7 @@ export default function LensCorrectionModal({
                       color={TextColors.button}
                       className="absolute top-4 left-4 bg-accent px-2 py-1 rounded-sm shadow-lg z-20"
                     >
-                      Original
+                      {t('modal.lensCorrection.original')}
                     </Text>
                   )}
                 </div>
@@ -982,10 +982,10 @@ export default function LensCorrectionModal({
                 onClick={onClose}
                 className="px-4 py-2 rounded-md text-text-secondary hover:bg-surface transition-colors"
               >
-                Cancel
+                {t('lensCorrectionModal.cancel')}
               </button>
               <Button onClick={handleApply} disabled={isApplying || !previewUrl}>
-                <Check className="mr-2" size={16} /> Apply
+                <Check className="mr-2" size={16} /> {t('lensCorrectionModal.apply')}
               </Button>
             </div>
           </motion.div>

@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback, useRef, useLayoutEffect } from 'react';
 import { invoke } from '@tauri-apps/api/core';
+import { useTranslation } from 'react-i18next';
 import { AnimatePresence, motion } from 'framer-motion';
 import {
   CheckCircle,
@@ -62,6 +63,7 @@ const INITIAL_SPACING = 15;
 const INITIAL_BORDER_RADIUS = 0;
 
 export default function CollageModal({ isOpen, onClose, onSave, sourceImages }: CollageModalProps) {
+  const { t } = useTranslation();
   const [isMounted, setIsMounted] = useState(false);
   const [show, setShow] = useState(false);
 
@@ -672,17 +674,17 @@ export default function CollageModal({ isOpen, onClose, onSave, sourceImages }: 
                   : 'bg-surface hover:bg-card-active',
               )}
             >
-              Original
+              {t('modal.collage.original')}
             </button>
           )}
         </div>
 
-        <Switch label="Keep Original Aspect Ratio" checked={keepOriginalRatio} onChange={setKeepOriginalRatio} />
+        <Switch label={t('modal.collage.keepAspectRatio')} checked={keepOriginalRatio} onChange={setKeepOriginalRatio} />
       </div>
 
       <div className="space-y-2">
         <Slider
-          label="Spacing"
+          label={t('modal.collage.spacing')}
           min={0}
           max={50}
           step={1}
@@ -692,7 +694,7 @@ export default function CollageModal({ isOpen, onClose, onSave, sourceImages }: 
           fillOrigin="min"
         />
         <Slider
-          label="Border Radius"
+          label={t('modal.collage.borderRadius')}
           min={0}
           max={50}
           step={1}
@@ -754,7 +756,7 @@ export default function CollageModal({ isOpen, onClose, onSave, sourceImages }: 
         <div className="flex flex-col items-center justify-center h-full text-center">
           <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-4" />
           <Text variant={TextVariants.heading} className="mb-2">
-            Collage Saved!
+            {t('collageModal.collageSaved')}
           </Text>
         </div>
       );
@@ -902,12 +904,12 @@ export default function CollageModal({ isOpen, onClose, onSave, sourceImages }: 
                 onClick={onClose}
                 className="px-4 py-2 rounded-md text-text-secondary hover:bg-surface transition-colors"
               >
-                {savedPath || error ? (savedPath ? 'Done' : 'Close') : 'Cancel'}
+                {savedPath || error ? (savedPath ? t('collageModal.done') : t('collageModal.close')) : t('collageModal.cancel')}
               </button>
               {!savedPath && !error && (
                 <Button onClick={handleSave} disabled={isSaving || isLoading || !activeLayout}>
                   {isSaving ? <Loader2 className="animate-spin mr-2" /> : <Save size={16} className="mr-2" />}
-                  {isSaving ? 'Saving...' : 'Save Collage'}
+                  {isSaving ? t('collageModal.saving') : t('collageModal.saveCollage')}
                 </Button>
               )}
             </div>

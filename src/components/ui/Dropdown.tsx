@@ -20,6 +20,7 @@ interface DropdownProps<T extends React.Key> {
   value: T | null;
   disabled?: boolean;
   triggerClassName?: string;
+  translate?: (key: string) => string;
 }
 
 const Dropdown = <T extends React.Key>({
@@ -31,6 +32,7 @@ const Dropdown = <T extends React.Key>({
   value,
   disabled = false,
   triggerClassName = '',
+  translate,
 }: DropdownProps<T>) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -116,7 +118,7 @@ const Dropdown = <T extends React.Key>({
         type="button"
       >
         <Text as="span" variant={TextVariants.label} color={TextColors.primary}>
-          {selectedOption ? selectedOption.label : placeholder}
+          {selectedOption ? (translate ? translate(selectedOption.label) : selectedOption.label) : placeholder}
         </Text>
         <ChevronDown
           className={`${TEXT_COLOR_KEYS[TextColors.secondary]} transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
@@ -166,7 +168,7 @@ const Dropdown = <T extends React.Key>({
                     aria-selected={isSelected}
                   >
                     <Text color={TextColors.primary} weight={isSelected ? TextWeights.semibold : TextWeights.normal}>
-                      {option.label}
+                      {translate ? translate(option.label) : option.label}
                     </Text>
                     {isSelected && <Check size={16} className={TEXT_COLOR_KEYS[TextColors.primary]} />}
                   </button>

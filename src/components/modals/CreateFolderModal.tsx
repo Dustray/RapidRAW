@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import Text from '../ui/Text';
 import { TextVariants } from '../../types/typography';
+import { useTranslation } from 'react-i18next';
 
 interface FolderModalProps {
   isOpen: boolean;
@@ -9,6 +10,7 @@ interface FolderModalProps {
 }
 
 export default function CreateFolderModal({ isOpen, onClose, onSave }: FolderModalProps) {
+  const { t } = useTranslation();
   const [name, setName] = useState('');
   const [isMounted, setIsMounted] = useState(false);
   const [show, setShow] = useState(false);
@@ -71,14 +73,14 @@ export default function CreateFolderModal({ isOpen, onClose, onSave }: FolderMod
         onClick={(e: any) => e.stopPropagation()}
       >
         <Text variant={TextVariants.title} className="mb-4">
-          Create New Folder
+          {t('modal.createFolder')}
         </Text>
         <input
           autoFocus
           className="w-full bg-bg-primary text-text-primary border border-border rounded-md px-3 py-2 focus:outline-hidden focus:ring-2 focus:ring-accent"
           onChange={(e: any) => setName(e.target.value)}
           onKeyDown={handleKeyDown}
-          placeholder="Enter folder name..."
+          placeholder={t('modal.enterFolderName')}
           type="text"
           value={name}
         />

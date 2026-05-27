@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { motion } from 'framer-motion';
 import clsx from 'clsx';
+import { useTranslation } from 'react-i18next';
 import { ADJUSTMENT_GROUPS, COPYABLE_ADJUSTMENT_KEYS, CopyPasteSettings, PasteMode } from '../../utils/adjustments';
 import Button from '../ui/Button';
 import Switch from '../ui/Switch';
@@ -23,18 +24,19 @@ const DEFAULT_SETTINGS: CopyPasteSettings = {
   knownAdjustments: [],
 };
 
-const pasteModeOptions = [
-  { id: PasteMode.Merge, label: 'Merge' },
-  { id: PasteMode.Replace, label: 'Replace' },
+const getPasteModeOptions = (t: (key: string) => string) => [
+  { id: PasteMode.Merge, label: t('copyPasteSettingsModal.merge') },
+  { id: PasteMode.Replace, label: t('copyPasteSettingsModal.replace') },
 ];
 
 interface PasteModeSwitchProps {
   selectedMode: PasteMode;
   onModeChange: (mode: PasteMode) => void;
   isVisible: boolean;
+  options: Array<{ id: PasteMode; label: string }>;
 }
 
-const PasteModeSwitch = ({ selectedMode, onModeChange, isVisible }: PasteModeSwitchProps) => {
+const PasteModeSwitch = ({ selectedMode, onModeChange, isVisible, options }: PasteModeSwitchProps) => {
   const [buttonRefs, setButtonRefs] = useState<Map<string, HTMLButtonElement>>(new Map());
   const [bubbleStyle, setBubbleStyle] = useState({});
   const containerRef = useRef<HTMLDivElement>(null);
@@ -84,7 +86,7 @@ const PasteModeSwitch = ({ selectedMode, onModeChange, isVisible }: PasteModeSwi
         animate={bubbleStyle}
         transition={{ type: 'spring', bounce: 0.2, duration: 0.6 }}
       />
-      {pasteModeOptions.map((option) => (
+      {options.map((option) => (
         <button
           key={option.id}
           ref={(el) => {
@@ -114,6 +116,7 @@ const PasteModeSwitch = ({ selectedMode, onModeChange, isVisible }: PasteModeSwi
 };
 
 export default function CopyPasteSettingsModal({ isOpen, onClose, onSave, settings }: CopyPasteSettingsModalProps) {
+  const { t } = useTranslation();
   const [isMounted, setIsMounted] = useState(false);
   const [show, setShow] = useState(false);
   const [localSettings, setLocalSettings] = useState<CopyPasteSettings>(settings || DEFAULT_SETTINGS);
@@ -200,42 +203,43 @@ export default function CopyPasteSettingsModal({ isOpen, onClose, onSave, settin
         onClick={(e) => e.stopPropagation()}
       >
         <Text variant={TextVariants.title} className="mb-4">
-          Copy & Paste Settings
+          {t('copyPasteSettingsModal.title')}
         </Text>
         <div className="grow overflow-y-auto pr-2 -mr-2 space-y-6">
           <div>
             <Text variant={TextVariants.heading} className="block mb-2">
-              Paste Mode
+              {t('copyPasteSettingsModal.pasteMode')}
             </Text>
             <PasteModeSwitch
               selectedMode={localSettings.mode}
               onModeChange={(mode) => setLocalSettings((p) => ({ ...p, mode }))}
               isVisible={show}
+              options={getPasteModeOptions(t)}
             />
             <Text variant={TextVariants.small} className="mt-2">
-              <b>Merge:</b> Adds your copied changes, leaving other settings untouched.
+              <b>{t('copyPasteSettingsModal.merge')}:</b> {t('copyPasteSettingsModal.mergeDescription')}
               <br />
-              <b>Replace:</b> Overwrites all selected settings, resetting the rest to their defaults.
+              <b>{t('copyPasteSettingsModal.replace')}:</b> {t('copyPasteSettingsModal.replaceDescription')}
             </Text>
           </div>
 
           <div>
             <div className="flex justify-between items-center mb-2">
-              <Text variant={TextVariants.heading}>Included Adjustments</Text>
+              <Text variant={TextVariants.heading}>{t('copyPasteSettingsModal.includedAdjustments')}</Text>
               <div className="flex gap-2">
                 <Button
                   className="px-4 py-2 rounded-md text-text-secondary hover:bg-surface transition-colors"
                   size="sm"
                   onClick={handleSelectAll}
                 >
-                  Select All
+                  {t('copyPasteSettingsModal.selectAll')}
                 </Button>
                 <Button
                   className="px-4 py-2 rounded-md text-text-secondary hover:bg-surface transition-colors"
                   size="sm"
                   onClick={handleSelectNone}
                 >
-                  Select None
+                  {t('copyPasteSettingsModal.selectNone')}
                 </Button>
               </div>
             </div>
@@ -244,7 +248,7 @@ export default function CopyPasteSettingsModal({ isOpen, onClose, onSave, settin
                 {Object.entries(ADJUSTMENT_GROUPS).map(([section, groups]) => (
                   <div key={section}>
                     <Text variant={TextVariants.heading} className="mb-2">
-                      {capitalize(section)}
+                      {t(`adjustments.sections.${section}`) || capitalize(section)}
                     </Text>
                     {groups.map((group) => {
                       const isFullyChecked = group.keys.every((key) => localSettings.includedAdjustments.includes(key));
@@ -252,7 +256,7 @@ export default function CopyPasteSettingsModal({ isOpen, onClose, onSave, settin
                       return (
                         <div key={group.label} className="mb-1.5 last:mb-0">
                           <Switch
-                            label={group.label}
+                            label={t(group.label)}
                             checked={isFullyChecked}
                             onChange={(checked) => handleGroupToggle(group.keys, checked)}
                           />
@@ -271,9 +275,9 @@ export default function CopyPasteSettingsModal({ isOpen, onClose, onSave, settin
             className="px-4 py-2 rounded-md text-text-secondary bg-surface hover:bg-surface transition-colors"
             onClick={onClose}
           >
-            Cancel
+            {t('common.cancel')}
           </Button>
-          <Button onClick={handleSave}>Save</Button>
+          <Button onClick={handleSave}>{t('common.save')}</Button>
         </div>
       </div>
     </div>

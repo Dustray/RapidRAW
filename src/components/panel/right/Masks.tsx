@@ -79,6 +79,9 @@ export function formatMaskTypeName(type: string) {
   return type.charAt(0).toUpperCase() + type.slice(1);
 }
 
+// Alias for backward compatibility
+export const getMaskTypeTranslationKey = formatMaskTypeName;
+
 export function getMaskTypeName(mask: MaskType) {
   if (mask.id === 'others') return i18n.t('masks.types.others');
   if (mask.type === Mask.QuickEraser && mask.name === 'Quick Erase') {

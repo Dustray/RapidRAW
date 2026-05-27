@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { invoke } from '@tauri-apps/api/core';
 import { listen } from '@tauri-apps/api/event';
+import { useTranslation } from 'react-i18next';
 import { RotateCcw, ZoomIn, ZoomOut, Maximize, Save, Loader2, Eye, EyeOff, Info } from 'lucide-react';
 import { AnimatePresence, motion } from 'framer-motion';
 import Button from '../ui/Button';
@@ -39,6 +40,7 @@ export default function NegativeConversionModal({
   targetPaths,
   onSave,
 }: NegativeConversionModalProps) {
+  const { t } = useTranslation();
   const [params, setParams] = useState<NegativeParams>(DEFAULT_PARAMS);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -217,11 +219,11 @@ export default function NegativeConversionModal({
           className={clsx('transition-opacity duration-200', isSaving && 'opacity-50 pointer-events-none grayscale')}
         >
           <Text variant={TextVariants.heading} className="mb-2">
-            Color Timing
+            {t('modal.negativeConversion.colorTiming')}
           </Text>
           <div className="space-y-3">
             <Slider
-              label="Red (Cyan)"
+              label={t('modal.negativeConversion.redCyan')}
               value={params.red_weight}
               min={0.5}
               max={2.0}
@@ -231,7 +233,7 @@ export default function NegativeConversionModal({
               fillOrigin="min"
             />
             <Slider
-              label="Green (Magenta)"
+              label={t('modal.negativeConversion.greenMagenta')}
               value={params.green_weight}
               min={0.5}
               max={2.0}
@@ -241,7 +243,7 @@ export default function NegativeConversionModal({
               fillOrigin="min"
             />
             <Slider
-              label="Blue (Yellow)"
+              label={t('modal.negativeConversion.blueYellow')}
               value={params.blue_weight}
               min={0.5}
               max={2.0}
@@ -261,7 +263,7 @@ export default function NegativeConversionModal({
           </Text>
           <div className="space-y-3">
             <Slider
-              label="Exposure"
+              label={t('modal.negativeConversion.exposure')}
               value={params.exposure}
               min={-2.0}
               max={2.0}
@@ -270,7 +272,7 @@ export default function NegativeConversionModal({
               onChange={(e) => handleParamChange('exposure', Number(e.target.value))}
             />
             <Slider
-              label="Contrast (Grade)"
+              label={t('modal.negativeConversion.contrastGrade')}
               value={params.contrast}
               min={0.5}
               max={2.5}
@@ -356,7 +358,7 @@ export default function NegativeConversionModal({
                       color={TextColors.button}
                       className="absolute top-4 left-4 bg-accent px-2 py-1 rounded-sm shadow-lg z-20"
                     >
-                      Original Negative
+                      {t('modal.negativeConversion.originalNegative')}
                     </Text>
                   )}
                 </div>
@@ -404,7 +406,7 @@ export default function NegativeConversionModal({
                 'p-2 rounded-full transition-colors select-none',
                 isCompareActive ? 'bg-accent text-button-text' : 'text-white/60 hover:bg-white/10 hover:text-white',
               )}
-              data-tooltip="Hold to View Original"
+              data-tooltip={t('modal.negativeConversion.holdToViewOriginal')}
             >
               {isCompareActive ? <Eye size={18} /> : <EyeOff size={18} />}
             </button>
