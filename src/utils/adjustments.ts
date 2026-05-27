@@ -690,11 +690,11 @@ export interface AdjustmentGroup {
 export const ADJUSTMENT_GROUPS: Record<string, AdjustmentGroup[]> = {
   basic: [
     {
-      label: 'Exposure & Tone Mapper',
+      label: 'copyPasteSettingsModal.groups.exposureToneMapper',
       keys: [BasicAdjustment.Exposure, 'toneMapper'],
     },
     {
-      label: 'Tone',
+      label: 'copyPasteSettingsModal.groups.tone',
       keys: [
         BasicAdjustment.Brightness,
         BasicAdjustment.Contrast,
@@ -705,20 +705,20 @@ export const ADJUSTMENT_GROUPS: Record<string, AdjustmentGroup[]> = {
       ],
     },
     {
-      label: 'Curves',
+      label: 'copyPasteSettingsModal.groups.curves',
       keys: ['curves', 'pointCurves', 'parametricCurve', 'curveMode'],
     },
   ],
   color: [
-    { label: 'White Balance', keys: [ColorAdjustment.Temperature, ColorAdjustment.Tint] },
-    { label: 'Presence', keys: [ColorAdjustment.Saturation, ColorAdjustment.Vibrance] },
-    { label: 'Color Grading', keys: [ColorAdjustment.ColorGrading] },
-    { label: 'Color Mixer', keys: [ColorAdjustment.Hsl] },
-    { label: 'Color Calibration', keys: ['colorCalibration'] },
+    { label: 'copyPasteSettingsModal.groups.whiteBalance', keys: [ColorAdjustment.Temperature, ColorAdjustment.Tint] },
+    { label: 'copyPasteSettingsModal.groups.presence', keys: [ColorAdjustment.Saturation, ColorAdjustment.Vibrance] },
+    { label: 'copyPasteSettingsModal.groups.colorGrading', keys: [ColorAdjustment.ColorGrading] },
+    { label: 'copyPasteSettingsModal.groups.colorMixer', keys: [ColorAdjustment.Hsl] },
+    { label: 'copyPasteSettingsModal.groups.colorCalibration', keys: ['colorCalibration'] },
   ],
   details: [
     {
-      label: 'Clarity & Dehaze',
+      label: 'copyPasteSettingsModal.groups.clarityDehaze',
       keys: [
         DetailsAdjustment.Clarity,
         DetailsAdjustment.Structure,
@@ -726,32 +726,32 @@ export const ADJUSTMENT_GROUPS: Record<string, AdjustmentGroup[]> = {
         DetailsAdjustment.Centré,
       ],
     },
-    { label: 'Sharpness', keys: [DetailsAdjustment.Sharpness, DetailsAdjustment.SharpnessThreshold] },
-    { label: 'Noise Reduction', keys: [DetailsAdjustment.LumaNoiseReduction, DetailsAdjustment.ColorNoiseReduction] },
+    { label: 'copyPasteSettingsModal.groups.sharpness', keys: [DetailsAdjustment.Sharpness, DetailsAdjustment.SharpnessThreshold] },
+    { label: 'copyPasteSettingsModal.groups.noiseReduction', keys: [DetailsAdjustment.LumaNoiseReduction, DetailsAdjustment.ColorNoiseReduction] },
     {
-      label: 'Chromatic Aberration',
+      label: 'copyPasteSettingsModal.groups.chromaticAberration',
       keys: [DetailsAdjustment.ChromaticAberrationRedCyan, DetailsAdjustment.ChromaticAberrationBlueYellow],
     },
   ],
   effects: [
     {
-      label: 'Vignette',
+      label: 'copyPasteSettingsModal.groups.vignette',
       keys: [Effect.VignetteAmount, Effect.VignetteFeather, Effect.VignetteMidpoint, Effect.VignetteRoundness],
     },
-    { label: 'Grain', keys: [Effect.GrainAmount, Effect.GrainRoughness, Effect.GrainSize] },
+    { label: 'copyPasteSettingsModal.groups.grain', keys: [Effect.GrainAmount, Effect.GrainRoughness, Effect.GrainSize] },
     {
-      label: 'Halation & Glow',
+      label: 'copyPasteSettingsModal.groups.halationGlow',
       keys: [CreativeAdjustment.GlowAmount, CreativeAdjustment.HalationAmount, CreativeAdjustment.FlareAmount],
     },
     {
-      label: 'LUT',
+      label: 'copyPasteSettingsModal.groups.lut',
       keys: [Effect.LutIntensity, Effect.LutName, Effect.LutPath, Effect.LutSize, Effect.LutData],
     },
   ],
   geometry: [
-    { label: 'Crop & Aspect Ratio', keys: ['crop', 'aspectRatio'] },
+    { label: 'copyPasteSettingsModal.groups.cropAspectRatio', keys: ['crop', 'aspectRatio'] },
     {
-      label: 'Transform & Rotation',
+      label: 'copyPasteSettingsModal.groups.transformRotation',
       keys: [
         'rotation',
         'flipHorizontal',
@@ -768,7 +768,7 @@ export const ADJUSTMENT_GROUPS: Record<string, AdjustmentGroup[]> = {
       ],
     },
   ],
-  masks: [{ label: 'Masks', keys: ['masks'] }],
+  masks: [{ label: 'copyPasteSettingsModal.groups.masks', keys: ['masks'] }],
 };
 
 export const COPYABLE_ADJUSTMENT_KEYS: string[] = Object.values(ADJUSTMENT_GROUPS)

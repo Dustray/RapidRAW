@@ -196,6 +196,14 @@
     "title": "调整",
     "chromaticAberration": "色差",
     "colorCalibrationT": "色彩校准",
+    "sections": {
+      "basic": "基础",
+      "color": "颜色",
+      "details": "细节",
+      "effects": "效果",
+      "geometry": "几何",
+      "masks": "蒙版"
+    },
     "basic": {
       "title": "基础",
       "evShift": "EV 偏移",
@@ -1399,11 +1407,38 @@
     "holdToCompareTooltip": "按住以对比"
   },
   "copyPasteSettingsModal": {
+    "title": "复制和粘贴设置",
+    "pasteMode": "粘贴模式",
+    "merge": "合并",
+    "mergeDescription": "添加复制的更改，保留其他设置不变。",
+    "replace": "替换",
+    "replaceDescription": "覆盖所有选中的设置，将其余设置重置为默认值。",
     "includedAdjustments": "包含的调整",
     "selectAll": "全选",
     "selectNone": "全不选",
     "cancel": "取消",
-    "save": "保存"
+    "save": "保存",
+    "groups": {
+      "exposureToneMapper": "曝光与色调映射",
+      "tone": "色调",
+      "curves": "曲线",
+      "whiteBalance": "白平衡",
+      "presence": "质感",
+      "colorGrading": "颜色分级",
+      "colorMixer": "颜色混合器",
+      "colorCalibration": "颜色校准",
+      "clarityDehaze": "清晰度与去雾",
+      "sharpness": "锐度",
+      "noiseReduction": "降噪",
+      "chromaticAberration": "色差",
+      "vignette": "暗角",
+      "grain": "颗粒",
+      "halationGlow": "光晕与辉光",
+      "lut": "LUT",
+      "cropAspectRatio": "裁剪与宽高比",
+      "transformRotation": "变换与旋转",
+      "masks": "蒙版"
+    }
   },
   "importSettingsModal": {
     "dateFormat": "日期格式",

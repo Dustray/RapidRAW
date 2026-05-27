@@ -196,6 +196,14 @@
     "title": "Adjustments",
     "chromaticAberration": "Chromatic Aberration",
     "colorCalibrationT": "Color Calibration",
+    "sections": {
+      "basic": "Basic",
+      "color": "Color",
+      "details": "Details",
+      "effects": "Effects",
+      "geometry": "Geometry",
+      "masks": "Masks"
+    },
     "basic": {
       "title": "Basic",
       "evShift": "EV Shift",
@@ -1399,11 +1407,38 @@
     "holdToCompareTooltip": "Hold to Compare"
   },
   "copyPasteSettingsModal": {
+    "title": "Copy & Paste Settings",
+    "pasteMode": "Paste Mode",
+    "merge": "Merge",
+    "mergeDescription": "Adds your copied changes, leaving other settings untouched.",
+    "replace": "Replace",
+    "replaceDescription": "Overwrites all selected settings, resetting the rest to their defaults.",
     "includedAdjustments": "Included Adjustments",
     "selectAll": "Select All",
     "selectNone": "Select None",
     "cancel": "Cancel",
-    "save": "Save"
+    "save": "Save",
+    "groups": {
+      "exposureToneMapper": "Exposure & Tone Mapper",
+      "tone": "Tone",
+      "curves": "Curves",
+      "whiteBalance": "White Balance",
+      "presence": "Presence",
+      "colorGrading": "Color Grading",
+      "colorMixer": "Color Mixer",
+      "colorCalibration": "Color Calibration",
+      "clarityDehaze": "Clarity & Dehaze",
+      "sharpness": "Sharpness",
+      "noiseReduction": "Noise Reduction",
+      "chromaticAberration": "Chromatic Aberration",
+      "vignette": "Vignette",
+      "grain": "Grain",
+      "halationGlow": "Halation & Glow",
+      "lut": "LUT",
+      "cropAspectRatio": "Crop & Aspect Ratio",
+      "transformRotation": "Transform & Rotation",
+      "masks": "Masks"
+    }
   },
   "importSettingsModal": {
     "dateFormat": "Date Format",
