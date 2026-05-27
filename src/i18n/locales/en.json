@@ -413,7 +413,6 @@
     "toggleAnalytics": "Toggle Analytics Display",
     "resetMasking": "Reset Masking",
     "grow": "Grow",
-    "feather": "Feather",
     "tolerance": "Tolerance",
     "globalFeather": "Global Feather",
     "switchToSubtract": "Switch to Subtract",
@@ -1048,7 +1047,9 @@
     "pasteSettings": "Paste Settings",
     "copyAndPaste": "Copy & Paste Settings",
     "export": "Export",
-    "resetZoom": "Reset Zoom to Fit Window",
+    "resetZoomTooltip": "Reset Zoom to Fit Window",
+    "resetZoom": "ResetZoom",
+    "Zoom": "Zoom",
     "customZoom": "Click to enter custom zoom percentage"
   },
   "mainLibrary": {

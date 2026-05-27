@@ -381,10 +381,10 @@ export default function BottomBar({
               onClick={handleResetZoom}
               onMouseEnter={() => setIsZoomLabelHovered(true)}
               onMouseLeave={() => setIsZoomLabelHovered(false)}
-              data-tooltip={t('bottomBar.resetZoom')}
+              data-tooltip={t('bottomBar.resetZoomTooltip')}
             >
               <span className="absolute right-0 text-xs text-text-secondary select-none text-right w-max transition-colors hover:text-text-primary">
-                {isZoomLabelHovered ? t('bottomBar.resetZoom') : t('editor.toolbar.zoom')}
+                {isZoomLabelHovered ? t('bottomBar.resetZoom') : t('bottomBar.Zoom')}
               </span>
             </div>
 
