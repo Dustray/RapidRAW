@@ -376,7 +376,7 @@ export function ViewOptionsDropdown({
         <div className="library-view-options-section w-1/4 p-2 border-r border-border-color">
           <>
             <Text as="div" variant={TextVariants.small} weight={TextWeights.semibold} className="px-3 py-2 uppercase">
-              {t('library.thumbnailSize')}
+              {t('library.thumbnailSizeText')}
             </Text>
             {thumbnailSizeOptions.map((option: any) => {
               const isSelected = thumbnailSize === option.id;

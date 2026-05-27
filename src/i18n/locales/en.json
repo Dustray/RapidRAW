@@ -84,7 +84,7 @@
     "clearSearch": "Clear search",
     "advancedQueriesTooltip": "Advanced Queries: iso:>800, f:<=2.8, s:1/200, mm:50, camera:sony",
     "viewOptions": "View Options",
-    "thumbnailSize": "Thumbnail Size",
+    "thumbnailSizeText": "Thumbnail Size",
     "thumbnailFit": "Thumbnail Fit",
     "displayMode": "Display Mode",
     "currentFolder": "Current Folder",
@@ -563,7 +563,6 @@
     "longitude": "Longitude",
     "altitude": "Altitude",
     "addTagPlaceholder": "Add tag...",
-    "title": "Title",
     "author": "Author",
     "copyright": "Copyright",
     "comments": "Comments",
@@ -593,7 +592,6 @@
     "presetName": "Preset Name",
     "noPresets": "No presets saved",
     "exploreCommunity": "Explore Community Presets",
-    "importPresets": "Import presets from .rrpreset file",
     "exportPresets": "Export all presets to .rrpreset file",
     "saveAsNew": "Save as new preset",
     "allPresetFiles": "All Preset Files",
@@ -1081,9 +1079,6 @@
     "enableTaggingHint": "For a more comprehensive search, enable automatic tagging in Settings.",
     "noImagesMatchFilter": "No images found that match your filter.",
     "importImages": "Import Images"
-  },
-  "imagePicker": {
-    "clearImage": "Clear Image"
   },
   "keyboard": {
     "sections": {
