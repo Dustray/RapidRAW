@@ -90,6 +90,7 @@ interface EditableMetadataItemProps {
 }
 
 function EditableMetadataItem({ label, value, onSave }: EditableMetadataItemProps) {
+  const { t } = useTranslation();
   const [isEditing, setIsEditing] = useState(false);
   const [localValue, setLocalValue] = useState(value || '');
 

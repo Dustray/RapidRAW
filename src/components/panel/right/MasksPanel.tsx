@@ -2340,7 +2340,7 @@ function SettingsPanel({
       onClick={(e) => e.stopPropagation()}
     >
       <CollapsibleSection
-        title={isComponentMode ? `${t(getSubMaskName(activeSubMask))} Properties` : t('masks.maskAdjustments')}
+        title={isComponentMode ? `${t(getSubMaskName(activeSubMask))} ${t('ai.properties')}` : t('masks.maskAdjustments')}
         isOpen={isSettingsSectionOpen}
         onToggle={() => {
           const isOpening = !isSettingsSectionOpen;

@@ -571,7 +571,7 @@ export default function AIPanel() {
       types
         .filter((mt) => !mt.disabled)
         .map((maskType: MaskType) => ({
-          label: maskType.name,
+          label: t(maskType.name),
           icon: maskType.icon,
           onClick: () => {
             if (targetContainerId) {
@@ -775,7 +775,7 @@ export default function AIPanel() {
     }
 
     const newEditSubMenu = AI_PANEL_CREATION_TYPES.filter((maskType) => !maskType.disabled).map((maskType) => ({
-      label: maskType.name,
+      label: t(maskType.name),
       icon: maskType.icon,
       onClick: () => handleAddAiPatchContainer(maskType.type),
     }));
@@ -1063,7 +1063,7 @@ export default function AIPanel() {
                   <div className="p-0.5">
                     <Plus size={18} />
                   </div>
-                  <span>{t('addNewEdit')}</span>
+                  <span>{t('ai.addNewEdit')}</span>
                 </Text>
               </motion.div>
             )}
@@ -1130,7 +1130,7 @@ export default function AIPanel() {
                   const Icon = MASK_ICON_MAP[sm.type] || Circle;
                   return <Icon size={16} className={`shrink-0 ml-1 ${TEXT_COLOR_KEYS[TextColors.secondary]}`} />;
                 })()}
-                <span className="flex-1 truncate">{getSubMaskName(activeDragItem.item as SubMask)}</span>
+                <span className="flex-1 truncate">{t(getSubMaskName(activeDragItem.item as SubMask))}</span>
               </Text>
             )}
             {activeDragItem.type === 'Creation' && (
@@ -1147,7 +1147,7 @@ export default function AIPanel() {
                     <>
                       <Icon size={24} />
                       <span className="text-center">
-                        {activeDragItem.maskType ? formatMaskTypeName(activeDragItem.maskType) : 'Mask'}
+                        {activeDragItem.maskType ? t(formatMaskTypeName(activeDragItem.maskType)) : t('masks.title')}
                       </span>
                     </>
                   );
@@ -1202,7 +1202,7 @@ function DraggableGridItem({ maskType, isGenerating, onClick }: any) {
     >
       <maskType.icon size={24} />{' '}
       <Text as="span" variant={TextVariants.small} color={TextColors.primary}>
-        {maskType.name}
+        {t(maskType.name)}
       </Text>
     </motion.div>
   );
@@ -1487,6 +1487,7 @@ function SubMaskRow({
   setTempName,
   isParentLoading,
 }: any) {
+  const { t } = useTranslation();
   const { attributes, listeners, setNodeRef, isDragging } = useDraggable({
     id: subMask.id,
     data: { type: 'SubMask', item: subMask, parentId: containerId },
@@ -1535,19 +1536,19 @@ function SubMaskRow({
     e.stopPropagation();
     showContextMenu(e.clientX, e.clientY, [
       {
-        label: 'Rename',
+        label: t('ai.renameComponent'),
         icon: FileEdit,
         onClick: () => {
           setRenamingId(subMask.id);
           setTempName(getSubMaskName(subMask));
         },
       },
-      { label: 'Duplicate Component', icon: PlusSquare, onClick: handleDuplicate },
-      { label: 'Duplicate and Invert Component', icon: RotateCcw, onClick: handleDuplicateAndInvert },
-      { label: 'Copy Component', icon: Copy, onClick: handleCopy },
-      { label: 'Paste Component', icon: ClipboardPaste, disabled: !hasCopiedSubMask, onClick: handlePaste },
+      { label: t('ai.duplicateComponent'), icon: PlusSquare, onClick: handleDuplicate },
+      { label: t('ai.duplicateAndInvertComponent'), icon: RotateCcw, onClick: handleDuplicateAndInvert },
+      { label: t('ai.copyComponent'), icon: Copy, onClick: handleCopy },
+      { label: t('ai.pasteComponent'), icon: ClipboardPaste, disabled: !hasCopiedSubMask, onClick: handlePaste },
       { type: OPTION_SEPARATOR },
-      { label: 'Delete Component', icon: Trash2, isDestructive: true, onClick: handleDelete },
+      { label: t('ai.deleteComponent'), icon: Trash2, isDestructive: true, onClick: handleDelete },
     ]);
   };
   const showNumber = isHovered && totalCount > 1;
@@ -1631,7 +1632,7 @@ function SubMaskRow({
         />
       ) : (
         <Text color={TextColors.primary} className="flex-1 truncate select-none">
-          {getSubMaskName(subMask)}
+          {t(getSubMaskName(subMask))}
         </Text>
       )}
       <div className="flex opacity-0 group-hover:opacity-100 transition-opacity">
@@ -1640,10 +1641,10 @@ function SubMaskRow({
             className="p-1 hover:text-text-primary text-text-secondary"
             data-tooltip={
               subMask.mode === SubMaskMode.Additive
-                ? 'Switch to Subtract'
+                ? t('ai.switchToSubtract')
                 : subMask.mode === SubMaskMode.Subtractive
-                  ? 'Switch to Intersect'
-                  : 'Switch to Add'
+                  ? t('ai.switchToIntersect')
+                  : t('ai.switchToAdd')
             }
             onClick={(e) => {
               e.stopPropagation();
@@ -1668,7 +1669,7 @@ function SubMaskRow({
         )}
         <button
           className="p-1 hover:text-red-500 text-text-secondary"
-          data-tooltip="Delete Component"
+          data-tooltip={t('ai.deleteComponent')}
           onClick={(e) => {
             e.stopPropagation();
             handleDelete();
@@ -1809,7 +1810,7 @@ function SettingsPanel({
                       onKeyDown={(e: any) => {
                         if (e.key === 'Enter') handleGenerateClick();
                       }}
-                      placeholder="e.g., a field of flowers"
+                      placeholder={t('ai.maskPlaceholder')}
                       type="text"
                       value={prompt}
                     />
@@ -1841,7 +1842,7 @@ function SettingsPanel({
       </CollapsibleSection>
 
       <CollapsibleSection
-        title={isComponentMode ? `${getSubMaskName(activeSubMask)} ${t('ai.properties')}` : t('ai.selectionProperties')}
+        title={isComponentMode ? `${t(getSubMaskName(activeSubMask))} ${t('ai.properties')}` : t('ai.selectionProperties')}
         isOpen={collapsibleState.properties}
         onToggle={() => handleToggleSection('properties')}
         canToggleVisibility={false}

@@ -668,7 +668,19 @@
     "inpaintSelection": "修复选区",
     "generateWithAI": "使用AI生成",
     "properties": "属性",
-    "selectionProperties": "选区属性"
+    "selectionProperties": "选区属性",
+    "feather": "羽化",
+    "grow": "扩展",
+    "renameComponent": "重命名",
+    "duplicateComponent": "复制组件",
+    "duplicateAndInvertComponent": "复制并反转组件",
+    "copyComponent": "复制组件",
+    "pasteComponent": "粘贴组件",
+    "deleteComponent": "删除组件",
+    "switchToSubtract": "切换到减去",
+    "switchToIntersect": "切换到相交",
+    "switchToAdd": "切换到添加",
+    "maskPlaceholder": "例如，一片花海"
   },
   "settings": {
     "title": "设置",

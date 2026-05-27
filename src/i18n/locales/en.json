@@ -668,7 +668,19 @@
     "inpaintSelection": "Inpaint Selection",
     "generateWithAI": "Generate with AI",
     "properties": "Properties",
-    "selectionProperties": "Selection Properties"
+    "selectionProperties": "Selection Properties",
+    "feather": "Feather",
+    "grow": "Grow",
+    "renameComponent": "Rename",
+    "duplicateComponent": "Duplicate Component",
+    "duplicateAndInvertComponent": "Duplicate and Invert Component",
+    "copyComponent": "Copy Component",
+    "pasteComponent": "Paste Component",
+    "deleteComponent": "Delete Component",
+    "switchToSubtract": "Switch to Subtract",
+    "switchToIntersect": "Switch to Intersect",
+    "switchToAdd": "Switch to Add",
+    "maskPlaceholder": "e.g., a field of flowers"
   },
   "settings": {
     "title": "Settings",
