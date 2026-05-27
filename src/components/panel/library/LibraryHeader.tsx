@@ -423,7 +423,7 @@ export function ViewOptionsDropdown({
                       color={TextColors.primary}
                       weight={isSelected ? TextWeights.semibold : TextWeights.normal}
                     >
-                      {option.label}
+                      {t(option.label)}
                     </Text>
                     {isSelected && <Check size={16} className={TEXT_COLOR_KEYS[TextColors.primary]} />}
                   </button>
@@ -499,7 +499,7 @@ export function ViewOptionsDropdown({
                     color={TextColors.primary}
                     weight={isSelected ? TextWeights.semibold : TextWeights.normal}
                   >
-                    {option.label}
+                    {t(option.label)}
                   </Text>
                   {isSelected && <Check size={16} className={TEXT_COLOR_KEYS[TextColors.primary]} />}
                 </button>
@@ -534,7 +534,7 @@ export function ViewOptionsDropdown({
                         color={TextColors.primary}
                         weight={isSelected ? TextWeights.semibold : TextWeights.normal}
                       >
-                        {option.label}
+                        {t(option.label)}
                       </Text>
                     </span>
                     {isSelected && <Check size={16} className={TEXT_COLOR_KEYS[TextColors.primary]} />}
@@ -565,7 +565,7 @@ export function ViewOptionsDropdown({
                       color={TextColors.primary}
                       weight={isSelected ? TextWeights.semibold : TextWeights.normal}
                     >
-                      {option.label}
+                      {t(option.label)}
                     </Text>
                     {isSelected && <Check size={16} className={TEXT_COLOR_KEYS[TextColors.primary]} />}
                   </button>

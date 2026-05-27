@@ -1041,7 +1041,17 @@
   },
   "community": {
     "searchPresets": "Search presets...",
-    "communityPresets": "Community Presets"
+    "communityPresets": "Community Presets",
+    "discoverPresets": "Discover presets created by the community.",
+    "sortBy": "Sort by:",
+    "nameAsc": "Name (A-Z)",
+    "fetchingPresets": "Fetching presets from GitHub...",
+    "wantFeatured": "Want to get your preset featured?",
+    "createIssue": "Create an issue on GitHub",
+    "save": "Save",
+    "saving": "Saving...",
+    "saved": "Saved",
+    "by": "by"
   },
   "controls": {
     "autoAdjust": "Auto Adjust Image",

@@ -1041,7 +1041,17 @@
   },
   "community": {
     "searchPresets": "搜索预设...",
-    "communityPresets": "社区预设"
+    "communityPresets": "社区预设",
+    "discoverPresets": "探索社区创建的预设。",
+    "sortBy": "排序方式：",
+    "nameAsc": "名称 (A-Z)",
+    "fetchingPresets": "正在从 GitHub 加载预设...",
+    "wantFeatured": "想让你的预设被推荐吗？",
+    "createIssue": "在 GitHub 上创建 issue",
+    "save": "保存",
+    "saving": "保存中...",
+    "saved": "已保存",
+    "by": "创建自"
   },
   "controls": {
     "autoAdjust": "自动调整图像",

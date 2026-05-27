@@ -26,7 +26,7 @@ interface CommunityPreset {
 const SORT_METHODS: {
   value: string;
   label: string;
-}[] = [{ value: 'name', label: 'Name (A-Z)' }];
+}[] = [{ value: 'name', label: 'community.nameAsc' }];
 
 const containerVariants = {
   hidden: { opacity: 1 },
@@ -222,11 +222,11 @@ const CommunityPage = ({ onBackToLibrary, imageList, currentFolderPath }: Commun
             <ArrowLeft />
           </Button>
           <div>
-            <Text variant={TextVariants.headline} className="flex items-center gap-2">
-              <Users /> Community Presets
-            </Text>
-            <Text>Discover presets created by the community.</Text>
-          </div>
+          <Text variant={TextVariants.headline} className="flex items-center gap-2">
+            <Users /> {t('community.communityPresets')}
+          </Text>
+          <Text>{t('community.discoverPresets')}</Text>
+        </div>
         </div>
       </header>
 
@@ -241,9 +241,9 @@ const CommunityPage = ({ onBackToLibrary, imageList, currentFolderPath }: Commun
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-text-secondary" />
         </div>
         <div className="flex items-center gap-2 text-sm">
-          <Text variant={TextVariants.label}>Sort by:</Text>
+          <Text variant={TextVariants.label}>{t('community.sortBy')}</Text>
           <Dropdown
-            options={SORT_METHODS.map(({ value, label }) => ({ value, label }))}
+            options={SORT_METHODS.map(({ value, label }) => ({ value, label: t(label) }))}
             value={sortBy}
             onChange={(value) => setSortBy(value)}
           />
@@ -259,7 +259,7 @@ const CommunityPage = ({ onBackToLibrary, imageList, currentFolderPath }: Commun
             className="flex items-center justify-center h-full "
           >
             <Loader2 className="h-8 w-8 animate-spin mr-2" />
-            Fetching presets from GitHub...
+            {t('community.fetchingPresets')}
           </Text>
         ) : (
           <motion.div
@@ -300,15 +300,15 @@ const CommunityPage = ({ onBackToLibrary, imageList, currentFolderPath }: Commun
                           disabled={status !== 'idle'}
                           className="shadow-lg"
                         >
-                          {status === 'idle' && <>Save</>}
+                          {status === 'idle' && <>{t('community.save')}</>}
                           {status === 'downloading' && (
                             <>
-                              <Loader2 size={14} className="mr-2 animate-spin" /> Saving...
+                              <Loader2 size={14} className="mr-2 animate-spin" /> {t('community.saving')}
                             </>
                           )}
                           {status === 'success' && (
                             <>
-                              <CheckCircle2 size={14} className="mr-2" /> Saved
+                              <CheckCircle2 size={14} className="mr-2" /> {t('community.saved')}
                             </>
                           )}
                         </Button>
@@ -319,7 +319,7 @@ const CommunityPage = ({ onBackToLibrary, imageList, currentFolderPath }: Commun
                         {preset.name}
                       </Text>
                       <Text variant={TextVariants.small} className="font-['cursive'] italic">
-                        by {preset.creator}
+                        {t('community.by')} {preset.creator}
                       </Text>
                     </div>
                   </motion.div>
@@ -335,7 +335,7 @@ const CommunityPage = ({ onBackToLibrary, imageList, currentFolderPath }: Commun
           className="text-center mt-8 py-4"
         >
           <Text>
-            Want to get your preset featured?<br />
+            {t('community.wantFeatured')}<br />
             <a
               href="https://github.com/CyberTimon/RapidRAW-Presets/issues/new?assignees=&labels=preset-submission&template=preset_submission.md&title=Preset+Submission%3A+%5BYour+Preset+Name%5D"
               target="_blank"
@@ -343,7 +343,7 @@ const CommunityPage = ({ onBackToLibrary, imageList, currentFolderPath }: Commun
               className="text-accent hover:underline inline-flex items-center gap-2"
             >
               <span dangerouslySetInnerHTML={{ __html: siGithub.svg.replace('xmlns="http://www.w3.org/2000/svg"', 'xmlns="http://www.w3.org/2000/svg" fill="currentColor"') }} style={{ display: 'inline-block', width: 14, height: 14 }} />
-              Create an issue on GitHub
+              {t('community.createIssue')}
             </a>
           </Text>
         </motion.div>
