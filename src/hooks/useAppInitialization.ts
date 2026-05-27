@@ -17,7 +17,6 @@ import {
   ThumbnailSize,
   ThumbnailAspectRatio,
 } from '../components/ui/AppProperties';
-import i18n from '../i18n';
 
 interface UseAppInitializationProps {
   preloadedDataRef: React.RefObject<any>;
