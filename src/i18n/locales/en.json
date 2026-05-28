@@ -209,7 +209,8 @@
           "test": "Test",
           "testing": "Testing...",
           "success": "Connection successful!",
-          "failed": "Connection failed."
+          "failed": "Connection failed.",
+          "addressPlaceholder": "127.0.0.1:8188"
         },
         "cloud": {
           "title": "Cloud Service",
@@ -285,6 +286,10 @@
       "zoom": "Zoom Speed Multiplier",
       "zoomDesc": "Adjust how fast the canvas zooms in and out when using the scroll wheel or pinch gesture.",
       "speed": "Speed",
+      "zoomMultipliers": {
+        "native": "1.0x (Native)",
+        "half": "0.50x (Half)"
+      },
       "keyboardTitle": "Keyboard Controls",
       "resetDefaults": "Reset All to Defaults",
       "pressKey": "Press a key... (Esc to clear)",
@@ -545,6 +550,11 @@
         "showClipping": "Show Clipping Warnings",
         "hideClipping": "Hide Clipping Warnings"
       }
+    },
+    "titlebar": {
+      "closeWindow": "Close window",
+      "minimizeWindow": "Minimize window",
+      "maximizeWindow": "Maximize window"
     }
   },
   "editor": {
@@ -651,6 +661,110 @@
         "pasteLabel": "Paste {{section}} Settings",
         "pasteSettings": "Paste Settings",
         "resetSectionSettings": "Reset {{section}} Settings"
+      },
+      "basic": {
+        "toneMapper": "Tone Mapper",
+        "reset": "Reset",
+        "evShift": "EV Shift",
+        "exposure": "Exposure",
+        "contrast": "Contrast",
+        "highlights": "Highlights",
+        "shadows": "Shadows",
+        "whites": "Whites",
+        "blacks": "Blacks",
+        "tonemappers": {
+          "basic": "Basic",
+          "agx": "AgX",
+          "basicTitle": "Standard Tonemapping",
+          "agxTitle": "Film-like Tonemapping"
+        }
+      },
+      "color": {
+        "whiteBalance": "White Balance",
+        "temperature": "Temperature",
+        "tint": "Tint",
+        "presence": "Presence",
+        "vibrance": "Vibrance",
+        "saturation": "Saturation",
+        "colorGrading": "Color Grading",
+        "colorMixer": "Color Mixer",
+        "colorCalibration": "Color Calibration",
+        "calibrationShadows": "Shadows",
+        "primaries": "Primaries",
+        "hue": "Hue",
+        "global": "Global",
+        "midtones": "Midtones",
+        "blending": "Blending",
+        "balance": "Balance",
+        "luminance": "Luminance",
+        "wbPickerTooltip": "White Balance Picker",
+        "wbPickerWgpuWarning": "WB Picker: Disable WGPU in Settings.",
+        "hslColors": {
+          "reds": "Reds",
+          "oranges": "Oranges",
+          "yellows": "Yellows",
+          "greens": "Greens",
+          "aquas": "Aquas",
+          "blues": "Blues",
+          "purples": "Purples",
+          "magentas": "Magentas"
+        },
+        "primaryColors": {
+          "red": "Red",
+          "green": "Green",
+          "blue": "Blue"
+        },
+        "toggleSliders": "Toggle Sliders"
+      },
+      "curves": {
+        "pointCurve": "Point Curve",
+        "parametricCurve": "Parametric Curve",
+        "channelTitle": "{{channel}} Channel",
+        "whiteLevel": "White Level",
+        "lights": "Lights",
+        "darks": "Darks",
+        "blackLevel": "Black Level",
+        "curveDataNotAvailable": "Curve data not available.",
+        "contextMenu": {
+          "copyParametric": "Copy {{channel}} Parametric Curve",
+          "pasteParametric": "Paste Parametric Curve",
+          "resetParametric": "Reset {{channel}} Parametric Curve",
+          "resetAllParametric": "Reset All Parametric Curves",
+          "copyPoint": "Copy {{channel}} Point Curve",
+          "pastePoint": "Paste Point Curve",
+          "pasteFromParametric": "Paste from Parametric Curve",
+          "resetPoint": "Reset {{channel}} Point Curve",
+          "resetAllPoint": "Reset All Point Curves"
+        }
+      },
+      "details": {
+        "sharpening": "Sharpening",
+        "sharpness": "Sharpness",
+        "threshold": "Threshold",
+        "presence": "Presence",
+        "clarity": "Clarity",
+        "dehaze": "Dehaze",
+        "structure": "Structure",
+        "centre": "Centre",
+        "noiseReduction": "Noise Reduction",
+        "chromaticAberration": "Chromatic Aberration",
+        "redCyan": "Red/Cyan",
+        "blueYellow": "Blue/Yellow"
+      },
+      "effects": {
+        "creative": "Creative",
+        "glow": "Glow",
+        "halation": "Halation",
+        "lightFlares": "Light Flares",
+        "lut": "LUT",
+        "vignette": "Vignette",
+        "grain": "Grain",
+        "amount": "Amount",
+        "midpoint": "Midpoint",
+        "roundness": "Roundness",
+        "feather": "Feather",
+        "size": "Size",
+        "roughness": "Roughness"
       }
     },
     "crop": {
@@ -667,25 +781,76 @@
         "hTooltip": "Height"
       },
       "presets": {
-        "free": { "name": "Free", "desc": "Freeform crop" },
-        "original": { "name": "Original", "desc": "Original image aspect ratio" },
-        "sq": { "name": "1:1", "desc": "Square - Instagram, profile pictures" },
-        "r54": { "name": "5:4", "desc": "5:4 - Instagram landscape, 8x10 prints" },
-        "r43": { "name": "4:3", "desc": "4:3 - Traditional monitors, tablets" },
-        "r32": { "name": "3:2", "desc": "3:2 - 35mm film, DSLR cameras" },
-        "r169": { "name": "16:9", "desc": "16:9 - Widescreen, desktop wallpapers, YouTube" },
-        "r219": { "name": "21:9", "desc": "21:9 - Ultrawide monitors, cinematic" },
-        "r6524": { "name": "65:24", "desc": "65:24 - Panoramic 35mm wide format" },
-        "custom": { "name": "Custom", "tooltip": "Enter custom aspect ratio" }
+        "free": {
+          "name": "Free",
+          "desc": "Freeform crop"
+        },
+        "original": {
+          "name": "Original",
+          "desc": "Original image aspect ratio"
+        },
+        "sq": {
+          "name": "1:1",
+          "desc": "Square - Instagram, profile pictures"
+        },
+        "r54": {
+          "name": "5:4",
+          "desc": "5:4 - Instagram landscape, 8x10 prints"
+        },
+        "r43": {
+          "name": "4:3",
+          "desc": "4:3 - Traditional monitors, tablets"
+        },
+        "r32": {
+          "name": "3:2",
+          "desc": "3:2 - 35mm film, DSLR cameras"
+        },
+        "r169": {
+          "name": "16:9",
+          "desc": "16:9 - Widescreen, desktop wallpapers, YouTube"
+        },
+        "r219": {
+          "name": "21:9",
+          "desc": "21:9 - Ultrawide monitors, cinematic"
+        },
+        "r6524": {
+          "name": "65:24",
+          "desc": "65:24 - Panoramic 35mm wide format"
+        },
+        "custom": {
+          "name": "Custom",
+          "tooltip": "Enter custom aspect ratio"
+        }
       },
       "overlays": {
-        "none": { "name": "None", "desc": "No overlay" },
-        "thirds": { "name": "Thirds", "desc": "Rule of Thirds" },
-        "diagonal": { "name": "Diagonal Lines", "desc": "Diagonal Lines" },
-        "triangle": { "name": "Triangle", "desc": "Golden Triangle" },
-        "spiral": { "name": "Spiral", "desc": "Golden Spiral (Fibonacci)" },
-        "phiGrid": { "name": "Phi Grid", "desc": "Phi Grid (Golden Ratio)" },
-        "armature": { "name": "Armature", "desc": "Armature" }
+        "none": {
+          "name": "None",
+          "desc": "No overlay"
+        },
+        "thirds": {
+          "name": "Thirds",
+          "desc": "Rule of Thirds"
+        },
+        "diagonal": {
+          "name": "Diagonal Lines",
+          "desc": "Diagonal Lines"
+        },
+        "triangle": {
+          "name": "Triangle",
+          "desc": "Golden Triangle"
+        },
+        "spiral": {
+          "name": "Spiral",
+          "desc": "Golden Spiral (Fibonacci)"
+        },
+        "phiGrid": {
+          "name": "Phi Grid",
+          "desc": "Phi Grid (Golden Ratio)"
+        },
+        "armature": {
+          "name": "Armature",
+          "desc": "Armature"
+        }
       },
       "tooltips": {
         "straighten": "Straighten Tool (S)",
@@ -1174,6 +1339,259 @@
       "placeholder": "Add a tag...",
       "addTagTooltip": "Add tag",
       "shortcutsHeading": "SHORTCUTS"
+    }
+  },
+  "modals": {
+    "collage": {
+      "keepOriginalRatio": "Keep Original Aspect Ratio",
+      "spacing": "Spacing",
+      "borderRadius": "Border Radius",
+      "shuffleImages": "Shuffle Images",
+      "widthPlaceholder": "W",
+      "heightPlaceholder": "H",
+      "layout": "Layout",
+      "aspectRatio": "Aspect Ratio",
+      "original": "Original",
+      "background": "Background",
+      "exportSize": "Export Size (px)",
+      "collageSaved": "Collage Saved!",
+      "errorOccurred": "An Error Occurred",
+      "done": "Done",
+      "close": "Close",
+      "cancel": "Cancel",
+      "saving": "Saving...",
+      "saveCollage": "Save Collage"
+    },
+    "configurePreset": {
+      "titleConfigure": "Configure Preset",
+      "titleSave": "Save New Preset",
+      "includeMasks": "Include Masks",
+      "includeCropTransform": "Include Crop & Transform",
+      "presetNamePlaceholder": "Enter preset name...",
+      "cancel": "Cancel",
+      "save": "Save"
+    },
+    "createFolder": {
+      "folderNamePlaceholder": "Enter folder name..."
+    },
+    "renameFolder": {
+      "newFolderNamePlaceholder": "Enter new folder name..."
+    },
+    "culling": {
+      "groupSimilarImages": "Group Similar Images",
+      "similarityThreshold": "Similarity Threshold",
+      "filterBlurryImages": "Filter Blurry Images",
+      "blurThreshold": "Blur Threshold",
+      "title": "Cull Images",
+      "similarityDesc": "Lower is stricter (exact duplicates). Higher is looser (near duplicates). A value of 24-32 is recommended.",
+      "blurDesc": "Images with a sharpness score below this value are flagged. Higher is stricter.",
+      "cancel": "Cancel",
+      "startCulling": "Start Culling",
+      "starting": "Starting...",
+      "cullingFailed": "Culling Failed",
+      "close": "Close",
+      "noIssuesFound": "No issues found!",
+      "allImagesGood": "All images seem to be unique and sharp.",
+      "done": "Done",
+      "suggestionsTitle": "Culling Suggestions",
+      "similarGroups": "Similar Groups",
+      "blurryImages": "Blurry Images",
+      "bestImage": "Best Image",
+      "duplicates": "Duplicates",
+      "score": "Score",
+      "sharpness": "Sharpness",
+      "applyTo": "Apply to {{count}} image{{plural}}",
+      "actions": {
+        "reject": "Mark as Rejected (Red Label)",
+        "rateZero": "Set Rating to 1 Stars",
+        "delete": "Move to Trash"
+      },
+      "groupLabel": "Group {{number}}",
+      "imagePath": "Image path: {{path}}",
+      "similarGroupsTab": "Similar Groups",
+      "blurryImagesTab": "Blurry Images"
+    },
+    "denoise": {
+      "noGpuSupportTooltip": "NIND Denoise does not yet support GPU acceleration due to dependency limitations.",
+      "methods": {
+        "ai": "NIND (AI - Best for RAW)",
+        "bm3d": "BM3D (Traditional - All formats)"
+      },
+      "panZoomEnabled": "Pan & Zoom enabled",
+      "reset": "Reset",
+      "original": "Original",
+      "denoised": "Denoised",
+      "processingFailed": "Processing Failed",
+      "imageSavedSuccess": "Image Saved Successfully!",
+      "denoisingInProgress": "Denoising in Progress",
+      "progressDesc": "This may take a few minutes depending on image size and selected method.",
+      "titleSingle": "Denoise Image",
+      "titleBatch": "Denoise Images",
+      "description": "Remove noise from your image using AI-powered or traditional denoising.",
+      "close": "Close",
+      "openInEditor": "Open in Editor",
+      "cancel": "Cancel",
+      "method": "Method",
+      "qualityTileSize": "Quality / Tile Size",
+      "strength": "Strength",
+      "batchDenoiseSave": "Batch Denoise & Save",
+      "retry": "Retry",
+      "start": "Start",
+      "save": "Save",
+      "saving": "Saving..."
+    },
+    "importSettings": {
+      "title": "Import Settings",
+      "fileNaming": "File Naming",
+      "folderOrganization": "Folder Organization",
+      "organizeByDate": "Organize into subfolders by date",
+      "dateFormat": "Date Format",
+      "dateFormatPlaceholder": "e.g., YYYY/MM-DD",
+      "sourceFiles": "Source Files",
+      "deleteAfterImport": "Delete originals after successful import",
+      "trashMessage": "Files will be moved to the system trash.",
+      "cancel": "Cancel",
+      "startImport": "Start Import"
+    },
+    "lensCorrection": {
+      "title": "Lens Correction",
+      "auto": "Auto",
+      "manual": "Manual",
+      "autoDetectionStatus": "Auto Detection Status",
+      "detectingExif": "Detecting EXIF...",
+      "lensProfileNotFound": "Lens profile not found",
+      "waitingForAutoDetect": "Waiting for Auto-Detect...",
+      "manualSelection": "Manual Selection",
+      "chooseSavedLens": "Choose Saved Lens",
+      "manageLensesInSettings": "Manage your lenses in Settings",
+      "selectManufacturer": "Select Manufacturer",
+      "selectLensModel": "Select Lens Model",
+      "corrections": "Corrections",
+      "distortion": "Distortion",
+      "chromaticAberration": "Chromatic Aberration",
+      "vignetting": "Vignetting",
+      "amount": "Amount",
+      "resetTooltip": "Reset Lens Correction",
+      "zoomOut": "Zoom Out",
+      "zoomIn": "Zoom In",
+      "resetZoom": "Reset Zoom",
+      "holdToCompare": "Hold to Compare",
+      "maskWarning": "Lens correction updates base geometry. Existing masks may shift, and AI masks must be regenerated.",
+      "lensfunAttribution": "Lens database provided by the Lensfun Project (CC BY-SA 3.0).",
+      "detecting": "Detecting...",
+      "notFound": "Not Found",
+      "lensFound": "Lens Found",
+      "autoDetectLens": "Auto-detect Lens"
+    },
+    "negativeConversion": {
+      "title": "Negative Conversion",
+      "colorTiming": "Color Timing",
+      "printGrade": "Print Grade",
+      "redCyan": "Red (Cyan)",
+      "greenMagenta": "Green (Magenta)",
+      "blueYellow": "Blue (Yellow)",
+      "exposure": "Exposure",
+      "contrastGrade": "Contrast (Grade)",
+      "reset": "Reset",
+      "zoomOut": "Zoom Out",
+      "zoomIn": "Zoom In",
+      "resetView": "Reset View",
+      "holdToViewOriginal": "Hold to View Original",
+      "originalNegative": "Original Negative",
+      "converting": "Converting",
+      "convertAndSave": "Convert & Save",
+      "convertAndSaveAll": "Convert & Save All ({{count}})"
+    },
+    "transform": {
+      "title": "Transform",
+      "distortion": "Distortion",
+      "perspective": "Perspective",
+      "transformSection": "Transform",
+      "offset": "Offset",
+      "amount": "Amount",
+      "vertical": "Vertical",
+      "horizontal": "Horizontal",
+      "rotate": "Rotate",
+      "aspect": "Aspect",
+      "scale": "Scale",
+      "xAxis": "X Axis",
+      "yAxis": "Y Axis",
+      "resetTooltip": "Reset Transform",
+      "toggleGrid": "Toggle Grid",
+      "toggleHelperLines": "Toggle Helper Lines",
+      "zoomOut": "Zoom Out",
+      "zoomIn": "Zoom In",
+      "resetZoom": "Reset Zoom",
+      "holdToCompare": "Hold to Compare",
+      "maskWarning": "Transforming updates base geometry. Existing masks may shift, and AI masks must be regenerated.",
+      "apply": "Apply"
+    },
+    "hdr": {
+      "title": "Merge to HDR",
+      "description": "Combine {{count}} bracketed exposures into a single High Dynamic Range image.",
+      "descriptionDefault": "Combine your bracketed exposures into a single High Dynamic Range image.",
+      "mergeFailed": "HDR Merge Failed",
+      "merging": "Merging HDR",
+      "initializing": "Initializing...",
+      "progressDesc": "This may take a few minutes depending on the number and size of your exposures.",
+      "savedSuccess": "HDR Saved Successfully!",
+      "close": "Close",
+      "openInEditor": "Open in Editor",
+      "cancel": "Cancel",
+      "retry": "Retry",
+      "start": "Start",
+      "save": "Save",
+      "saving": "Saving..."
+    },
+    "panorama": {
+      "title": "Stitch Panorama",
+      "description": "Combine {{count}} overlapping images into a seamless panorama.",
+      "descriptionDefault": "Combine your overlapping images into a seamless panorama.",
+      "stitchFailed": "Panorama Failed",
+      "stitching": "Stitching Panorama",
+      "initializing": "Initializing...",
+      "progressDesc": "This may take a few minutes depending on the number and size of images.",
+      "savedSuccess": "Panorama Saved Successfully!",
+      "close": "Close",
+      "openInEditor": "Open in Editor",
+      "cancel": "Cancel",
+      "retry": "Retry",
+      "start": "Start",
+      "save": "Save",
+      "saving": "Saving..."
+    },
+    "copyPasteSettings": {
+      "title": "Copy & Paste Settings",
+      "pasteMode": "Paste Mode",
+      "modes": {
+        "merge": "Merge",
+        "replace": "Replace"
+      },
+      "mergeDesc": "<b>Merge:</b> Adds your copied changes, leaving other settings untouched.",
+      "replaceDesc": "<b>Replace:</b> Overwrites all selected settings, resetting the rest to their defaults.",
+      "includedAdjustments": "Included Adjustments",
+      "selectAll": "Select All",
+      "selectNone": "Select None",
+      "cancel": "Cancel",
+      "save": "Save"
+    },
+    "renameFile": {
+      "newName": "New Name",
+      "fileNamingTemplate": "File Naming Template"
+    },
+    "altTexts": {
+      "mergedHdr": "Merged HDR",
+      "stitchedPanorama": "Stitched Panorama",
+      "sourcePreview": "Source preview",
+      "denoised": "Denoised",
+      "original": "Original",
+      "selectedPreview": "Selected preview",
+      "lensCorrectionPreview": "Lens Correction Preview",
+      "transformPreview": "Transform Preview",
+      "negativePreview": "Negative Conversion Preview",
+      "splashBackground": "Splash screen background",
+      "maskOverlay": "Mask Overlay",
+      "cropPreview": "Crop preview"
     }
   }
 }

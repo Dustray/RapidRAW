@@ -8,6 +8,7 @@ import { Adjustments, ColorGrading } from '../../utils/adjustments';
 import { AppSettings } from '../ui/AppProperties';
 import Text from '../ui/Text';
 import { TextColors, TextVariants, TextWeights } from '../../types/typography';
+import { useTranslation } from 'react-i18next';
 
 interface ColorProps {
   color: string;
@@ -30,17 +31,6 @@ interface ColorSwatchProps {
   name: string;
   onClick: any;
 }
-
-const HSL_COLORS: Array<ColorProps> = [
-  { name: 'reds', color: '#f87171' },
-  { name: 'oranges', color: '#fb923c' },
-  { name: 'yellows', color: '#facc15' },
-  { name: 'greens', color: '#4ade80' },
-  { name: 'aquas', color: '#2dd4bf' },
-  { name: 'blues', color: '#60a5fa' },
-  { name: 'purples', color: '#a78bfa' },
-  { name: 'magentas', color: '#f472b6' },
-];
 
 const ColorSwatch = ({ color, name, isActive, onClick }: ColorSwatchProps) => {
   const [isPressed, setIsPressed] = useState(false);
@@ -115,6 +105,7 @@ const ColorSwatch = ({ color, name, isActive, onClick }: ColorSwatchProps) => {
 };
 
 const ColorGradingPanel = ({ adjustments, setAdjustments, onDragStateChange }: ColorPanelProps) => {
+  const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState<'3way' | 'global'>('3way');
   const [isExpanded, setIsExpanded] = useState(false);
   const colorGrading = adjustments.colorGrading || INITIAL_ADJUSTMENTS.colorGrading;
@@ -187,7 +178,7 @@ const ColorGradingPanel = ({ adjustments, setAdjustments, onDragStateChange }: C
                 ? 'bg-accent text-button-text'
                 : 'bg-bg-secondary text-text-secondary hover:text-text-primary hover:bg-bg-secondary/80'
             }`}
-          data-tooltip="Toggle Sliders"
+          data-tooltip={t('editor.adjustments.color.toggleSliders')}
         >
           <Sliders size={14} />
         </button>
@@ -208,7 +199,7 @@ const ColorGradingPanel = ({ adjustments, setAdjustments, onDragStateChange }: C
                 <div className="w-[calc(50%-0.5rem)]">
                   <ColorWheel
                     defaultValue={INITIAL_ADJUSTMENTS.colorGrading.midtones}
-                    label="Midtones"
+                    label={t('editor.adjustments.color.midtones')}
                     onChange={(val: HueSatLum) => handleChange(ColorGrading.Midtones, val)}
                     value={colorGrading.midtones}
                     onDragStateChange={onDragStateChange}
@@ -220,7 +211,7 @@ const ColorGradingPanel = ({ adjustments, setAdjustments, onDragStateChange }: C
                 <div className="w-full flex-1 min-w-0">
                   <ColorWheel
                     defaultValue={INITIAL_ADJUSTMENTS.colorGrading.shadows}
-                    label="Shadows"
+                    label={t('editor.adjustments.basic.shadows')}
                     onChange={(val: HueSatLum) => handleChange(ColorGrading.Shadows, val)}
                     value={colorGrading.shadows}
                     onDragStateChange={onDragStateChange}
@@ -230,7 +221,7 @@ const ColorGradingPanel = ({ adjustments, setAdjustments, onDragStateChange }: C
                 <div className="w-full flex-1 min-w-0">
                   <ColorWheel
                     defaultValue={INITIAL_ADJUSTMENTS.colorGrading.highlights}
-                    label="Highlights"
+                    label={t('editor.adjustments.basic.highlights')}
                     onChange={(val: HueSatLum) => handleChange(ColorGrading.Highlights, val)}
                     value={colorGrading.highlights}
                     onDragStateChange={onDragStateChange}
@@ -251,7 +242,7 @@ const ColorGradingPanel = ({ adjustments, setAdjustments, onDragStateChange }: C
               <div className="w-full max-w-70">
                 <ColorWheel
                   defaultValue={INITIAL_ADJUSTMENTS.colorGrading.global}
-                  label="Global"
+                  label={t('editor.adjustments.color.global')}
                   onChange={(val: HueSatLum) => handleChange(ColorGrading.Global, val)}
                   value={colorGrading.global || INITIAL_ADJUSTMENTS.colorGrading.global}
                   onDragStateChange={onDragStateChange}
@@ -266,7 +257,7 @@ const ColorGradingPanel = ({ adjustments, setAdjustments, onDragStateChange }: C
       <div>
         <Slider
           defaultValue={50}
-          label="Blending"
+          label={t('editor.adjustments.color.blending')}
           max={100}
           min={0}
           onChange={(e: any) => handleGlobalChange(ColorGrading.Blending, e.target.value)}
@@ -276,7 +267,7 @@ const ColorGradingPanel = ({ adjustments, setAdjustments, onDragStateChange }: C
         />
         <Slider
           defaultValue={0}
-          label="Balance"
+          label={t('editor.adjustments.color.balance')}
           max={100}
           min={-100}
           onChange={(e: any) => handleGlobalChange(ColorGrading.Balance, e.target.value)}
@@ -290,6 +281,7 @@ const ColorGradingPanel = ({ adjustments, setAdjustments, onDragStateChange }: C
 };
 
 const ColorCalibrationPanel = ({ adjustments, setAdjustments, onDragStateChange }: ColorPanelProps) => {
+  const { t } = useTranslation();
   const [activePrimary, setActivePrimary] = useState('red');
   const colorCalibration = adjustments.colorCalibration || INITIAL_ADJUSTMENTS.colorCalibration;
 
@@ -330,14 +322,14 @@ const ColorCalibrationPanel = ({ adjustments, setAdjustments, onDragStateChange 
   return (
     <div className="p-2 bg-bg-tertiary rounded-md mt-4">
       <Text variant={TextVariants.heading} className="mb-2">
-        Color Calibration
+        {t('editor.adjustments.color.colorCalibration')}
       </Text>
       <div>
         <Text color={TextColors.primary} weight={TextWeights.medium} className="mb-1">
-          Shadows
+          {t('editor.adjustments.color.calibrationShadows')}
         </Text>
         <Slider
-          label="Tint"
+          label={t('editor.adjustments.color.tint')}
           min={-100}
           max={100}
           step={1}
@@ -350,7 +342,7 @@ const ColorCalibrationPanel = ({ adjustments, setAdjustments, onDragStateChange 
       </div>
       <div className="mt-3">
         <Text color={TextColors.primary} weight={TextWeights.medium} className="mb-3">
-          Primaries
+          {t('editor.adjustments.color.primaries')}
         </Text>
         <div className="flex justify-center gap-6 mb-4 px-1">
           {PRIMARY_COLORS.map(({ name, color }) => (
@@ -364,7 +356,7 @@ const ColorCalibrationPanel = ({ adjustments, setAdjustments, onDragStateChange 
           ))}
         </div>
         <Slider
-          label="Hue"
+          label={t('editor.adjustments.color.hue')}
           min={-100}
           max={100}
           step={1}
@@ -375,7 +367,7 @@ const ColorCalibrationPanel = ({ adjustments, setAdjustments, onDragStateChange 
           trackClassName={`hue-slider-${trackSuffix}`}
         />
         <Slider
-          label="Saturation"
+          label={t('editor.adjustments.color.saturation')}
           min={-100}
           max={100}
           step={1}
@@ -399,6 +391,7 @@ export default function ColorPanel({
   toggleWbPicker,
   onDragStateChange,
 }: ColorPanelProps) {
+  const { t } = useTranslation();
   const [activeColor, setActiveColor] = useState('reds');
   const adjustmentVisibility = appSettings?.adjustmentVisibility || {};
   const isWgpuEnabled = appSettings?.useWgpuRenderer !== false;
@@ -451,7 +444,7 @@ export default function ColorPanel({
     <div className="space-y-4">
       <div className="p-2 bg-bg-tertiary rounded-md">
         <div className="flex justify-between items-center mb-2">
-          <Text variant={TextVariants.heading}>White Balance</Text>
+          <Text variant={TextVariants.heading}>{t('editor.adjustments.color.whiteBalance')}</Text>
           {!isForMask && toggleWbPicker && (
             <button
               onClick={toggleWbPicker}
@@ -463,14 +456,14 @@ export default function ColorPanel({
                     ? 'bg-accent text-button-text'
                     : 'hover:bg-bg-secondary text-text-secondary'
               }`}
-              data-tooltip={isWgpuEnabled ? 'WB Picker: Disable WGPU in Settings.' : 'White Balance Picker'}
+              data-tooltip={isWgpuEnabled ? t('editor.adjustments.color.wbPickerWgpuWarning') : t('editor.adjustments.color.wbPickerTooltip')}
             >
               <Pipette size={16} />
             </button>
           )}
         </div>
         <Slider
-          label="Temperature"
+          label={t('editor.adjustments.color.temperature')}
           max={100}
           min={-100}
           onChange={(e: any) => handleGlobalChange(ColorAdjustment.Temperature, e.target.value)}
@@ -480,7 +473,7 @@ export default function ColorPanel({
           onDragStateChange={onDragStateChange}
         />
         <Slider
-          label="Tint"
+          label={t('editor.adjustments.color.tint')}
           max={100}
           min={-100}
           onChange={(e: any) => handleGlobalChange(ColorAdjustment.Tint, e.target.value)}
@@ -493,10 +486,10 @@ export default function ColorPanel({
 
       <div className="p-2 bg-bg-tertiary rounded-md">
         <Text variant={TextVariants.heading} className="mb-2">
-          Presence
+          {t('editor.adjustments.color.presence')}
         </Text>
         <Slider
-          label="Vibrance"
+          label={t('editor.adjustments.color.vibrance')}
           max={100}
           min={-100}
           onChange={(e: any) => handleGlobalChange(ColorAdjustment.Vibrance, e.target.value)}
@@ -505,7 +498,7 @@ export default function ColorPanel({
           onDragStateChange={onDragStateChange}
         />
         <Slider
-          label="Saturation"
+          label={t('editor.adjustments.color.saturation')}
           max={100}
           min={-100}
           onChange={(e: any) => handleGlobalChange(ColorAdjustment.Saturation, e.target.value)}
@@ -517,7 +510,7 @@ export default function ColorPanel({
 
       <div className="p-2 bg-bg-tertiary rounded-md">
         <Text variant={TextVariants.heading} className="mb-3">
-          Color Grading
+          {t('editor.adjustments.color.colorGrading')}
         </Text>
         <ColorGradingPanel
           adjustments={adjustments}
@@ -529,7 +522,7 @@ export default function ColorPanel({
 
       <div className="p-2 bg-bg-tertiary rounded-md">
         <Text variant={TextVariants.heading} className="mb-3">
-          Color Mixer
+          {t('editor.adjustments.color.colorMixer')}
         </Text>
         <div className="flex justify-between mb-4 px-1">
           {HSL_COLORS.map(({ name, color }) => (
@@ -543,7 +536,7 @@ export default function ColorPanel({
           ))}
         </div>
         <Slider
-          label="Hue"
+          label={t('editor.adjustments.color.hue')}
           max={100}
           min={-100}
           onChange={(e: any) => handleHslChange(ColorAdjustment.Hue, e.target.value)}
@@ -553,7 +546,7 @@ export default function ColorPanel({
           onDragStateChange={onDragStateChange}
         />
         <Slider
-          label="Saturation"
+          label={t('editor.adjustments.color.saturation')}
           max={100}
           min={-100}
           onChange={(e: any) => handleHslChange(ColorAdjustment.Saturation, e.target.value)}
@@ -563,7 +556,7 @@ export default function ColorPanel({
           onDragStateChange={onDragStateChange}
         />
         <Slider
-          label="Luminance"
+          label={t('editor.adjustments.color.luminance')}
           max={100}
           min={-100}
           onChange={(e: any) => handleHslChange(ColorAdjustment.Luminance, e.target.value)}
@@ -585,3 +578,16 @@ export default function ColorPanel({
     </div>
   );
 }
+
+// Define HSL_COLORS after the component to use t() in a different way if needed
+// For now, keeping it static as color names are used for internal logic
+const HSL_COLORS: Array<ColorProps> = [
+  { name: 'reds', color: '#f87171' },
+  { name: 'oranges', color: '#fb923c' },
+  { name: 'yellows', color: '#facc15' },
+  { name: 'greens', color: '#4ade80' },
+  { name: 'aquas', color: '#2dd4bf' },
+  { name: 'blues', color: '#60a5fa' },
+  { name: 'purples', color: '#a78bfa' },
+  { name: 'magentas', color: '#f472b6' },
+];

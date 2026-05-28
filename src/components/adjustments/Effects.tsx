@@ -4,6 +4,7 @@ import LUTControl from '../ui/LUTControl';
 import { AppSettings } from '../ui/AppProperties';
 import Text from '../ui/Text';
 import { TextVariants } from '../../types/typography';
+import { useTranslation } from 'react-i18next';
 
 interface EffectsPanelProps {
   adjustments: Adjustments;
@@ -22,6 +23,7 @@ export default function EffectsPanel({
   appSettings,
   onDragStateChange,
 }: EffectsPanelProps) {
+  const { t } = useTranslation();
   const handleAdjustmentChange = (key: string, value: string) => {
     const numericValue = parseInt(value, 10);
     setAdjustments((prev: Partial<Adjustments>) => ({ ...prev, [key]: numericValue }));
@@ -48,11 +50,11 @@ export default function EffectsPanel({
     <div className="space-y-4">
       <div className="p-2 bg-bg-tertiary rounded-md">
         <Text variant={TextVariants.heading} className="mb-2">
-          Creative
+          {t('editor.adjustments.effects.creative')}
         </Text>
 
         <Slider
-          label="Glow"
+          label={t('editor.adjustments.effects.glow')}
           max={100}
           min={0}
           onChange={(e: any) => handleAdjustmentChange(CreativeAdjustment.GlowAmount, e.target.value)}
@@ -62,7 +64,7 @@ export default function EffectsPanel({
         />
 
         <Slider
-          label="Halation"
+          label={t('editor.adjustments.effects.halation')}
           max={100}
           min={0}
           onChange={(e: any) => handleAdjustmentChange(CreativeAdjustment.HalationAmount, e.target.value)}
@@ -73,7 +75,7 @@ export default function EffectsPanel({
 
         {!isForMask && (
           <Slider
-            label="Light Flares"
+            label={t('editor.adjustments.effects.lightFlares')}
             max={100}
             min={0}
             onChange={(e: any) => handleAdjustmentChange(CreativeAdjustment.FlareAmount, e.target.value)}
@@ -88,7 +90,7 @@ export default function EffectsPanel({
         <div className="space-y-4">
           <div className="p-2 bg-bg-tertiary rounded-md">
             <Text variant={TextVariants.heading} className="mb-2">
-              LUT
+              {t('editor.adjustments.effects.lut')}
             </Text>
             <LUTControl
               lutName={adjustments.lutName || null}
@@ -103,10 +105,10 @@ export default function EffectsPanel({
           {adjustmentVisibility.vignette !== false && (
             <div className="p-2 bg-bg-tertiary rounded-md">
               <Text variant={TextVariants.heading} className="mb-2">
-                Vignette
+                {t('editor.adjustments.effects.vignette')}
               </Text>
               <Slider
-                label="Amount"
+                label={t('editor.adjustments.effects.amount')}
                 max={100}
                 min={-100}
                 onChange={(e: any) => handleAdjustmentChange(Effect.VignetteAmount, e.target.value)}
@@ -116,7 +118,7 @@ export default function EffectsPanel({
               />
               <Slider
                 defaultValue={50}
-                label="Midpoint"
+                label={t('editor.adjustments.effects.midpoint')}
                 max={100}
                 min={0}
                 onChange={(e: any) => handleAdjustmentChange(Effect.VignetteMidpoint, e.target.value)}
@@ -126,7 +128,7 @@ export default function EffectsPanel({
                 fillOrigin="min"
               />
               <Slider
-                label="Roundness"
+                label={t('editor.adjustments.effects.roundness')}
                 max={100}
                 min={-100}
                 onChange={(e: any) => handleAdjustmentChange(Effect.VignetteRoundness, e.target.value)}
@@ -136,7 +138,7 @@ export default function EffectsPanel({
               />
               <Slider
                 defaultValue={50}
-                label="Feather"
+                label={t('editor.adjustments.effects.feather')}
                 max={100}
                 min={0}
                 onChange={(e: any) => handleAdjustmentChange(Effect.VignetteFeather, e.target.value)}
@@ -151,10 +153,10 @@ export default function EffectsPanel({
           {adjustmentVisibility.grain !== false && (
             <div className="p-2 bg-bg-tertiary rounded-md">
               <Text variant={TextVariants.heading} className="mb-2">
-                Grain
+                {t('editor.adjustments.effects.grain')}
               </Text>
               <Slider
-                label="Amount"
+                label={t('editor.adjustments.effects.amount')}
                 max={100}
                 min={0}
                 onChange={(e: any) => handleAdjustmentChange(Effect.GrainAmount, e.target.value)}
@@ -164,7 +166,7 @@ export default function EffectsPanel({
               />
               <Slider
                 defaultValue={25}
-                label="Size"
+                label={t('editor.adjustments.effects.size')}
                 max={100}
                 min={0}
                 onChange={(e: any) => handleAdjustmentChange(Effect.GrainSize, e.target.value)}
@@ -175,7 +177,7 @@ export default function EffectsPanel({
               />
               <Slider
                 defaultValue={50}
-                label="Roughness"
+                label={t('editor.adjustments.effects.roughness')}
                 max={100}
                 min={0}
                 onChange={(e: any) => handleAdjustmentChange(Effect.GrainRoughness, e.target.value)}

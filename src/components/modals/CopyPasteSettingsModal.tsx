@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { motion } from 'framer-motion';
 import clsx from 'clsx';
+import { useTranslation } from 'react-i18next';
 import { ADJUSTMENT_GROUPS, COPYABLE_ADJUSTMENT_KEYS, CopyPasteSettings, PasteMode } from '../../utils/adjustments';
 import Button from '../ui/Button';
 import Switch from '../ui/Switch';
@@ -24,8 +25,8 @@ const DEFAULT_SETTINGS: CopyPasteSettings = {
 };
 
 const pasteModeOptions = [
-  { id: PasteMode.Merge, label: 'Merge' },
-  { id: PasteMode.Replace, label: 'Replace' },
+  { id: PasteMode.Merge, labelKey: 'modals.copyPasteSettings.modes.merge' },
+  { id: PasteMode.Replace, labelKey: 'modals.copyPasteSettings.modes.replace' },
 ];
 
 interface PasteModeSwitchProps {
@@ -35,6 +36,7 @@ interface PasteModeSwitchProps {
 }
 
 const PasteModeSwitch = ({ selectedMode, onModeChange, isVisible }: PasteModeSwitchProps) => {
+  const { t } = useTranslation();
   const [buttonRefs, setButtonRefs] = useState<Map<string, HTMLButtonElement>>(new Map());
   const [bubbleStyle, setBubbleStyle] = useState({});
   const containerRef = useRef<HTMLDivElement>(null);
@@ -106,7 +108,7 @@ const PasteModeSwitch = ({ selectedMode, onModeChange, isVisible }: PasteModeSwi
           )}
           style={{ WebkitTapHighlightColor: 'transparent' }}
         >
-          <span className="relative z-10 flex items-center">{option.label}</span>
+          <span className="relative z-10 flex items-center">{t(option.labelKey)}</span>
         </button>
       ))}
     </div>
@@ -114,6 +116,7 @@ const PasteModeSwitch = ({ selectedMode, onModeChange, isVisible }: PasteModeSwi
 };
 
 export default function CopyPasteSettingsModal({ isOpen, onClose, onSave, settings }: CopyPasteSettingsModalProps) {
+  const { t } = useTranslation();
   const [isMounted, setIsMounted] = useState(false);
   const [show, setShow] = useState(false);
   const [localSettings, setLocalSettings] = useState<CopyPasteSettings>(settings || DEFAULT_SETTINGS);
@@ -200,42 +203,41 @@ export default function CopyPasteSettingsModal({ isOpen, onClose, onSave, settin
         onClick={(e) => e.stopPropagation()}
       >
         <Text variant={TextVariants.title} className="mb-4">
-          Copy & Paste Settings
+          {t('modals.copyPasteSettings.title')}
         </Text>
         <div className="grow overflow-y-auto pr-2 -mr-2 space-y-6">
           <div>
             <Text variant={TextVariants.heading} className="block mb-2">
-              Paste Mode
+              {t('modals.copyPasteSettings.pasteMode')}
             </Text>
             <PasteModeSwitch
               selectedMode={localSettings.mode}
               onModeChange={(mode) => setLocalSettings((p) => ({ ...p, mode }))}
               isVisible={show}
             />
-            <Text variant={TextVariants.small} className="mt-2">
-              <b>Merge:</b> Adds your copied changes, leaving other settings untouched.
-              <br />
-              <b>Replace:</b> Overwrites all selected settings, resetting the rest to their defaults.
+            <Text variant={TextVariants.small} className="mt-2" as="div">
+              <div dangerouslySetInnerHTML={{ __html: t('modals.copyPasteSettings.mergeDesc') }} />
+              <div dangerouslySetInnerHTML={{ __html: t('modals.copyPasteSettings.replaceDesc') }} />
             </Text>
           </div>
 
           <div>
             <div className="flex justify-between items-center mb-2">
-              <Text variant={TextVariants.heading}>Included Adjustments</Text>
+              <Text variant={TextVariants.heading}>{t('modals.copyPasteSettings.includedAdjustments')}</Text>
               <div className="flex gap-2">
                 <Button
                   className="px-4 py-2 rounded-md text-text-secondary hover:bg-surface transition-colors"
                   size="sm"
                   onClick={handleSelectAll}
                 >
-                  Select All
+                  {t('modals.copyPasteSettings.selectAll')}
                 </Button>
                 <Button
                   className="px-4 py-2 rounded-md text-text-secondary hover:bg-surface transition-colors"
                   size="sm"
                   onClick={handleSelectNone}
                 >
-                  Select None
+                  {t('modals.copyPasteSettings.selectNone')}
                 </Button>
               </div>
             </div>
@@ -271,9 +273,9 @@ export default function CopyPasteSettingsModal({ isOpen, onClose, onSave, settin
             className="px-4 py-2 rounded-md text-text-secondary bg-surface hover:bg-surface transition-colors"
             onClick={onClose}
           >
-            Cancel
+            {t('modals.copyPasteSettings.cancel')}
           </Button>
-          <Button onClick={handleSave}>Save</Button>
+          <Button onClick={handleSave}>{t('modals.copyPasteSettings.save')}</Button>
         </div>
       </div>
     </div>

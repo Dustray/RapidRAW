@@ -6,6 +6,7 @@ import { TextVariants } from '../../types/typography';
 import Switch from '../ui/Switch';
 import { Preset } from '../ui/AppProperties';
 import { ADJUSTMENT_GROUPS } from '../../utils/adjustments';
+import { useTranslation } from 'react-i18next';
 
 interface ConfigurePresetModalProps {
   isOpen: boolean;
@@ -14,27 +15,28 @@ interface ConfigurePresetModalProps {
   initialPreset?: Preset | null;
 }
 
-const presetTypeOptions = [
-  {
-    id: 'style',
-    label: 'Style',
-    title: 'Applies the complete look. This will override all your current settings to match the preset exactly.',
-  },
-  {
-    id: 'tool',
-    label: 'Tool',
-    title: 'Only applies specific changes without touching your other settings.',
-  },
-] as const;
-
 interface PresetTypeSwitchProps {
   selectedType: 'tool' | 'style';
   onChange: (type: 'tool' | 'style') => void;
 }
 
 const PresetTypeSwitch = ({ selectedType, onChange }: PresetTypeSwitchProps) => {
+  const { t } = useTranslation();
   const [bubbleStyle, setBubbleStyle] = useState({});
   const isInitialAnimation = useRef(true);
+
+  const presetTypeOptions = [
+    {
+      id: 'style',
+      label: t('editor.presets.types.style'),
+      title: t('modals.configurePreset.styleDescription'),
+    },
+    {
+      id: 'tool',
+      label: t('editor.presets.types.tool'),
+      title: t('modals.configurePreset.toolDescription'),
+    },
+  ] as const;
 
   useEffect(() => {
     const selectedIndex = presetTypeOptions.findIndex((m) => m.id === selectedType);
@@ -95,6 +97,7 @@ const PresetTypeSwitch = ({ selectedType, onChange }: PresetTypeSwitchProps) => 
 };
 
 export default function ConfigurePresetModal({ isOpen, onClose, onSave, initialPreset }: ConfigurePresetModalProps) {
+  const { t } = useTranslation();
   const [name, setName] = useState('');
   const [includeMasks, setIncludeMasks] = useState(false);
   const [includeCropTransform, setIncludeCropTransform] = useState(false);
@@ -176,21 +179,21 @@ export default function ConfigurePresetModal({ isOpen, onClose, onSave, initialP
         onClick={(e: any) => e.stopPropagation()}
       >
         <Text variant={TextVariants.title} className="mb-4">
-          {initialPreset ? 'Configure Preset' : 'Save New Preset'}
+          {initialPreset ? t('modals.configurePreset.titleConfigure') : t('modals.configurePreset.titleSave')}
         </Text>
         <input
           autoFocus
           className="w-full bg-bg-primary text-text-primary border border-border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-accent"
           onChange={(e: any) => setName(e.target.value)}
           onKeyDown={handleKeyDown}
-          placeholder="Enter preset name..."
+          placeholder={t('modals.configurePreset.presetNamePlaceholder')}
           type="text"
           value={name}
         />
 
         <div className="mt-5 mb-4 p-1 space-y-4">
-          <Switch label="Include Masks" checked={includeMasks} onChange={setIncludeMasks} />
-          <Switch label="Include Crop & Transform" checked={includeCropTransform} onChange={setIncludeCropTransform} />
+          <Switch label={t('modals.configurePreset.includeMasks')} checked={includeMasks} onChange={setIncludeMasks} />
+          <Switch label={t('modals.configurePreset.includeCropTransform')} checked={includeCropTransform} onChange={setIncludeCropTransform} />
         </div>
 
         <PresetTypeSwitch selectedType={presetType} onChange={setPresetType} />
@@ -200,14 +203,14 @@ export default function ConfigurePresetModal({ isOpen, onClose, onSave, initialP
             className="px-4 py-2 rounded-md text-text-secondary hover:bg-surface transition-colors"
             onClick={onClose}
           >
-            Cancel
+            {t('modals.configurePreset.cancel')}
           </button>
           <button
             className="px-4 py-2 rounded-md bg-accent text-button-text font-semibold hover:bg-accent-hover disabled:bg-gray-500 disabled:text-white disabled:cursor-not-allowed transition-colors"
             disabled={!name.trim()}
             onClick={handleSave}
           >
-            Save
+            {t('modals.configurePreset.save')}
           </button>
         </div>
       </div>

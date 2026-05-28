@@ -7,6 +7,7 @@ import { useContextMenu } from '../../context/ContextMenuContext';
 import Text from '../ui/Text';
 import Slider from '../ui/Slider';
 import { TextColors, TextVariants, TextWeights } from '../../types/typography';
+import { useTranslation } from 'react-i18next';
 
 let curveClipboard: Array<Coord> | null = null;
 let parametricClipboard: any = null;
@@ -110,7 +111,7 @@ function buildParametricPoints(settings: ParametricCurveSettings): Array<Coord> 
 
   const clamp = (v: number) => Math.max(0, Math.min(1, v));
 
-  let points = xs.map((x, i) => ({
+  const points = xs.map((x, i) => ({
     x: x * 255,
     y: clamp(ys[i]) * 255,
   }));
@@ -268,6 +269,7 @@ export default function CurveGraph({
   theme,
   onDragStateChange,
 }: CurveGraphProps) {
+  const { t } = useTranslation();
   const { showContextMenu } = useContextMenu();
   const [curveMode, setCurveMode] = useState<'point' | 'parametric'>(adjustments.curveMode || 'point');
   const [activeChannel, setActiveChannel] = useState<ActiveChannel>(ActiveChannel.Luma);
@@ -493,7 +495,7 @@ export default function CurveGraph({
         variant={TextVariants.small}
         className="w-full aspect-square bg-surface-secondary p-1 rounded-md flex items-center justify-center"
       >
-        Curve data not available.
+        {t('editor.adjustments.curves.curveDataNotAvailable')}
       </Text>
     );
   }
@@ -641,20 +643,20 @@ export default function CurveGraph({
       ].some((channel) => channel !== activeChannel && !isDefaultParametricCurve(parametricCurves[channel]));
 
       const options = [
-        { label: `Copy ${channelName} Parametric Curve`, icon: Copy, onClick: handleCopyParametric },
+        { label: t('editor.adjustments.curves.contextMenu.copyParametric', { channel: channelName }), icon: Copy, onClick: handleCopyParametric },
         {
-          label: `Paste Parametric Curve`,
+          label: t('editor.adjustments.curves.contextMenu.pasteParametric'),
           icon: ClipboardPaste,
           onClick: handlePasteParametric,
           disabled: !parametricClipboard,
         },
         { type: OPTION_SEPARATOR },
-        { label: `Reset ${channelName} Parametric Curve`, icon: RotateCcw, onClick: handleResetParametric },
+        { label: t('editor.adjustments.curves.contextMenu.resetParametric', { channel: channelName }), icon: RotateCcw, onClick: handleResetParametric },
       ];
 
       if (areOtherParametricCurvesDirty) {
         options.push({
-          label: 'Reset All Parametric Curves',
+          label: t('editor.adjustments.curves.contextMenu.resetAllParametric'),
           icon: RotateCcw,
           onClick: handleResetAllParametric,
         });
@@ -720,26 +722,26 @@ export default function CurveGraph({
     ].some((channel) => channel !== activeChannel && !isDefaultCurve(adjustments.curves?.[channel]));
 
     const options = [
-      { label: `Copy ${channelName} Point Curve`, icon: Copy, onClick: handleCopy },
+      { label: t('editor.adjustments.curves.contextMenu.copyPoint', { channel: channelName }), icon: Copy, onClick: handleCopy },
       {
-        label: `Paste Point Curve`,
+        label: t('editor.adjustments.curves.contextMenu.pastePoint'),
         icon: ClipboardPaste,
         onClick: handlePaste,
         disabled: !curveClipboard,
       },
       {
-        label: 'Paste from Parametric Curve',
+        label: t('editor.adjustments.curves.contextMenu.pasteFromParametric'),
         icon: ClipboardPaste,
         onClick: handlePasteFromParametric,
         disabled: !parametricClipboard,
       },
       { type: OPTION_SEPARATOR },
-      { label: `Reset ${channelName} Point Curve`, icon: RotateCcw, onClick: handleReset },
+      { label: t('editor.adjustments.curves.contextMenu.resetPoint', { channel: channelName }), icon: RotateCcw, onClick: handleReset },
     ];
 
     if (areOtherPointCurvesDirty) {
       options.push({
-        label: 'Reset All Point Curves',
+        label: t('editor.adjustments.curves.contextMenu.resetAllPoint'),
         icon: RotateCcw,
         onClick: handleResetAllPoint,
       });
@@ -763,7 +765,7 @@ export default function CurveGraph({
               !isParametricMode ? 'bg-surface text-text-primary' : 'text-text-secondary hover:text-text-primary'
             }`}
             onClick={() => handleToggleMode('point')}
-            text-tooltip="Point Curve"
+            text-tooltip={t('editor.adjustments.curves.pointCurve')}
             type="button"
           >
             <Spline size={16} />
@@ -773,7 +775,7 @@ export default function CurveGraph({
               isParametricMode ? 'bg-surface text-text-primary' : 'text-text-secondary hover:text-text-primary'
             }`}
             onClick={() => handleToggleMode('parametric')}
-            text-tooltip="Parametric Curve"
+            text-tooltip={t('editor.adjustments.curves.parametricCurve')}
             type="button"
           >
             <Settings2 size={16} />
@@ -795,7 +797,7 @@ export default function CurveGraph({
                   backgroundColor:
                     channel !== ActiveChannel.Luma && !selected ? channelConfig[channel].color + '40' : undefined,
                 }}
-                title={`${channel.charAt(0).toUpperCase() + channel.slice(1)} Channel`}
+                title={t('editor.adjustments.curves.channelTitle', { channel: channel.charAt(0).toUpperCase() + channel.slice(1) })}
               >
                 <Text variant={TextVariants.small} color={TextColors.primary} weight={TextWeights.bold}>
                   {channel.charAt(0).toUpperCase()}
@@ -955,7 +957,7 @@ export default function CurveGraph({
 
               <div className="flex flex-col gap-2">
                 <Slider
-                  label="White Level"
+                  label={t('editor.adjustments.curves.whiteLevel')}
                   min={-100}
                   max={0}
                   step={1}
@@ -965,7 +967,7 @@ export default function CurveGraph({
                   onDragStateChange={onDragStateChange}
                 />
                 <Slider
-                  label="Highlights"
+                  label={t('editor.adjustments.basic.highlights')}
                   min={-100}
                   max={100}
                   step={1}
@@ -975,7 +977,7 @@ export default function CurveGraph({
                   onDragStateChange={onDragStateChange}
                 />
                 <Slider
-                  label="Lights"
+                  label={t('editor.adjustments.curves.lights')}
                   min={-100}
                   max={100}
                   step={1}
@@ -985,7 +987,7 @@ export default function CurveGraph({
                   onDragStateChange={onDragStateChange}
                 />
                 <Slider
-                  label="Darks"
+                  label={t('editor.adjustments.curves.darks')}
                   min={-100}
                   max={100}
                   step={1}
@@ -995,7 +997,7 @@ export default function CurveGraph({
                   onDragStateChange={onDragStateChange}
                 />
                 <Slider
-                  label="Shadows"
+                  label={t('editor.adjustments.basic.shadows')}
                   min={-100}
                   max={100}
                   step={1}
@@ -1005,7 +1007,7 @@ export default function CurveGraph({
                   onDragStateChange={onDragStateChange}
                 />
                 <Slider
-                  label="Black Level"
+                  label={t('editor.adjustments.curves.blackLevel')}
                   min={0}
                   max={100}
                   step={1}

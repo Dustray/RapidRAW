@@ -128,13 +128,6 @@ const thumbnailResolutions: OptionItem<number>[] = [
   { value: 1080, label: '1080px' },
 ];
 
-const zoomMultiplierOptions: OptionItem<number>[] = [
-  { value: 1.0, label: '1.0x (Native)' },
-  { value: 0.75, label: '0.75x' },
-  { value: 0.5, label: '0.50x (Half)' },
-  { value: 0.25, label: '0.25x' },
-];
-
 const KeybindRow = ({
   def,
   currentCombo,
@@ -517,6 +510,13 @@ export default function SettingsPanel({
   const [testStatus, setTestStatus] = useState<TestStatus>({ message: '', success: null, testing: false });
   const [hasInteractedWithLivePreview, setHasInteractedWithLivePreview] = useState(false);
   const [recordingAction, setRecordingAction] = useState<string | null>(null);
+
+  const zoomMultiplierOptions = useMemo<OptionItem<number>[]>(() => [
+    { value: 1.0, label: t('settings.controls.zoomMultipliers.native') },
+    { value: 0.75, label: '0.75x' },
+    { value: 0.5, label: t('settings.controls.zoomMultipliers.half') },
+    { value: 0.25, label: '0.25x' },
+  ], [t]);
 
   const [aiProvider, setAiProvider] = useState(appSettings?.aiProvider || 'cpu');
   const [aiConnectorAddress, setAiConnectorAddress] = useState<string>(appSettings?.aiConnectorAddress || '');
