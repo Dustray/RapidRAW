@@ -2524,7 +2524,7 @@ function SettingsPanel({
             details: DetailsPanel,
             effects: EffectsPanel,
           }[sectionName];
-          const title = sectionName.charAt(0).toUpperCase() + sectionName.slice(1);
+          const title = t(`editor.adjustments.sections.${sectionName}`);
           return (
             <CollapsibleSection
               key={sectionName}

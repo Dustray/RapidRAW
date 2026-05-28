@@ -237,7 +237,7 @@
     },
     "data": {
       "title": "数据管理",
-      "clearSidecars": "清除所有侧车文件",
+      "clearSidecars": "清除所有关联辅助文件",
       "clearSidecarsDesc": "这将删除根文件夹中的所有 .rrdata 文件（包含您的编辑）：",
       "noFolders": "未选择文件夹",
       "clearSidecarsButton": "清除",
