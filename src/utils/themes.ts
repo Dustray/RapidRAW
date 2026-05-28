@@ -9,6 +9,12 @@ export interface ThemeProps {
 
 export const THEMES: Array<ThemeProps> = [
   {
+    id: Theme.System,
+    name: 'System',
+    splashImage: '/splash-dark.jpg',
+    cssVariables: {},
+  },
+  {
     id: Theme.Dark,
     name: 'settings.themes.dark',
     splashImage: '/splash-dark.jpg',
