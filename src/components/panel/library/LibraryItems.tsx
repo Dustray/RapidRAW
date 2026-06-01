@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Image as ImageIcon, Folder, FolderOpen, Star as StarIcon } from 'lucide-react';
+import { Image as ImageIcon, Folder, FolderOpen, Star as StarIcon, SlidersHorizontal } from 'lucide-react';
 import clsx from 'clsx';
 import { useTranslation } from 'react-i18next';
 import { COLOR_LABELS, Color } from '../../../utils/adjustments';
@@ -29,11 +29,14 @@ const ThumbnailComponent = ({
   rating,
   tags,
   aspectRatio: thumbnailAspectRatio,
+  isEdited,
   exif,
 }: any) => {
   const { t } = useTranslation();
   const data = useProcessStore((s) => s.thumbnails[path]);
   const exifOverlay = useSettingsStore((s) => s.appSettings?.exifOverlay || ExifOverlay.Off);
+  const displayEditIcon = useSettingsStore((s) => s.appSettings?.displayEditIcon ?? true);
+  const showEditIcon = isEdited && displayEditIcon;
 
   const [showPlaceholder, setShowPlaceholder] = useState(false);
   const [layers, setLayers] = useState<ImageLayer[]>([]);
@@ -176,28 +179,82 @@ const ThumbnailComponent = ({
         </AnimatePresence>
       </div>
 
-      {(colorLabel || rating > 0) && (
-        <>
-          <div className="absolute top-0 right-0 w-1/2 h-1/2 bg-linear-to-bl from-black/20 via-black/0 to-transparent pointer-events-none z-0" />
+      <AnimatePresence initial={false}>
+        {(colorLabel || rating > 0 || showEditIcon) && (
+          <motion.div
+            key="gradient-bg"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="absolute top-0 right-0 w-1/2 h-1/2 bg-linear-to-bl from-black/20 via-black/0 to-transparent pointer-events-none z-0"
+          />
+        )}
+      </AnimatePresence>
 
-          <div className="absolute top-1.5 right-1.5 rounded-full px-1.5 py-0.5 flex items-center gap-1 backdrop-blur-md shadow-md">
-            {colorLabel && (
-              <div
-                className="w-3 h-3 rounded-full ring-1 ring-black/20"
-                style={{ backgroundColor: colorLabel.color }}
-              />
-            )}
-            {rating > 0 && (
-              <>
-                <Text variant={TextVariants.small} color={TextColors.white}>
-                  {rating}
-                </Text>
-                <StarIcon size={12} className="text-white fill-white" />
-              </>
-            )}
-          </div>
-        </>
-      )}
+      <div className="absolute top-1.5 right-1.5 flex items-center justify-end z-10 pointer-events-none">
+        <AnimatePresence initial={false}>
+          {(colorLabel || rating > 0 || showEditIcon) && (
+            <motion.div
+              key="badge-container"
+              layout
+              initial={{ opacity: 0, scale: 0.8, y: -5 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.8, y: -5 }}
+              transition={{ duration: 0.25, type: 'spring', bounce: 0.3 }}
+              className="rounded-full px-1.5 py-0.5 flex items-center gap-1.5 backdrop-blur-md shadow-md bg-black/10"
+            >
+              <AnimatePresence mode="popLayout" initial={false}>
+                {showEditIcon && (
+                  <motion.div
+                    key="edited"
+                    layout
+                    initial={{ opacity: 0, scale: 0.5 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.5 }}
+                    transition={{ duration: 0.2 }}
+                    className="text-white pointer-events-auto flex items-center"
+                  >
+                    <SlidersHorizontal size={12} />
+                  </motion.div>
+                )}
+                {colorLabel && (
+                  <motion.div
+                    key="color"
+                    layout
+                    initial={{ opacity: 0, scale: 0.5 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.5 }}
+                    transition={{ duration: 0.2 }}
+                    className="flex items-center justify-center shrink-0 pointer-events-auto"
+                  >
+                    <div
+                      className="w-3 h-3 rounded-full ring-1 ring-black/20"
+                      style={{ backgroundColor: colorLabel.color }}
+                    />
+                  </motion.div>
+                )}
+                {rating > 0 && (
+                  <motion.div
+                    key="rating"
+                    layout
+                    initial={{ opacity: 0, scale: 0.5 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.5 }}
+                    transition={{ duration: 0.2 }}
+                    className="flex items-center gap-0.5 shrink-0 pointer-events-auto"
+                  >
+                    <Text variant={TextVariants.small} color={TextColors.white}>
+                      {rating}
+                    </Text>
+                    <StarIcon size={12} className="text-white fill-white" />
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
 
       <div
         className={clsx(
@@ -226,28 +283,28 @@ const ThumbnailComponent = ({
                 </Text>
               )}
             </div>
-            <div className="pt-1.5 pb-1 flex flex-wrap items-center gap-x-2.5 shrink-0">
+            <div className="pt-1.5 pb-0.5 flex flex-wrap items-center gap-x-2.5 shrink-0">
               <div className="flex items-center gap-1">
                 <IconShutter className="w-2.5 h-2.5" />
-                <Text variant={TextVariants.small} className="text-[9px]">
+                <Text variant={TextVariants.small} className="text-[9px] font-medium tracking-wide">
                   {shutter || '-'}
                 </Text>
               </div>
               <div className="flex items-center gap-1">
                 <IconAperture className="w-2.5 h-2.5" />
-                <Text variant={TextVariants.small} className="text-[9px]">
+                <Text variant={TextVariants.small} className="text-[9px] font-medium tracking-wide">
                   {fNumber || '-'}
                 </Text>
               </div>
               <div className="flex items-center gap-1">
                 <IconIso className="w-2.5 h-2.5" />
-                <Text variant={TextVariants.small} className="text-[9px]">
+                <Text variant={TextVariants.small} className="text-[9px] font-medium tracking-wide">
                   {iso || '-'}
                 </Text>
               </div>
               <div className="flex items-center gap-1">
                 <IconFocalLength className="w-2.5 h-2.5" />
-                <Text variant={TextVariants.small} className="text-[9px]">
+                <Text variant={TextVariants.small} className="text-[9px] font-medium tracking-wide">
                   {focal ? (String(focal).endsWith('mm') ? focal : `${focal}mm`) : '-'}
                 </Text>
               </div>
@@ -260,7 +317,7 @@ const ThumbnailComponent = ({
         className={clsx(
           'absolute bottom-0 left-0 right-0 flex flex-col p-2 pb-1.5 transition-all duration-300 ease-in-out z-20',
           isAlways
-            ? 'bg-surface/95 border-t border-border-color/50 pointer-events-auto'
+            ? 'bg-surface border-t border-border-color/50 pointer-events-auto'
             : isHover
               ? 'bg-transparent group-hover:bg-surface/60 backdrop-blur-none group-hover:backdrop-blur-md border-t border-transparent group-hover:border-border-color/50 pointer-events-none group-hover:pointer-events-auto'
               : 'bg-transparent border-t border-transparent pointer-events-none',
@@ -280,6 +337,7 @@ const ThumbnailComponent = ({
             <Text
               as="div"
               variant={TextVariants.small}
+              weight={TextWeights.bold}
               className={clsx(
                 'shrink-0 px-1.5 py-0.5 rounded-full transition-colors duration-300 font-bold',
                 isAlways
@@ -742,6 +800,7 @@ const RowComponent = ({
               rating={imageRatings?.[imageFile.path] || 0}
               tags={imageFile.tags}
               exif={imageFile.exif}
+              isEdited={imageFile.is_edited}
               aspectRatio={thumbnailAspectRatio}
             />
           )}
