@@ -19,6 +19,13 @@ import {
 } from '../components/ui/AppProperties';
 import { useTranslation } from 'react-i18next';
 
+const getSystemTheme = (): Theme.Dark | Theme.Light => {
+  if (typeof window !== 'undefined' && window.matchMedia) {
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? Theme.Dark : Theme.Light;
+  }
+  return Theme.Dark;
+};
+
 interface UseAppInitializationProps {
   preloadedDataRef: React.RefObject<any>;
   thumbnailSize: ThumbnailSize;
@@ -333,8 +340,13 @@ export const useAppInitialization = ({
     const root = document.documentElement;
     const currentThemeId = theme || DEFAULT_THEME_ID;
 
+    let effectiveThemeId = currentThemeId;
+    if (currentThemeId === Theme.System) {
+      effectiveThemeId = getSystemTheme();
+    }
+
     const baseTheme =
-      THEMES.find((t: ThemeProps) => t.id === currentThemeId) ||
+      THEMES.find((t: ThemeProps) => t.id === effectiveThemeId) ||
       THEMES.find((t: ThemeProps) => t.id === DEFAULT_THEME_ID);
     if (!baseTheme) return;
 
@@ -351,4 +363,29 @@ export const useAppInitialization = ({
         : "'Poppins', system-ui, sans-serif";
     root.style.setProperty('--font-family', fontStack);
   }, [theme, appSettings?.fontFamily]);
+
+  useEffect(() => {
+    if (theme !== Theme.System) return;
+
+    if (typeof window === 'undefined' || !window.matchMedia) return;
+
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    
+    const handler = (e: MediaQueryListEvent) => {
+      const effectiveThemeId = e.matches ? Theme.Dark : Theme.Light;
+      const baseTheme = THEMES.find((t: ThemeProps) => t.id === effectiveThemeId);
+      if (!baseTheme) return;
+
+      const root = document.documentElement;
+      Object.entries(baseTheme.cssVariables).forEach(([key, value]) => {
+        root.style.setProperty(key, value as string);
+      });
+    };
+
+    mediaQuery.addEventListener('change', handler);
+
+    return () => {
+      mediaQuery.removeEventListener('change', handler);
+    };
+  }, [theme]);
 };
