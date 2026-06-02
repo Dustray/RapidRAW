@@ -197,18 +197,16 @@ const ThumbnailComponent = ({
           {(colorLabel || rating > 0 || showEditIcon) && (
             <motion.div
               key="badge-container"
-              layout
               initial={{ opacity: 0, scale: 0.8, y: -5 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.8, y: -5 }}
               transition={{ duration: 0.25, type: 'spring', bounce: 0.3 }}
               className="rounded-full px-1.5 py-0.5 flex items-center gap-1.5 backdrop-blur-md shadow-md bg-black/10"
             >
-              <AnimatePresence mode="popLayout" initial={false}>
+              <AnimatePresence initial={false}>
                 {showEditIcon && (
                   <motion.div
                     key="edited"
-                    layout
                     initial={{ opacity: 0, scale: 0.5 }}
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0, scale: 0.5 }}
@@ -221,7 +219,6 @@ const ThumbnailComponent = ({
                 {colorLabel && (
                   <motion.div
                     key="color"
-                    layout
                     initial={{ opacity: 0, scale: 0.5 }}
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0, scale: 0.5 }}
@@ -237,7 +234,6 @@ const ThumbnailComponent = ({
                 {rating > 0 && (
                   <motion.div
                     key="rating"
-                    layout
                     initial={{ opacity: 0, scale: 0.5 }}
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0, scale: 0.5 }}
@@ -339,7 +335,7 @@ const ThumbnailComponent = ({
               variant={TextVariants.small}
               weight={TextWeights.bold}
               className={clsx(
-                'shrink-0 px-1.5 py-0.5 rounded-full transition-colors duration-300 font-bold',
+                'shrink-0 px-1.5 py-0.5 rounded-full transition-colors duration-300 font-bold pointer-events-auto',
                 isAlways
                   ? 'bg-border-color/30 text-text-primary shadow-none'
                   : isHover
